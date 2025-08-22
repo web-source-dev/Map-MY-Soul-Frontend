@@ -221,8 +221,8 @@ const BookingPage = () => {
 
   const fetchService = async () => {
     try {
-      const response = await backendRequest(`/api/services/${serviceId}`);
-      setService(response as Service);
+      const response = await backendRequest(`/api/services/${serviceId}`) as { service: Service };
+      setService(response.service);
     } catch (error) {
       console.error('Failed to fetch service:', error);
       showToast.error('Failed to load service details');
@@ -375,13 +375,8 @@ const BookingPage = () => {
                   {service.name}
                 </h1>
                 <div className="flex items-center gap-4 mb-4">
-                  <Badge variant="secondary">Online Session</Badge>
-                  <Badge variant="secondary">{service.duration || 90} minutes</Badge>
-                  <div className="flex items-center gap-1">
-                    <Star className="w-4 h-4 fill-yellow-400 text-yellow-400" />
-                    <span className="text-sm font-medium">{service.rating || 5.0}</span>
-                  </div>
-                  <Badge variant="outline">Spiritual Healing</Badge>
+                  <Badge variant="secondary">{service.serviceType}</Badge>
+                  <Badge variant="outline">{service.serviceProviderName}</Badge>
                 </div>
               </div>
 
