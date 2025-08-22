@@ -570,9 +570,6 @@ const Index = () => {
                         <div className="absolute inset-0 p-2 flex flex-col justify-end bg-black/20">
                           <div className="space-y-2">
                             <h4 className="font-bold text-xl text-white leading-tight">{podcast.title}</h4>
-                            {podcast.description && (
-                              <p className="text-sm text-white/90 line-clamp-2 leading-relaxed">{podcast.description}</p>
-                            )}
                             {/* Play Button */}
                             <div className="flex items-center space-x-2 mt-3">
                               <div className="w-8 h-8 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center">
@@ -608,9 +605,6 @@ const Index = () => {
                         <div className="absolute inset-0 p-2 flex flex-col justify-end bg-black/20">
                           <div className="space-y-2">
                             <h4 className="font-bold text-xl text-white leading-tight">{podcast.title}</h4>
-                            {podcast.description && (
-                              <p className="text-sm text-white/90 line-clamp-2 leading-relaxed">{podcast.description}</p>
-                            )}
                             {/* Play Button */}
                             <div className="flex items-center space-x-2 mt-3">
                               <div className="w-8 h-8 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center">
@@ -661,9 +655,6 @@ const Index = () => {
                         <div className="absolute inset-0 p-2 flex flex-col justify-end bg-black/20">
                           <div className="space-y-2">
                             <h4 className="font-bold text-xl text-white leading-tight">{podcast.title}</h4>
-                            {podcast.description && (
-                              <p className="text-sm text-white/90 line-clamp-2 leading-relaxed">{podcast.description}</p>
-                            )}
                             {/* Play Button */}
                             <div className="flex items-center space-x-2 mt-3">
                               <div className="w-8 h-8 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center">
@@ -699,9 +690,6 @@ const Index = () => {
                         <div className="absolute inset-0 p-2 flex flex-col justify-end bg-black/20">
                           <div className="space-y-2">
                             <h4 className="font-bold text-xl text-white leading-tight">{podcast.title}</h4>
-                            {podcast.description && (
-                              <p className="text-sm text-white/90 line-clamp-2 leading-relaxed">{podcast.description}</p>
-                            )}
                             {/* Play Button */}
                             <div className="flex items-center space-x-2 mt-3">
                               <div className="w-8 h-8 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center">
