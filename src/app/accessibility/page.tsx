@@ -263,7 +263,7 @@ const AccessibilityStatement = () => {
             <div className="space-y-3 text-sm text-muted-foreground">
               <p>
                 <strong>Browser Accessibility:</strong> Most browsers offer built-in accessibility features. 
-                Check your browser's help section for information about zoom, text scaling, and keyboard navigation.
+                Check your browser&apos;s help section for information about zoom, text scaling, and keyboard navigation.
               </p>
               <p>
                 <strong>Assistive Technology:</strong> Our platform is compatible with various assistive 

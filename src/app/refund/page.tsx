@@ -278,7 +278,7 @@ const RefundPolicy = () => {
                     <div className="text-2xl font-bold text-primary mb-2">3</div>
                     <h4 className="font-semibold text-foreground mb-2">Review & Process</h4>
                     <p className="text-sm text-muted-foreground">
-                      We'll review your request and process the refund within 2 business days
+                      We&apos;ll review your request and process the refund within 2 business days
                     </p>
                   </div>
                 </div>

@@ -188,7 +188,7 @@ const TermsAndConditions = () => {
             Terms and Conditions
           </h1>
           <p className="text-lg text-muted-foreground leading-relaxed mb-4">
-            These terms govern your use of MapMySoul's spiritual healing platform. Please read them carefully 
+            These terms govern your use of MapMySoul&apos;s spiritual healing platform. Please read them carefully 
             before using our services.
           </p>
           <div className="flex items-center justify-center gap-2 text-sm text-muted-foreground">

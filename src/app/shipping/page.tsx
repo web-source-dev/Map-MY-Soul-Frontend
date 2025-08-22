@@ -382,7 +382,7 @@ const ShippingPolicy = () => {
                 tracking number provided in your shipping confirmation email.
               </p>
               <p>
-                <strong>Delivery Notifications:</strong> We'll send you email updates at each stage of the 
+                <strong>Delivery Notifications:</strong> We&apos;ll send you email updates at each stage of the 
                 shipping process, from order confirmation to delivery.
               </p>
               <p>
