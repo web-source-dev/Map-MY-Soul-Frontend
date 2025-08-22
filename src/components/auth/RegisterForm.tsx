@@ -8,7 +8,7 @@ import { CustomTextInput } from '@/components/ui/custom-text-input';
 import { CustomDateInput } from '@/components/ui/custom-date-input';
 import { Label } from '@/components/ui/label';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { Eye, EyeOff, Loader2 } from 'lucide-react';
+import { Loader2 } from 'lucide-react';
 
 interface RegisterFormProps {
   onSwitchToLogin: () => void;

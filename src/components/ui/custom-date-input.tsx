@@ -16,7 +16,7 @@ interface CustomDateInputProps extends Omit<React.HTMLAttributes<HTMLDivElement>
 }
 
 const CustomDateInput = React.forwardRef<HTMLDivElement, CustomDateInputProps>(
-  ({ className, value, onChange, placeholder = "Select date", disabled, required, max, min, ...props }, ref) => {
+  ({ className, value, onChange, placeholder = "Select date", max, min, ...props }, ref) => {
     const [isOpen, setIsOpen] = React.useState(false)
     const [currentDate, setCurrentDate] = React.useState(() => {
       if (value) {

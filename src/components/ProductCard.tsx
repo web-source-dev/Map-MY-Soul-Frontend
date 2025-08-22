@@ -21,7 +21,7 @@ interface ProductCardProps {
   onQuickView?: () => void;
 }
 
-const ProductCard = ({ product, onQuickView }: ProductCardProps) => {
+const ProductCard = ({ product }: ProductCardProps) => {
   const { addToCart, addToWishlist, isInCart, isInWishlist, loading } = useCartWishlist();
   const { isAuthenticated } = useAuth();
   const router = useRouter();

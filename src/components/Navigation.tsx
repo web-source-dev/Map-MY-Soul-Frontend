@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { Menu, X, Heart, ShoppingBag, User, Sparkles, LogOut, Settings, Crown } from "lucide-react";
+import { Menu, X, User, Sparkles, LogOut, Crown } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { usePathname } from "next/navigation";
 import Image from "next/image";

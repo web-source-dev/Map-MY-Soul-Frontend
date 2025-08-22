@@ -60,7 +60,7 @@ interface QuizResults {
     sunSign: string;
     moonSign: string;
     risingSign: string;
-    birthChart?: any;
+    birthChart?:  unknown;
     calculationMethod?: 'accurate' | 'simplified';
   };
   humanDesign: {

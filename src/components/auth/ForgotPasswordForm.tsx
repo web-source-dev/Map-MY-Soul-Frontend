@@ -27,7 +27,7 @@ export const ForgotPasswordForm: React.FC<ForgotPasswordFormProps> = ({ onSwitch
       await forgotPassword(email);
       setSuccess(true);
     } catch (err) {
-      // Error is already handled by the AuthContext toast
+      console.error('Error sending reset token:', err);
     } finally {
       setLoading(false);
     }
@@ -47,7 +47,7 @@ export const ForgotPasswordForm: React.FC<ForgotPasswordFormProps> = ({ onSwitch
         </CardHeader>
         <CardContent className="space-y-4">
           <div className="p-4 bg-green-50 border border-green-200 rounded-md">
-            <p className="mb-2 text-green-800">We've sent a password reset link to your email address.</p>
+            <p className="mb-2 text-green-800">We&apos;ve sent a password reset link to your email address.</p>
             <p className="text-sm text-green-600">
               Click the link in the email to reset your password. The link will expire in 1 hour.
             </p>
@@ -67,7 +67,7 @@ export const ForgotPasswordForm: React.FC<ForgotPasswordFormProps> = ({ onSwitch
       <CardHeader className="space-y-1">
         <CardTitle className="text-2xl font-bold text-center">Forgot password</CardTitle>
         <CardDescription className="text-center">
-          Enter your email address and we'll send you a reset token
+          Enter your email address and we&apos;ll send you a reset token
         </CardDescription>
       </CardHeader>
       <CardContent>

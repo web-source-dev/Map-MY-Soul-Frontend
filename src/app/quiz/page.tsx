@@ -9,7 +9,7 @@ import { Label } from "@/components/ui/label";
 import { CustomTextInput } from "@/components/ui/custom-text-input";
 import { CustomDateInput } from "@/components/ui/custom-date-input";
 import { CustomTimeInput } from "@/components/ui/custom-time-input";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { useRouter } from "next/navigation";
 import { Sparkles, ArrowRight, ArrowLeft, Calendar, Clock, MapPin, User } from "lucide-react";
 import CitySearch from "@/components/CitySearch";
@@ -19,9 +19,37 @@ import { quizApi } from "@/lib/api";
 import { useAuth } from "@/contexts/AuthContext";
 import LoginPrompt from "@/components/LoginPrompt";
 
+interface BirthInfo {
+  dob?: string;
+  birthTime?: string;
+  birthPlace?: string;
+  timezone_offset?: number;
+}
+
+interface Preferences {
+  budget?: string;
+  timeCommitment?: string;
+  sessionPreference?: string;
+}
+
+interface FinalPreferences {
+  eligibleNonprofit?: string;
+  nonprofitReason?: string;
+  productInterest?: string;
+}
+
 interface QuizAnswer {
-  value: string | string[] | any;
+  value: string | string[] | BirthInfo | Preferences | FinalPreferences;
   logicField: string;
+}
+
+interface Question {
+  id: string;
+  question: string;
+  type: string;
+  logicField: string;
+  options?: string[];
+  maxSelect?: number;
 }
 
 const Quiz = () => {
@@ -39,7 +67,7 @@ const Quiz = () => {
     }
   }, []);
   
-  const questions = [
+  const questions: Question[] = [
     {
       id: "birth_info",
       question: "Let's start with your birth information",
@@ -142,16 +170,6 @@ const Quiz = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [quizStartTime] = useState(Date.now()); // Track when quiz started
   
-  // Set default timezone when birth info is first accessed
-  useEffect(() => {
-    if (typeof window !== 'undefined' && currentTimezone !== 0) {
-      const birthInfo = answers["birth_info"]?.value as any;
-      if (birthInfo && birthInfo.timezone_offset === undefined) {
-        handleAnswer({ ...birthInfo, timezone_offset: currentTimezone });
-      }
-    }
-  }, [currentTimezone, answers]);
-
   const getQuestionIcon = (type: string) => {
     switch (type) {
       case "date":
@@ -165,7 +183,9 @@ const Quiz = () => {
     }
   };
 
-  const handleAnswer = (value: string | string[]) => {
+
+
+  const handleAnswer = useCallback((value: string | string[] | BirthInfo | Preferences | FinalPreferences) => {
     const currentQ = questions[currentQuestion];
     
     const newAnswers = {
@@ -179,12 +199,17 @@ const Quiz = () => {
     if (typeof window !== 'undefined') {
       localStorage.setItem('quizAnswers', JSON.stringify(newAnswers));
     }
-    
-    // Update current question if needed after answer changes
-    setTimeout(() => {
-      updateCurrentQuestionIfNeeded();
-    }, 100); // Small delay to show the transition
-  };
+  }, [answers, currentQuestion, questions]);
+
+  // Set default timezone when birth info is first accessed
+  useEffect(() => {
+    if (typeof window !== 'undefined' && currentTimezone !== null && currentTimezone !== 0) {
+      const birthInfo = answers["birth_info"]?.value as BirthInfo;
+      if (birthInfo && birthInfo.timezone_offset === undefined) {
+        handleAnswer({ ...birthInfo, timezone_offset: currentTimezone });
+      }
+    }
+  }, [currentTimezone, answers, handleAnswer]);
 
   const handleMultiChoiceChange = (option: string, checked: boolean) => {
     const currentQ = questions[currentQuestion];
@@ -204,7 +229,7 @@ const Quiz = () => {
     handleAnswer(newAnswers);
   };
 
-  const shouldShowQuestion = (question: any, questionIndex: number) => {
+  const shouldShowQuestion = (question: Question, questionIndex: number) => {
     // Always show the first question
     if (questionIndex === 0) return true;
     
@@ -257,17 +282,17 @@ const Quiz = () => {
     }
     
     if (currentQ.type === "birthInfo") {
-      const birthData = currentAnswer.value as any;
+      const birthData = currentAnswer.value as BirthInfo;
       return birthData.dob && birthData.birthPlace && birthData.timezone_offset !== undefined;
     }
     
     if (currentQ.type === "preferences") {
-      const prefData = currentAnswer.value as any;
+      const prefData = currentAnswer.value as Preferences;
       return prefData.budget && prefData.timeCommitment && prefData.sessionPreference;
     }
     
     if (currentQ.type === "finalPreferences") {
-      const finalPrefData = currentAnswer.value as any;
+      const finalPrefData = currentAnswer.value as FinalPreferences;
       return finalPrefData.eligibleNonprofit && finalPrefData.productInterest;
     }
     
@@ -291,10 +316,10 @@ const Quiz = () => {
       // Prepare quiz data for backend
       const quizData = {
         // Birth information
-        dateOfBirth: answers["birth_info"]?.value?.dob,
-        birthTime: answers["birth_info"]?.value?.birthTime,
-        birthPlace: answers["birth_info"]?.value?.birthPlace,
-        timezoneOffset: answers["birth_info"]?.value?.timezone_offset,
+        dateOfBirth: (answers["birth_info"]?.value as BirthInfo)?.dob,
+        birthTime: (answers["birth_info"]?.value as BirthInfo)?.birthTime,
+        birthPlace: (answers["birth_info"]?.value as BirthInfo)?.birthPlace,
+        timezoneOffset: (answers["birth_info"]?.value as BirthInfo)?.timezone_offset,
         
         // Energy type
         energyType: answers["energy_type"]?.value,
@@ -307,16 +332,16 @@ const Quiz = () => {
         balanceActivities: answers["balance_activities"]?.value,
         
         // Preferences
-        budget: answers["preferences"]?.value?.budget,
-        timeCommitment: answers["preferences"]?.value?.timeCommitment,
-        sessionPreference: answers["preferences"]?.value?.sessionPreference,
+        budget: (answers["preferences"]?.value as Preferences)?.budget,
+        timeCommitment: (answers["preferences"]?.value as Preferences)?.timeCommitment,
+        sessionPreference: (answers["preferences"]?.value as Preferences)?.sessionPreference,
         
         // Practitioner type
         practitionerType: answers["practitioner_type"]?.value,
         
         // Final preferences
-        eligibleNonprofit: answers["final_preferences"]?.value?.eligibleNonprofit,
-        productInterest: answers["final_preferences"]?.value?.productInterest,
+        eligibleNonprofit: (answers["final_preferences"]?.value as FinalPreferences)?.eligibleNonprofit,
+        productInterest: (answers["final_preferences"]?.value as FinalPreferences)?.productInterest,
         
         // Analytics
         completionTime: Math.round((Date.now() - quizStartTime) / 1000),
@@ -408,7 +433,6 @@ const Quiz = () => {
   };
 
   // Add a small delay to show the skip animation
-  const [isTransitioning, setIsTransitioning] = useState(false);
   const [skipMessage, setSkipMessage] = useState<string | null>(null);
 
   const renderQuestionInput = () => {
@@ -417,7 +441,7 @@ const Quiz = () => {
 
     switch (currentQ.type) {
       case "birthInfo":
-        const birthData = currentAnswer?.value as any || {};
+        const birthData = (currentAnswer?.value as BirthInfo) || {};
         return (
           <div className="space-y-6">
             <div className="space-y-2">
@@ -484,7 +508,7 @@ const Quiz = () => {
                   <div>Date: {new Date(birthData.dob).toLocaleDateString()}</div>
                   <div>Time: {birthData.birthTime} (Local Time)</div>
                   <div>Place: {birthData.birthPlace}</div>
-                  <div>Timezone: UTC{birthData.timezone_offset >= 0 ? '+' : ''}{birthData.timezone_offset}</div>
+                  <div>Timezone: UTC{birthData.timezone_offset && birthData.timezone_offset >= 0 ? '+' : ''}{birthData.timezone_offset}</div>
                 </div>
               </div>
             )}
@@ -492,7 +516,7 @@ const Quiz = () => {
         );
 
       case "preferences":
-        const prefData = currentAnswer?.value as any || {};
+        const prefData = (currentAnswer?.value as Preferences) || {};
         return (
           <div className="space-y-6">
             <div className="space-y-2">
@@ -561,7 +585,7 @@ const Quiz = () => {
         );
 
       case "finalPreferences":
-        const finalPrefData = currentAnswer?.value as any || {};
+        const finalPrefData = (currentAnswer?.value as FinalPreferences) || {};
         return (
           <div className="space-y-6">
             <div className="space-y-2">
@@ -650,7 +674,7 @@ const Quiz = () => {
             />
             {currentAnswer?.value && (
               <p className="text-xs text-muted-foreground">
-                Selected: {currentAnswer.value}
+                Selected: {currentAnswer.value as string}
               </p>
             )}
           </div>
@@ -670,7 +694,7 @@ const Quiz = () => {
         return (
           <RadioGroup
             value={currentAnswer?.value as string || ""}
-            onValueChange={handleAnswer}
+            onValueChange={(value) => handleAnswer(value)}
             className="space-y-4"
           >
             {currentQ.options?.map((option, index) => (
@@ -747,7 +771,7 @@ const Quiz = () => {
              )}
           </div>
           
-                     <Card className={`modern-card slide-up transition-all duration-300 ${isTransitioning ? 'opacity-50' : 'opacity-100'}`}>
+                     <Card className="modern-card slide-up transition-all duration-300 opacity-100">
             <CardHeader>
                              <div className="flex justify-between items-center mb-4">
                  <span className="text-sm text-muted-foreground">

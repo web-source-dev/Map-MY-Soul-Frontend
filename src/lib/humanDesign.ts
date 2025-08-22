@@ -50,9 +50,8 @@ export function ascendantLongitudeDeg(dateUTC: Date, latDeg: number, lonDegEast:
   let gmstHours: number;
   try {
     // Use the correct function name from astronomia
-    gmstHours = (sidereal as any).mean(jd);
-  } catch (error) {
-    // Fallback calculation if the function doesn't exist
+    gmstHours = (sidereal as unknown as { mean: (jd: number) => number }).mean(jd);
+  } catch {
     console.warn('sidereal.mean not available, using fallback calculation');
     // Simple GMST calculation as fallback
     const T = (jd - 2451545.0) / 36525;
@@ -76,7 +75,7 @@ export function ascendantLongitudeDeg(dateUTC: Date, latDeg: number, lonDegEast:
   const tanφ = Math.tan(φ);
 
   // Ascendant λ = atan2( sinθ * cosε - tanφ * sinε, cosθ )
-  let ascRad = Math.atan2(sinθ * cosε - tanφ * sinε, cosθ);
+  const ascRad = Math.atan2(sinθ * cosε - tanφ * sinε, cosθ);
   let ascDeg = toDeg(ascRad);
   ascDeg = norm360(ascDeg);
   return ascDeg;
@@ -228,13 +227,27 @@ export function findDesignTimeForBirth(dateUTC: Date, maxDaysWindow=10) {
 }
 
 /* --------------- High-level profile builder --------------- */
+
+export interface GateLine {
+  gate: number;
+  line: number;
+  withinGateDeg: number;
+  gateStartLon: number;
+}
+
+export interface PersonalityGates {
+  sunGate: GateLine;
+  moonGate: GateLine;
+  ascGate: GateLine;
+}
+
 export type HDProfile = {
   birthUTC: Date;
   sunLon: number; moonLon: number; ascLon: number;
-  personality: { sunGate: any; moonGate: any; ascGate: any };
+  personality: PersonalityGates;
   designUTC: Date;
   designSunLon: number;
-  design: { sunGate: any; moonGate: any; ascGate: any };
+  design: PersonalityGates;
 };
 
 export function buildHDProfile(
@@ -334,12 +347,12 @@ export const calculateHumanDesign = async (
   } catch (error) {
     console.error('Human Design calculation error:', error);
     // Fallback to simplified calculation
-    return calculateSimplifiedHumanDesign(birthDate, birthTime, birthPlace);
+    return calculateSimplifiedHumanDesign(birthDate, birthTime);
   }
 };
 
 // Simplified fallback calculation
-const calculateSimplifiedHumanDesign = (birthDate: string, birthTime: string, birthPlace: string) => {
+const calculateSimplifiedHumanDesign = (birthDate: string, birthTime: string) => {
   try {
     const date = new Date(birthDate + 'T' + birthTime);
     const month = date.getMonth() + 1;
@@ -373,7 +386,7 @@ const calculateSimplifiedHumanDesign = (birthDate: string, birthTime: string, bi
 };
 
 // Helper functions for determining Human Design components
-const determineEnergyType = (personality: any): string => {
+const determineEnergyType = (personality: PersonalityGates): string => {
   // This is a simplified determination - in practice, it's based on specific gate combinations
   const sunGate = personality.sunGate.gate;
   const moonGate = personality.moonGate.gate;
@@ -391,7 +404,7 @@ const determineEnergyType = (personality: any): string => {
   return types[index];
 };
 
-const determineAuthority = (personality: any): string => {
+const determineAuthority = (personality: PersonalityGates): string => {
   // Simplified authority determination
   const sunGate = personality.sunGate.gate;
   const moonGate = personality.moonGate.gate;
@@ -406,7 +419,7 @@ const determineAuthority = (personality: any): string => {
   return authorities[index];
 };
 
-const determineProfile = (personality: any, design: any): string => {
+const determineProfile = (personality: PersonalityGates, design: PersonalityGates): string => {
   // Profile is determined by the combination of personality and design lines
   const personalityLine = personality.sunGate.line;
   const designLine = design.sunGate.line;
@@ -414,7 +427,7 @@ const determineProfile = (personality: any, design: any): string => {
   return `${personalityLine}/${designLine}`;
 };
 
-const determineDefinition = (personality: any, design: any): string => {
+const determineDefinition = (personality: PersonalityGates, design: PersonalityGates): string => {
   // Simplified definition determination
   return 'Single Definition'; // Most common
 };

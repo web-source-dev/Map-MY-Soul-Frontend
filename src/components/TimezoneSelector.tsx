@@ -221,7 +221,7 @@ export default function TimezoneSelector({
           {filteredOptions.length === 0 && searchQuery && (
             <div className="px-4 py-4 text-center">
               <div className="text-sm text-gray-500 mb-2">
-                No timezones found matching "{searchQuery}"
+                No timezones found matching &quot;{searchQuery}&quot;
               </div>
               <div className="text-xs text-gray-400">
                 Try searching for a city name, country, or UTC offset

@@ -15,7 +15,7 @@ interface CustomTimeInputProps extends Omit<React.HTMLAttributes<HTMLDivElement>
 }
 
 const CustomTimeInput = React.forwardRef<HTMLDivElement, CustomTimeInputProps>(
-  ({ className, value, onChange, placeholder = "Select time", disabled, required, format = "24h", ...props }, ref) => {
+  ({ className, value, onChange, placeholder = "Select time", format = "24h", ...props }, ref) => {
     const [isOpen, setIsOpen] = React.useState(false)
     const [selectedHour, setSelectedHour] = React.useState<number>(0)
     const [selectedMinute, setSelectedMinute] = React.useState<number>(0)
@@ -37,7 +37,7 @@ const CustomTimeInput = React.forwardRef<HTMLDivElement, CustomTimeInputProps>(
 
     const formatTime = (hour: number, minute: number, am: boolean) => {
       let displayHour = hour
-      let displayMinute = minute.toString().padStart(2, '0')
+      const displayMinute = minute.toString().padStart(2, '0')
       
       if (format === "12h") {
         displayHour = hour === 0 ? 12 : hour
@@ -87,12 +87,6 @@ const CustomTimeInput = React.forwardRef<HTMLDivElement, CustomTimeInputProps>(
     const decrementMinute = () => {
       setSelectedMinute(prev => prev <= 0 ? 59 : prev - 1)
     }
-
-    const hours = Array.from({ length: format === "12h" ? 12 : 24 }, (_, i) => 
-      format === "12h" ? (i === 0 ? 12 : i) : i
-    )
-    
-    const minutes = Array.from({ length: 60 }, (_, i) => i)
 
     return (
       <Popover open={isOpen} onOpenChange={setIsOpen}>

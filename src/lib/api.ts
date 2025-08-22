@@ -1,10 +1,10 @@
-import { getApiUrl, getBackendUrl, API_CONFIG } from '@/config/api';
+import { getApiUrl, getBackendUrl } from '@/config/api';
 
 // Generic API request function
 export const apiRequest = async (
   endpoint: string,
   options: RequestInit = {}
-): Promise<any> => {
+): Promise<unknown> => {
   const url = getApiUrl(endpoint);
   
   const defaultOptions: RequestInit = {
@@ -45,7 +45,7 @@ export const apiRequest = async (
 export const backendRequest = async (
   endpoint: string,
   options: RequestInit = {}
-): Promise<any> => {
+): Promise<unknown> => {
   const url = getBackendUrl(endpoint);
   
   const defaultOptions: RequestInit = {
@@ -99,8 +99,8 @@ export const backendRequest = async (
 // Health check function
 export const checkBackendHealth = async (): Promise<boolean> => {
   try {
-    const response = await backendRequest('/health');
-    return response.status === 'OK';
+    const response = await backendRequest('/health') as { status: string };
+    return response.status === 'OK'; 
   } catch (error) {
     console.error('Backend health check failed:', error);
     return false;
@@ -136,7 +136,7 @@ export const debugAuthStatus = () => {
 
 // Quiz API functions
 export const quizApi = {
-  submit: async (quizData: any) => {
+  submit: async (quizData: unknown) => {
     return await backendRequest('/api/quiz/submit', {
       method: 'POST',
       body: JSON.stringify(quizData),
@@ -150,14 +150,14 @@ export const quizApi = {
 
 // Auth API functions (using direct backend calls for better error handling)
 export const authApiDirect = {
-  register: async (data: any) => {
+  register: async (data: unknown) => {
     return await backendRequest('/api/auth/register', {
       method: 'POST',
       body: JSON.stringify(data),
     });
   },
   
-  login: async (data: any) => {
+  login: async (data: unknown) => {
     return await backendRequest('/api/auth/login', {
       method: 'POST',
       body: JSON.stringify(data),
@@ -172,14 +172,14 @@ export const authApiDirect = {
     });
   },
   
-  forgotPassword: async (data: any) => {
+  forgotPassword: async (data: unknown) => {
     return await backendRequest('/api/auth/forgot-password', {
       method: 'POST',
       body: JSON.stringify(data),
     });
   },
   
-  resetPassword: async (data: any) => {
+  resetPassword: async (data: unknown) => {
     return await backendRequest('/api/auth/reset-password', {
       method: 'POST',
       body: JSON.stringify(data),
@@ -202,7 +202,7 @@ export const catalogApi = {
 
 // Booking API functions
 export const bookingApi = {
-  createBooking: async (bookingData: any) => {
+  createBooking: async (bookingData: unknown) => {
     return await backendRequest('/api/bookings', {
       method: 'POST',
       body: JSON.stringify(bookingData),

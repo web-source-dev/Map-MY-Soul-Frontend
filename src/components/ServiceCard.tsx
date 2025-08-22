@@ -17,7 +17,7 @@ interface ServiceCardProps {
   reviewCount?: number;
 }
 
-const ServiceCard = ({ name, price, duration, rating, image, description, serviceId, onBook, reviewCount }: ServiceCardProps) => {
+const ServiceCard = ({ name, price, duration, rating, image, description, serviceId, onBook }: ServiceCardProps) => {
   const router = useRouter();
 
   const handleBookClick = () => {

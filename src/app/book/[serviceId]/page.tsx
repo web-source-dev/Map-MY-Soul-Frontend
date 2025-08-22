@@ -201,7 +201,7 @@ const BookingPage = () => {
     phoneNumber: "",
     sessionType: "video",
     sessionPlatform: "Zoom",
-    specialRequests: ""
+    specialRequests: "",
   });
 
   // Auto-populate user data when authenticated
@@ -291,13 +291,13 @@ const BookingPage = () => {
         router.push('/my-bookings');
       }, 2000);
 
-    } catch (error: any) {
+    } catch (error: unknown) {
       console.error('Booking error:', error);
       
-      if (error.message?.includes('Access token required') || error.message?.includes('Unauthorized') || error.message?.includes('Authentication required')) {
+      if (error instanceof Error && (error.message?.includes('Access token required') || error.message?.includes('Unauthorized') || error.message?.includes('Authentication required'))) {
         setShowLoginPrompt(true);
       } else {
-        showToast.error(error.message || 'Failed to create booking');
+        showToast.error(error instanceof Error ? error.message : 'Failed to create booking');
       }
     } finally {
       setSubmitting(false);
@@ -326,7 +326,7 @@ const BookingPage = () => {
         <div className="min-h-screen flex items-center justify-center">
           <div className="text-center">
             <h2 className="text-2xl font-bold mb-4">Service Not Found</h2>
-            <p className="text-muted-foreground mb-4">The service you're looking for doesn't exist.</p>
+            <p className="text-muted-foreground mb-4">The service you&apos;re looking for doesn&apos;t exist.</p>
             <Button onClick={() => router.push('/services')}>
               <ArrowLeft className="w-4 h-4 mr-2" />
               Back to Services
@@ -607,7 +607,7 @@ const BookingPage = () => {
                       </Button>
 
                       <p className="text-xs text-muted-foreground text-center">
-                        Your payment won't be charged until the session is confirmed.
+                        Your payment won&apos;t be charged until the session is confirmed.
                       </p>
                     </form>
                   </CardContent>

@@ -7,8 +7,8 @@ declare module 'astronomia' {
 
   export namespace planetposition {
     class Planet {
-      constructor(data: any);
-      position2000(jd: number): any;
+      constructor(data: unknown);
+      position2000(jd: number): unknown;
     }
   }
 
@@ -40,31 +40,31 @@ declare module 'astronomia' {
 }
 
 declare module 'astronomia/data/vsop87Bearth' {
-  const earth: any;
+  const earth: unknown;
   export default earth;
 }
 
 declare module 'astronomia/data/vsop87Bmars' {
-  const mars: any;
+  const mars: unknown;
   export default mars;
 }
 
 declare module 'astronomia/data/vsop87Bvenus' {
-  const venus: any;
+  const venus: unknown;
   export default venus;
 }
 
 declare module 'astronomia/data/vsop87Bjupiter' {
-  const jupiter: any;
+  const jupiter: unknown;
   export default jupiter;
 }
 
 declare module 'astronomia/data/vsop87Bsaturn' {
-  const saturn: any;
+  const saturn: unknown;
   export default saturn;
 }
 
 declare module 'astronomia/data/vsop87Bmercury' {
-  const mercury: any;
+  const mercury: unknown;
   export default mercury;
 }

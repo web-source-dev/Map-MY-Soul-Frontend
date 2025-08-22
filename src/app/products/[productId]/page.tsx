@@ -4,9 +4,8 @@ import { useState, useEffect } from "react";
 import { useParams, useRouter } from "next/navigation";
 import Layout from "@/components/Layout";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { ArrowLeft, ShoppingBag, Heart, Star, Shield, Sparkles, Leaf } from "lucide-react";
+import { ArrowLeft, ShoppingBag, Heart } from "lucide-react";
 import Image from "next/image";
 import { useCartWishlist } from "@/contexts/CartWishlistContext";
 import { useAuth } from "@/contexts/AuthContext";
@@ -95,7 +94,7 @@ const ProductDetailPage = () => {
                 <div className="min-h-screen flex items-center justify-center">
                     <div className="text-center">
                         <h2 className="text-2xl font-bold mb-4">Product Not Found</h2>
-                        <p className="text-muted-foreground mb-4">The product you're looking for doesn't exist.</p>
+                        <p className="text-muted-foreground mb-4">The product you&apos;re looking for doesn&apos;t exist.</p>
                         <Button onClick={() => router.push('/products')}>
                             <ArrowLeft className="w-4 h-4 mr-2" />
                             Back to Products

@@ -27,10 +27,10 @@ interface CartWishlistContextType {
   wishlist: WishlistItem[];
   cartCount: number;
   wishlistCount: number;
-  addToCart: (product: any) => Promise<void>;
+  addToCart: (product: { _id: string; productId: string; name: string; price: number; imageUrl: string }) => Promise<void>;
   removeFromCart: (productId: string) => Promise<void>;
   updateCartQuantity: (productId: string, quantity: number) => Promise<void>;
-  addToWishlist: (product: any) => Promise<void>;
+  addToWishlist: (product: { _id: string; productId: string; name: string; price: number; imageUrl: string }) => Promise<void>;
   removeFromWishlist: (productId: string) => Promise<void>;
   clearCart: () => Promise<void>;
   clearWishlist: () => Promise<void>;
@@ -107,7 +107,7 @@ export const CartWishlistProvider: React.FC<CartWishlistProviderProps> = ({ chil
     }
   };
 
-  const addToCart = async (product: any) => {
+  const addToCart = async (product: { _id: string; productId: string; name: string; price: number; imageUrl: string }) => {
     if (!isAuthenticated) {
       return;
     }
@@ -136,7 +136,6 @@ export const CartWishlistProvider: React.FC<CartWishlistProviderProps> = ({ chil
         setCart(data.cart || []);
         showToast.success('Added to cart', `${product.name} has been added to your cart`);
       } else if (response.status === 429) {
-        const errorData = await response.json();
         showToast.error('Rate limit exceeded', 'Please wait a moment before trying again');
       } else {
         throw new Error('Failed to add to cart');
@@ -166,7 +165,6 @@ export const CartWishlistProvider: React.FC<CartWishlistProviderProps> = ({ chil
         setCart(data.cart || []);
         showToast.success('Removed from cart');
       } else if (response.status === 429) {
-        const errorData = await response.json();
         showToast.error('Rate limit exceeded', 'Please wait a moment before trying again');
       } else {
         throw new Error('Failed to remove from cart');
@@ -200,7 +198,6 @@ export const CartWishlistProvider: React.FC<CartWishlistProviderProps> = ({ chil
         const data = await response.json();
         setCart(data.cart || []);
       } else if (response.status === 429) {
-        const errorData = await response.json();
         showToast.error('Rate limit exceeded', 'Please wait a moment before trying again');
       } else {
         throw new Error('Failed to update cart');
@@ -213,7 +210,7 @@ export const CartWishlistProvider: React.FC<CartWishlistProviderProps> = ({ chil
     }
   };
 
-  const addToWishlist = async (product: any) => {
+  const addToWishlist = async (product: { _id: string; productId: string; name: string; price: number; imageUrl: string }) => {
     if (!isAuthenticated) {
       return;
     }
@@ -241,7 +238,6 @@ export const CartWishlistProvider: React.FC<CartWishlistProviderProps> = ({ chil
         setWishlist(data.wishlist || []);
         showToast.success('Added to wishlist', `${product.name} has been added to your wishlist`);
       } else if (response.status === 429) {
-        const errorData = await response.json();
         showToast.error('Rate limit exceeded', 'Please wait a moment before trying again');
       } else {
         throw new Error('Failed to add to wishlist');
@@ -271,7 +267,6 @@ export const CartWishlistProvider: React.FC<CartWishlistProviderProps> = ({ chil
         setWishlist(data.wishlist || []);
         showToast.success('Removed from wishlist');
       } else if (response.status === 429) {
-        const errorData = await response.json();
         showToast.error('Rate limit exceeded', 'Please wait a moment before trying again');
       } else {
         throw new Error('Failed to remove from wishlist');
@@ -301,7 +296,6 @@ export const CartWishlistProvider: React.FC<CartWishlistProviderProps> = ({ chil
         setCart(data.cart || []);
         showToast.success('Cart cleared');
       } else if (response.status === 429) {
-        const errorData = await response.json();
         showToast.error('Rate limit exceeded', 'Please wait a moment before trying again');
       } else {
         throw new Error('Failed to clear cart');
@@ -331,7 +325,6 @@ export const CartWishlistProvider: React.FC<CartWishlistProviderProps> = ({ chil
         setWishlist(data.wishlist || []);
         showToast.success('Wishlist cleared');
       } else if (response.status === 429) {
-        const errorData = await response.json();
         showToast.error('Rate limit exceeded', 'Please wait a moment before trying again');
       } else {
         throw new Error('Failed to clear wishlist');

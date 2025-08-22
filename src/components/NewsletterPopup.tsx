@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { X, Sparkles, Heart, Shield } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -97,7 +97,7 @@ const NewsletterPopup = ({ isOpen, onClose }: NewsletterPopupProps) => {
 
             {/* Description */}
             <p className="text-gray-600 text-sm mb-6 leading-relaxed">
-              Welcome to Map My Soul Daily. We'll send you the latest insights in spiritual growth, 
+              Welcome to Map My Soul Daily. We&apos;ll send you the latest insights in spiritual growth, 
               healing practices, and soul transformation — straight to your inbox.
             </p>
 

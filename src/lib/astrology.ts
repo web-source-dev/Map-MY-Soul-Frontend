@@ -1,11 +1,11 @@
-import { julian, sexa, solar, moonposition, coord, sidereal, nutation, planetposition } from "astronomia";
+import { julian, solar, moonposition, sidereal, nutation } from "astronomia";
 import { getCoordinatesForCity } from './geocoding';
 
 export interface AstrologyData {
   sunSign: string;
   moonSign: string;
   risingSign: string;
-  birthChart?: any;
+  birthChart?: BirthChart;
   calculationMethod?: 'accurate';
 }
 
@@ -13,6 +13,25 @@ export interface BirthPlace {
   latitude: number;
   longitude: number;
   altitude?: number;
+}
+
+export interface BirthChart {
+  sun: { longitude: number; sign: string };
+  moon: { longitude: number; sign: string };
+  ascendant: { longitude: number; sign: string };
+  observer: { latitude: number; longitude: number; altitude?: number };
+  calculationDate: Date;
+}
+
+export interface NutationResult {
+  0: number; // Δψ (nutation in longitude)
+  1: number; // Δε (nutation in obliquity)
+}
+
+export interface MoonPosition {
+  lon: number; // longitude in radians
+  lat: number; // latitude in radians
+  range: number; // distance
 }
 
 /** Map ecliptic longitude (0..360) -> tropical zodiac sign */
@@ -74,7 +93,7 @@ function localToUTCDate(year: number, month: number, day: number, hour: number, 
 function ascendantLongitude(dateUTC: Date, latDeg: number, lonDegEast: number): number {
   try {
     // 1) Julian Day (UT1 ~ UTC for our purposes)
-    const jd = (julian.CalendarGregorianToJD as any)(
+    const jd = (julian.CalendarGregorianToJD as (year: number, month: number, day: number, hour: number) => number)(
       dateUTC.getUTCFullYear(),
       dateUTC.getUTCMonth() + 1,
       dateUTC.getUTCDate(),
@@ -82,13 +101,13 @@ function ascendantLongitude(dateUTC: Date, latDeg: number, lonDegEast: number): 
     );
 
     // 2) Greenwich mean sidereal time (GMST) in hours
-    const gmst = (sidereal as any).mean(jd); // hours - using mean sidereal time
+    const gmst = (sidereal as unknown as { mean: (jd: number) => number }).mean(jd); // hours - using mean sidereal time
 
     // 3) Local mean sidereal time (LMST) in hours (east longitudes positive)
     const lmstHours = (gmst + lonDegEast/15 + 24) % 24;
 
     // 4) True obliquity of the ecliptic (ε) in radians
-    const ΔψΔε = nutation.nutation(jd);           // nutation in longitude Δψ and obliquity Δε (radians)
+    const ΔψΔε = nutation.nutation(jd) as NutationResult;           // nutation in longitude Δψ and obliquity Δε (radians)
     const ε0 = nutation.meanObliquityLaskar(jd);  // mean obliquity (radians)
     const ε = ε0 + ΔψΔε[1];                       // true obliquity (radians)
 
@@ -125,7 +144,7 @@ function ascendantLongitude(dateUTC: Date, latDeg: number, lonDegEast: number): 
 function sunMoonLongitudes(dateUTC: Date): { sunLon: number; moonLon: number } {
   try {
     // Julian Day (UT) - calculate using astronomia function with time
-    const jd = (julian.CalendarGregorianToJD as any)(
+    const jd = (julian.CalendarGregorianToJD as (year: number, month: number, day: number, hour: number) => number)(
       dateUTC.getUTCFullYear(),
       dateUTC.getUTCMonth() + 1,
       dateUTC.getUTCDate(),
@@ -136,7 +155,7 @@ function sunMoonLongitudes(dateUTC: Date): { sunLon: number; moonLon: number } {
     const λsun = solar.apparentLongitude(jd) * 180/Math.PI;
 
     // Moon ecliptic longitude (radians) -> degrees
-    const moon = moonposition.position(jd); // { lon (rad), lat (rad), range }
+    const moon = moonposition.position(jd) as MoonPosition; // { lon (rad), lat (rad), range }
     const λmoon = moon.lon * 180/Math.PI;
 
     return { sunLon: norm360(λsun), moonLon: norm360(λmoon) };

@@ -7,7 +7,7 @@ import { Button } from '@/components/ui/button';
 import { CustomTextInput } from '@/components/ui/custom-text-input';
 import { Label } from '@/components/ui/label';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { Eye, EyeOff, Loader2 } from 'lucide-react';
+import { Loader2 } from 'lucide-react';
 
 interface LoginFormProps {
   onSwitchToRegister: () => void;
@@ -96,7 +96,7 @@ export const LoginForm: React.FC<LoginFormProps> = ({
         </form>
 
         <div className="mt-4 text-center text-sm">
-          Don't have an account?{' '}
+          Don&apos;t have an account?{' '}
           <Button
             type="button"
             variant="link"

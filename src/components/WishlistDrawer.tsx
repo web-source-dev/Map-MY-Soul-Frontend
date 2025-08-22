@@ -12,9 +12,10 @@ const WishlistDrawer = () => {
   const { wishlist, wishlistCount, removeFromWishlist, addToCart, clearWishlist, loading } = useCartWishlist();
   const [isOpen, setIsOpen] = useState(false);
 
-  const handleMoveToCart = async (item: any) => {
+  const handleMoveToCart = async (item: { productId: string; name: string; price: number; imageUrl: string }) => {
     await addToCart({
-      _id: item.productId,
+      _id: item.productId, // Use productId as _id since WishlistItem doesn't have _id
+      productId: item.productId,  
       name: item.name,
       price: item.price,
       imageUrl: item.imageUrl,

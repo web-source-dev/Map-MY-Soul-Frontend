@@ -39,7 +39,7 @@ export interface ResetPasswordData {
   newPassword: string;
 }
 
-import { getBackendUrl, API_CONFIG } from '@/config/api';
+import { API_CONFIG } from '@/config/api';
 
 const API_BASE_URL = API_CONFIG.BACKEND_URL;
 
@@ -122,7 +122,7 @@ export const authApi = {
     });
 
     if (!response.ok) {
-      return { isValid: false, user: null as any };
+      return { isValid: false, user: null as unknown as User };
     }
 
     return response.json();

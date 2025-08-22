@@ -57,7 +57,7 @@ const Index = () => {
         setServices(servicesRes.services || []);
         setPodcasts(podcastsRes.podcasts || []);
       } catch (e) {
-        // noop - already handled in individual calls
+        console.error('Error fetching data:', e);
       }
     };
     fetchData();

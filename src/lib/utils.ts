@@ -27,8 +27,8 @@ export const showToast = {
   },
   
   // Helper to show backend error messages in a user-friendly way
-  backendError: (error: any) => {
-    let title = "Error";
+  backendError: (error: string | { message: string; error?: string }) => {
+    const title = "Error";
     let description = "Something went wrong. Please try again.";
     
     if (typeof error === 'string') {

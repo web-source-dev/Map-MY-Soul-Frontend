@@ -192,7 +192,7 @@ export default function CitySearch({
                 <span>No cities found. Try a different search term.</span>
               </div>
               <div className="mt-2 text-xs text-gray-400">
-                You can still type any city name and we'll use OpenStreetMap to find coordinates.
+                You can still type any city name and we&apos;ll use OpenStreetMap to find coordinates.
               </div>
             </div>
           ) : null}
