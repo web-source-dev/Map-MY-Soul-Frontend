@@ -355,8 +355,8 @@ const Quiz = () => {
       
       // Store results in localStorage
       if (typeof window !== 'undefined') {
-        localStorage.setItem('quizSessionId', result.sessionId);
-        localStorage.setItem('quizResults', JSON.stringify(result.results));
+        localStorage.setItem('quizSessionId', (result as { sessionId: string }).sessionId);
+        localStorage.setItem('quizResults', JSON.stringify((result as { results: unknown }).results));
         
         // Clear quiz progress
         localStorage.removeItem('quizProgress');

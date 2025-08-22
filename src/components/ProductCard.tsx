@@ -34,7 +34,13 @@ const ProductCard = ({ product }: ProductCardProps) => {
       setShowLoginPrompt(true);
       return;
     }
-    await addToCart(product);
+    await addToCart({
+      _id: product._id,
+      productId: product._id,
+      name: product.name,
+      price: product.price,
+      imageUrl: product.imageUrl || ''
+    });
   };
 
   const handleAddToWishlist = async () => {
@@ -43,7 +49,13 @@ const ProductCard = ({ product }: ProductCardProps) => {
       setShowLoginPrompt(true);
       return;
     }
-    await addToWishlist(product);
+    await addToWishlist({
+      _id: product._id,
+      productId: product._id,
+      name: product.name,
+      price: product.price,
+      imageUrl: product.imageUrl || ''
+    });
   };
 
   const handleViewProduct = () => {

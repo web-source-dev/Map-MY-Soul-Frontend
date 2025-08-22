@@ -112,7 +112,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
       showToast.backendSuccess(response.message);
       return true;
     } catch (error) {
-      showToast.backendError(error);
+      showToast.backendError(error as string);
       return false;
     }
   };
@@ -126,7 +126,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
       showToast.backendSuccess(response.message);
       return true;
     } catch (error) {
-      showToast.backendError(error);
+      showToast.backendError(error as string);
       return false;
     }
   };
@@ -148,7 +148,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
       }
       return response;
     } catch (error) {
-      showToast.backendError(error);
+      showToast.backendError(error as string);
       throw error;
     }
   };
@@ -159,7 +159,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
       showToast.backendSuccess(response.message);
       return true;
     } catch (error) {
-      showToast.backendError(error);
+      showToast.backendError(error as string);
       return false;
     }
   };

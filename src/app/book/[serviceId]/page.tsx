@@ -222,7 +222,7 @@ const BookingPage = () => {
   const fetchService = async () => {
     try {
       const response = await backendRequest(`/api/services/${serviceId}`);
-      setService(response.service);
+      setService(response as Service);
     } catch (error) {
       console.error('Failed to fetch service:', error);
       showToast.error('Failed to load service details');
@@ -234,7 +234,7 @@ const BookingPage = () => {
   const fetchAvailability = async (date: string) => {
     try {
       const response = await backendRequest(`/api/bookings/service/${serviceId}/availability?date=${date}`);
-      setAvailableSlots(response.availableSlots || []);
+      setAvailableSlots((response as { availableSlots: string[] }).availableSlots || []);
     } catch (error) {
       console.error('Failed to fetch availability:', error);
       showToast.error('Failed to load available time slots');

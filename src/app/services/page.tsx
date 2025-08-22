@@ -31,10 +31,10 @@ const Services = () => {
       try {
         const response = await catalogApi.getServices();
         // Handle the response structure from backend
-        if (response && response.services) {
-          setServices(response.services);
+        if (response && (response as { services: ServiceItem[] }).services) {
+          setServices((response as { services: ServiceItem[] }).services);
         } else if (Array.isArray(response)) {
-          setServices(response);
+          setServices(response as ServiceItem[]);
         } else {
           console.error('Unexpected services response format:', response);
           setServices([]);

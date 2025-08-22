@@ -24,7 +24,7 @@ const Products = () => {
   useEffect(() => {
     const fetchProducts = async () => {
       const productsRes = await catalogApi.getProducts();
-      setProducts(productsRes.products);
+      setProducts((productsRes as { products: ProductItem[] }).products || []);
     };
     fetchProducts();
   }, []);

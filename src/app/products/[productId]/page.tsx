@@ -44,7 +44,7 @@ const ProductDetailPage = () => {
         try {
             setLoadingProduct(true);
             const response = await backendRequest(`/api/products/${productId}`);
-            setProduct(response.product);
+            setProduct((response as { product: Product }).product);
         } catch (error) {
             console.error('Failed to fetch product:', error);
             showToast.error('Failed to load product details');
@@ -60,7 +60,13 @@ const ProductDetailPage = () => {
             return;
         }
         if (product) {
-            await addToCart(product);
+            await addToCart({
+                _id: product._id,
+                productId: product._id,
+                name: product.name,
+                price: product.price,
+                imageUrl: product.imageUrl || ''
+            });
         }
     };
 
@@ -71,7 +77,13 @@ const ProductDetailPage = () => {
             return;
         }
         if (product) {
-            await addToWishlist(product);
+            await addToWishlist({
+                _id: product._id,
+                productId: product._id,
+                name: product.name,
+                price: product.price,
+                imageUrl: product.imageUrl || ''
+            });
         }
     };
 

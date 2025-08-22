@@ -53,9 +53,9 @@ const Index = () => {
           catalogApi.getPodcasts().catch(() => ({ podcasts: [] })),
         ]);
         if (!isMounted) return;
-        setProducts(productsRes.products || []);
-        setServices(servicesRes.services || []);
-        setPodcasts(podcastsRes.podcasts || []);
+        setProducts((productsRes as { products: ProductItem[] }).products || []);
+        setServices((servicesRes as { services: ServiceItem[] }).services || []);
+        setPodcasts((podcastsRes as { podcasts: PodcastItem[] }).podcasts || []);
       } catch (e) {
         console.error('Error fetching data:', e);
       }

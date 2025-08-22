@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, Suspense } from 'react';
 import { useSearchParams } from 'next/navigation';
 import { LoginForm } from '@/components/auth/LoginForm';
 import { RegisterForm } from '@/components/auth/RegisterForm';
@@ -9,7 +9,7 @@ import { useAuth } from '@/contexts/AuthContext';
 
 type AuthView = 'login' | 'register' | 'forgot-password';
 
-export default function AuthPage() {
+function AuthContent() {
   const [currentView, setCurrentView] = useState<AuthView>('login');
   const searchParams = useSearchParams();
   const { setRedirectUrl } = useAuth();
@@ -61,10 +61,30 @@ export default function AuthPage() {
   };
 
   return (
+    <div className="w-full max-w-md">
+      {renderForm()}
+    </div>
+  );
+}
+
+export default function AuthPage() {
+  return (
     <div className="min-h-screen bg-gradient-to-br from-purple-50 via-pink-50 to-indigo-50 flex items-center justify-center p-4">
-      <div className="w-full max-w-md">
-        {renderForm()}
-      </div>
+      <Suspense fallback={
+        <div className="w-full max-w-md">
+          <div className="bg-white rounded-lg shadow-lg p-8">
+            <div className="animate-pulse">
+              <div className="h-8 bg-gray-200 rounded mb-4"></div>
+              <div className="h-4 bg-gray-200 rounded mb-2"></div>
+              <div className="h-4 bg-gray-200 rounded mb-6"></div>
+              <div className="h-10 bg-gray-200 rounded mb-4"></div>
+              <div className="h-10 bg-gray-200 rounded"></div>
+            </div>
+          </div>
+        </div>
+      }>
+        <AuthContent />
+      </Suspense>
     </div>
   );
 }
