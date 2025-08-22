@@ -15,6 +15,7 @@ interface AuthContextType {
   logout: () => void;
   forgotPassword: (email: string) => Promise<{ emailSent: boolean; resetToken?: string; expiresAt?: string }>;
   resetPassword: (resetToken: string, newPassword: string) => Promise<boolean>;
+  refreshUser: () => Promise<void>;
   setRedirectUrl: (url: string) => void;
   getRedirectUrl: () => string | null;
   clearRedirectUrl: () => void;
@@ -164,6 +165,21 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     }
   };
 
+  const refreshUser = async (): Promise<void> => {
+    try {
+      const token = tokenStorage.getToken();
+      if (token) {
+        const { isValid, user: verifiedUser } = await authApi.verifyToken(token);
+        if (isValid && verifiedUser) {
+          setUser(verifiedUser);
+          tokenStorage.setUser(verifiedUser);
+        }
+      }
+    } catch (error) {
+      console.error('Error refreshing user:', error);
+    }
+  };
+
   const value: AuthContextType = {
     user,
     loading,
@@ -175,6 +191,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     logout,
     forgotPassword,
     resetPassword,
+    refreshUser,
     setRedirectUrl,
     getRedirectUrl,
     clearRedirectUrl,

@@ -1,8 +1,8 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Link from "next/link";
-import { Menu, X, User, Sparkles, LogOut, Crown } from "lucide-react";
+import { Menu, X, User, Sparkles, LogOut, Crown, ChevronDown, Settings } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { usePathname, useRouter } from "next/navigation";
 import Image from "next/image";
@@ -10,6 +10,15 @@ import { useAuth } from "@/contexts/AuthContext";
 import { LogoutButton } from "@/components/auth/LogoutButton";
 import CartDrawer from "./CartDrawer";
 import WishlistDrawer from "./WishlistDrawer";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
 // Logo URL from Wixstatic CDN
 const logoUrl = "https://static.wixstatic.com/media/bdbc7d_0c6ab12123064711a5f85e34030152c8~mv2.png/v1/fill/w_536,h_531,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/bdbc7d_0c6ab12123064711a5f85e34030152c8~mv2.png";
@@ -18,6 +27,7 @@ const Navigation = () => {
   const [isOpen, setIsOpen] = useState(false);
   const pathname = usePathname();
   const { isAuthenticated, isAdmin, user } = useAuth();
+
   const router = useRouter();
   const isActive = (path: string) => pathname === path;
 
@@ -44,10 +54,6 @@ const Navigation = () => {
                 height={48}
                 className="w-12 h-12 transition-all duration-200 group-hover:scale-105" 
               />
-            </div>
-            <div className="flex flex-col">
-              <span className="text-lg font-bold font-display text-foreground">Map My Soul</span>
-              <span className="text-xs text-muted-foreground font-medium">Your Holistic Wellness</span>
             </div>
           </Link>
 
@@ -77,21 +83,63 @@ const Navigation = () => {
             <CartDrawer />
             
             {isAuthenticated ? (
-              <div className="flex items-center space-x-2">
-                {isAdmin && (
-                  <Button variant="ghost" size="sm" className="rounded-lg text-yellow-600">
-                    <Crown className="w-4 h-4" />
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <Button variant="ghost" size="sm" className="rounded-lg flex items-center space-x-2 hover:bg-muted/50">
+                                                            <Avatar className="h-8 w-8">
+                      <AvatarImage src={user?.avatar} alt={user?.displayName || user?.firstName} />
+                      <AvatarFallback className="bg-primary/10 text-primary text-sm font-medium">
+                        {user?.firstName ? user.firstName.charAt(0).toUpperCase() : 
+                         user?.displayName ? user.displayName.charAt(0).toUpperCase() : 
+                         user?.email ? user.email.charAt(0).toUpperCase() : 'U'}
+                      </AvatarFallback>
+                    </Avatar>
+                    <div className="flex flex-col items-start">
+                      <span className="text-sm font-medium text-foreground">
+                        {user?.displayName || `${user?.firstName || ''} ${user?.lastName || ''}`.trim() || 'User'}
+                      </span>
+                    </div>
+                    <ChevronDown className="h-4 w-4 text-muted-foreground" />
                   </Button>
-                )}
-                <Link href="/dashboard">
-                  <Button variant="ghost" size="sm" className="rounded-lg">
-                    <User className="w-4 h-4" />
-                    <span className="ml-2 text-sm">Dashboard</span>
-                  </Button>
-                </Link>
-                <LogoutButton variant="ghost" size="sm" className="rounded-lg">
-                </LogoutButton>
-              </div>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent align="end" className="w-56">
+                  <DropdownMenuLabel className="font-normal">
+                    <div className="flex flex-col space-y-1">
+                      <p className="text-sm font-medium leading-none">
+                        {user?.displayName || `${user?.firstName || ''} ${user?.lastName || ''}`.trim() || 'User'}
+                      </p>
+                      <p className="text-xs leading-none text-muted-foreground">
+                        {user?.email}
+                      </p>
+                      {isAdmin && (
+                        <div className="flex items-center mt-1">
+                          <Crown className="h-3 w-3 text-yellow-600 mr-1" />
+                          <span className="text-xs text-yellow-600 font-medium">Administrator</span>
+                        </div>
+                      )}
+                    </div>
+                  </DropdownMenuLabel>
+                  <DropdownMenuSeparator />
+                  <DropdownMenuItem asChild>
+                    <Link href="/dashboard" className="flex items-center">
+                      <User className="mr-2 h-4 w-4" />
+                      <span>Dashboard</span>
+                    </Link>
+                  </DropdownMenuItem>
+                  <DropdownMenuItem asChild>
+                    <Link href="/dashboard/profile" className="flex items-center">
+                      <Settings className="mr-2 h-4 w-4" />
+                      <span>Profile Settings</span>
+                    </Link>
+                  </DropdownMenuItem>
+                  <DropdownMenuSeparator />
+                  <DropdownMenuItem asChild>
+                    <LogoutButton variant="ghost" className="w-full justify-start p-0 h-auto">
+                      <span>Sign Out</span>
+                    </LogoutButton>
+                  </DropdownMenuItem>
+                </DropdownMenuContent>
+              </DropdownMenu>
             ) : (
               <Link href="/auth">
                 <Button variant="ghost" size="sm" className="rounded-lg">
@@ -149,20 +197,40 @@ const Navigation = () => {
                 </div>
                 {isAuthenticated ? (
                   <>
-                    {isAdmin && (
-                      <div className="flex items-center px-3 py-2 text-sm text-yellow-600">
-                        <Crown className="w-4 h-4 mr-2" />
-                        Admin User
-                      </div>
-                    )}
                     <div className="flex items-center px-3 py-2 text-sm text-muted-foreground">
-                      <User className="w-4 h-4 mr-2" />
-                      {user?.firstName} {user?.lastName}
+                      <Avatar className="h-6 w-6 mr-2">
+                        <AvatarImage src={user?.avatar} alt={user?.displayName || user?.firstName} />
+                        <AvatarFallback className="bg-primary/10 text-primary text-xs font-medium">
+                          {user?.firstName ? user.firstName.charAt(0).toUpperCase() : 
+                           user?.displayName ? user.displayName.charAt(0).toUpperCase() : 
+                           user?.email ? user.email.charAt(0).toUpperCase() : 'U'}
+                        </AvatarFallback>
+                      </Avatar>
+                      <div className="flex flex-col">
+                        <span className="text-sm font-medium text-foreground">
+                          {user?.displayName || `${user?.firstName || ''} ${user?.lastName || ''}`.trim() || 'User'}
+                        </span>
+                        <span className="text-xs text-muted-foreground">
+                          {user?.email}
+                        </span>
+                        {isAdmin && (
+                          <div className="flex items-center mt-1">
+                            <Crown className="h-3 w-3 text-yellow-600 mr-1" />
+                            <span className="text-xs text-yellow-600 font-medium">Administrator</span>
+                          </div>
+                        )}
+                      </div>
                     </div>
                     <Link href="/dashboard">
                       <Button variant="outline" size="sm" className="w-full rounded-lg">
                         <User className="w-4 h-4 mr-2" />
                         Dashboard
+                      </Button>
+                    </Link>
+                    <Link href="/dashboard/profile">
+                      <Button variant="outline" size="sm" className="w-full rounded-lg">
+                        <Settings className="w-4 h-4 mr-2" />
+                        Profile Settings
                       </Button>
                     </Link>
                     <LogoutButton variant="outline" size="sm" className="w-full rounded-lg">

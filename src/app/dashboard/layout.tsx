@@ -17,6 +17,7 @@ import Link from 'next/link';
 import { LogoutButton } from '@/components/auth/LogoutButton';
 import { useCartWishlist } from '@/contexts/CartWishlistContext';
 import Image from 'next/image';
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 
 // Logo URL from Wixstatic CDN
 const logoUrl = "https://static.wixstatic.com/media/bdbc7d_0c6ab12123064711a5f85e34030152c8~mv2.png/v1/fill/w_536,h_531,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/bdbc7d_0c6ab12123064711a5f85e34030152c8~mv2.png";
@@ -136,9 +137,14 @@ export default function DashboardLayout({
         {/* User Info */}
         <div className="p-4 border-b border-gray-200">
           <div className="flex items-center space-x-3">
-            <div className="w-10 h-10 bg-purple-500 rounded-full flex items-center justify-center">
-              <User className="h-5 w-5 text-white" />
-            </div>
+            <Avatar className="w-10 h-10">
+              <AvatarImage src={user?.avatar} alt={user?.displayName || user?.firstName} />
+              <AvatarFallback className="bg-purple-500 text-white text-sm font-medium">
+                {user?.firstName ? user.firstName.charAt(0).toUpperCase() : 
+                 user?.displayName ? user.displayName.charAt(0).toUpperCase() : 
+                 user?.email ? user.email.charAt(0).toUpperCase() : 'U'}
+              </AvatarFallback>
+            </Avatar>
             <div className="flex-1 min-w-0">
               <p className="text-sm font-medium text-gray-900 truncate">
                 {user?.displayName || user?.firstName || 'User'}

@@ -26,7 +26,7 @@ interface UserProfile {
 }
 
 export default function ProfilePage() {
-  const { user, loading, isAuthenticated } = useAuth();
+  const { user, loading, isAuthenticated, refreshUser } = useAuth();
   const router = useRouter();
   const [profile, setProfile] = useState<UserProfile>({});
   const [loadingProfile, setLoadingProfile] = useState(true);
@@ -52,21 +52,35 @@ export default function ProfilePage() {
     }
   }, [isAuthenticated, loading]);
 
+  // Initialize profile with user data when user is available
+  useEffect(() => {
+    if (user && !loadingProfile) {
+      setProfile(prev => ({
+        ...prev,
+        displayName: prev.displayName || user.displayName || '',
+        avatar: prev.avatar || user.avatar || null
+      }));
+    }
+  }, [user, loadingProfile]);
+
   const fetchProfile = async () => {
     try {
       setLoadingProfile(true);
-      const response = await authApiDirect.getProfile() as UserProfile;
-      if (response && response) {
+      const response = await authApiDirect.getProfile() as { profile: UserProfile };
+      console.log('Profile response:', response);
+      
+      if (response && response.profile) {
+        const userProfile = response.profile;
         setProfile({
-          displayName: response.displayName || '',
-          avatar: response.avatar || null,
-          activityHistory: response.activityHistory || []
+          displayName: userProfile.displayName || user?.displayName || '',
+          avatar: userProfile.avatar || user?.avatar || null,
+          activityHistory: userProfile.activityHistory || []
         });
       } else {
         // Fallback to user data from auth context
         setProfile({
           displayName: user?.displayName || '',
-          avatar: null,
+          avatar: user?.avatar || null,
           activityHistory: []
         });
       }
@@ -75,7 +89,7 @@ export default function ProfilePage() {
       // Fallback to user data from auth context
       setProfile({
         displayName: user?.displayName || '',
-        avatar: null,
+        avatar: user?.avatar || null,
         activityHistory: []
       });
     } finally {
@@ -86,13 +100,31 @@ export default function ProfilePage() {
   const updateProfile = async () => {
     try {
       setSaving(true);
-      const updateData = {
-        displayName: profile.displayName,
-        avatar: profile.avatar
-      };
       
-      await authApiDirect.updateProfile(updateData);
-      showToast.success('Profile updated successfully');
+      // Only include fields that have actually changed
+      const updateData: { displayName?: string; avatar?: string | null } = {};
+      
+      // Check if displayName has changed
+      if (profile.displayName !== user?.displayName) {
+        updateData.displayName = profile.displayName;
+      }
+      
+      // Check if avatar has changed
+      if (profile.avatar !== user?.avatar) {
+        updateData.avatar = profile.avatar;
+      }
+      
+      // Only make the API call if there are actual changes
+      if (Object.keys(updateData).length > 0) {
+        console.log('Updating profile with changes:', updateData);
+        await authApiDirect.updateProfile(updateData);
+        showToast.success('Profile updated successfully');
+        
+        // Refresh the user data to update the navigation
+        await refreshUser();
+      } else {
+        showToast.success('No changes to save');
+      }
     } catch (error) {
       console.error('Error updating profile:', error);
       showToast.error('Failed to update profile');
