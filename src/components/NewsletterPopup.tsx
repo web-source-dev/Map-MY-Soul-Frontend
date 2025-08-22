@@ -5,6 +5,8 @@ import { X, Sparkles, Heart, Shield } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import Image from "next/image";
+import { newsletterApi } from "@/lib/api";
+import { showToast } from "@/lib/utils";
 
 // Logo URL from Wixstatic CDN
 const logoUrl = "https://static.wixstatic.com/media/bdbc7d_0c6ab12123064711a5f85e34030152c8~mv2.png/v1/fill/w_536,h_531,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/bdbc7d_0c6ab12123064711a5f85e34030152c8~mv2.png";
@@ -23,15 +25,18 @@ const NewsletterPopup = ({ isOpen, onClose }: NewsletterPopupProps) => {
     if (!email) return;
     
     setIsSubmitting(true);
-    // TODO: Implement actual newsletter subscription logic
-    console.log("Subscribing email:", email);
     
-    // Simulate API call
-    setTimeout(() => {
-      setIsSubmitting(false);
+    try {
+      await newsletterApi.subscribe(email, 'popup');
+      showToast.success('Successfully subscribed to Map My Soul Daily!');
       setEmail("");
       onClose();
-    }, 1000);
+    } catch (error) {
+      console.error('Newsletter subscription error:', error);
+      showToast.error(error instanceof Error ? error.message : 'Failed to subscribe to newsletter');
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   // Close popup when clicking outside

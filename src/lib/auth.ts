@@ -4,7 +4,7 @@ export interface User {
   lastName: string;
   email: string;
   role: string;
-  displayName: string;
+  displayName?: string;
   isAuthenticated: boolean;
   isUser: boolean;
   isAdmin: boolean;

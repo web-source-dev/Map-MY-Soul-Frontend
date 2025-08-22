@@ -9,7 +9,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { User, ArrowLeft, CheckCircle, Star, ChevronLeft, ChevronRight, Video, Phone as PhoneIcon, MapPin } from "lucide-react";
+import { User, ArrowLeft, CheckCircle, ChevronLeft, ChevronRight, Video, Phone as PhoneIcon, MapPin } from "lucide-react";
 import { useAuth } from "@/contexts/AuthContext";
 import { backendRequest } from "@/lib/api";
 import { showToast } from "@/lib/utils";

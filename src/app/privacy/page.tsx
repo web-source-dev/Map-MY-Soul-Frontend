@@ -247,7 +247,7 @@ const PrivacyPolicy = () => {
               <div className="space-y-2 text-sm">
                 <div className="flex items-center gap-2">
                   <Mail className="w-4 h-4 text-primary" />
-                  <span>Email: privacy@mapmysoul.com</span>
+                  <span>Email: info@mapmysoul.com</span>
                 </div>
                 <div className="flex items-center gap-2">
                   <Phone className="w-4 h-4 text-primary" />

@@ -1,5 +1,38 @@
 import { getApiUrl, getBackendUrl } from '@/config/api';
 
+interface Booking {
+  serviceName: string;
+  serviceProviderName: string;
+  bookingDate: string;
+  sessionType: string;
+  status: string;
+}
+
+interface RecommendationService {
+  name: string;
+  type: string;
+  price: number;
+}
+
+interface RecommendationProduct {
+  name: string;
+  type: string;
+  price: number;
+}
+
+interface RecommendationPodcast {
+  name: string;
+  type: string;
+  price: number;
+}
+
+interface Recommendations {
+  services: RecommendationService[];
+  products: RecommendationProduct[];
+  podcasts: RecommendationPodcast[];
+}
+
+
 // Generic API request function
 export const apiRequest = async (
   endpoint: string,
@@ -185,6 +218,31 @@ export const authApiDirect = {
       body: JSON.stringify(data),
     });
   },
+
+  getProfile: async () => {
+    return await backendRequest('/api/auth/profile');
+  },
+
+  updateProfile: async (data: unknown) => {
+    return await backendRequest('/api/auth/profile', {
+      method: 'PUT',
+      body: JSON.stringify(data),
+    });
+  },
+
+  changePassword: async (data: unknown) => {
+    return await backendRequest('/api/auth/change-password', {
+      method: 'PUT',
+      body: JSON.stringify(data),
+    });
+  },
+
+  uploadImage: async (imageData: string) => {
+    return await backendRequest('/api/auth/upload-image', {
+      method: 'POST',
+      body: JSON.stringify({ imageData }),
+    });
+  },
 };
 
 // Services and Products API helpers
@@ -212,4 +270,139 @@ export const bookingApi = {
   getAvailability: async (serviceId: string, date: string) => {
     return await backendRequest(`/api/bookings/service/${serviceId}/availability?date=${date}`);
   },
+
+  getUserBookings: async () => {
+    return await backendRequest('/api/bookings/user');
+  },
+
+  cancelBooking: async (bookingId: string) => {
+    return await backendRequest(`/api/bookings/${bookingId}/cancel`, {
+      method: 'PUT',
+    });
+  },
+};
+
+export const contactApi = {
+  submit: async (contactData: unknown) => {
+    return await backendRequest('/api/contact/submit', {
+      method: 'POST',
+      body: JSON.stringify(contactData),
+    });
+  },
+};
+
+export const newsletterApi = {
+  subscribe: async (email: string, source: string = 'popup', preferences?: object) => {
+    return await backendRequest('/api/newsletter/subscribe', {
+      method: 'POST',
+      body: JSON.stringify({ email, source, preferences }),
+    });
+  },
+  
+  unsubscribe: async (email: string) => {
+    return await backendRequest('/api/newsletter/unsubscribe', {
+      method: 'POST',
+      body: JSON.stringify({ email }),
+    });
+  },
+};
+
+export const recommendationsApi = {
+  getUserRecommendations: async () => {
+    return await backendRequest('/api/recommendations/user');
+  },
+
+  getRecommendationsHistory: async () => {
+    return await backendRequest('/api/recommendations/user/history');
+  },
+};
+
+// Dashboard API functions
+export const dashboardApi = {
+  getOverview: async () => {
+    try {
+      const [bookings, recommendations, cart, wishlist] = await Promise.all([
+        backendRequest('/api/bookings/user'),
+        backendRequest('/api/recommendations/user'),
+        backendRequest('/api/auth/cart'),
+        backendRequest('/api/auth/wishlist')
+      ]);
+
+      return {
+        bookings: (bookings as { bookings: Booking[] }).bookings || [],
+        recommendations: (recommendations as { recommendations: Recommendations }).recommendations || { services: [], products: [], podcasts: [] },
+        cart: (cart as { cart: RecommendationProduct[] }).cart || [],
+        wishlist: (wishlist as { wishlist: RecommendationPodcast[] }).wishlist || []
+      };
+    } catch (error) {
+      console.error('Error fetching dashboard overview:', error);
+      return {
+        bookings: [],
+        recommendations: { services: [], products: [], podcasts: [] },
+        cart: [],
+        wishlist: []
+      };
+    }
+  },
+
+  getStats: async () => {
+    try {
+      const [bookings, recommendations, cart, wishlist] = await Promise.all([
+        backendRequest('/api/bookings/user'),
+        backendRequest('/api/recommendations/user'),
+        backendRequest('/api/auth/cart'),
+        backendRequest('/api/auth/wishlist')
+      ]);
+
+      const allBookings = (bookings as { bookings: Booking[] }).bookings || [];
+      console.log('All bookings:', allBookings); // Debug log
+
+      const upcomingBookings = allBookings.filter((booking: Booking) => {
+        const bookingDate = new Date(booking.bookingDate);
+        const now = new Date();
+        const isUpcoming = bookingDate > now;
+        const isConfirmed = booking.status === 'confirmed';
+        const isPending = booking.status === 'pending';
+        
+        console.log('Booking check:', {
+          serviceName: booking.serviceName,
+          bookingDate: booking.bookingDate,
+          parsedDate: bookingDate,
+          now: now,
+          isUpcoming,
+          status: booking.status,
+          isConfirmed,
+          isPending,
+          shouldShow: isUpcoming && (isConfirmed || isPending)
+        });
+        
+        // Show bookings that are upcoming (future date) and either confirmed or pending
+        return isUpcoming && (isConfirmed || isPending);
+      });
+
+      console.log('Upcoming bookings:', upcomingBookings); // Debug log
+
+      const totalRecommendations = ((recommendations as { recommendations: Recommendations }).recommendations || { services: [], products: [], podcasts: [] });
+      const recommendationCount = (totalRecommendations.services?.length || 0) + 
+                                 (totalRecommendations.products?.length || 0) + 
+                                 (totalRecommendations.podcasts?.length || 0);
+
+      return {
+        upcomingBookings: upcomingBookings.length,
+        recommendations: recommendationCount,
+        cartItems: ((cart as { cart: RecommendationProduct[] }).cart || []).length,
+        wishlistItems: ((wishlist as { wishlist: RecommendationPodcast[] }).wishlist || []).length,
+        totalBookings: allBookings.length
+      };
+    } catch (error) {
+      console.error('Error fetching dashboard stats:', error);
+      return {
+        upcomingBookings: 0,
+        recommendations: 0,
+        cartItems: 0,
+        wishlistItems: 0,
+        totalBookings: 0
+      };
+    }
+  }
 };

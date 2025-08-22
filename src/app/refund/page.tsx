@@ -264,7 +264,7 @@ const RefundPolicy = () => {
                     <div className="text-2xl font-bold text-primary mb-2">1</div>
                     <h4 className="font-semibold text-foreground mb-2">Contact Us</h4>
                     <p className="text-sm text-muted-foreground">
-                      Email us at support@mapmysoul.com or call +1 (555) 123-4567
+                      Email us at info@mapmysoul.com or call +1 (555) 123-4567
                     </p>
                   </div>
                   <div className="text-center p-4 bg-muted/50 rounded-lg">
@@ -300,7 +300,7 @@ const RefundPolicy = () => {
               </p>
               <div className="space-y-2 text-sm">
                 <div className="flex items-center gap-2">
-                  <span>Email: support@mapmysoul.com</span>
+                  <span>Email: info@mapmysoul.com</span>
                 </div>
                 <div className="flex items-center gap-2">
                   <span>Phone: +1 (555) 123-4567</span>

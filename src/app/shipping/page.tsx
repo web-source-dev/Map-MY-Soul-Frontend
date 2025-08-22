@@ -1,7 +1,7 @@
 "use client";
 import Layout from "@/components/Layout";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Truck, Package, Globe, Clock, AlertTriangle, CheckCircle, MapPin, Calendar } from "lucide-react";
+import { Truck, Package, Globe, Clock, AlertTriangle, CheckCircle, Calendar } from "lucide-react";
 
 const ShippingPolicy = () => {
   const lastUpdated = "December 2024";
@@ -358,7 +358,7 @@ const ShippingPolicy = () => {
               </p>
               <div className="space-y-2 text-sm">
                 <div className="flex items-center gap-2">
-                  <span>Email: shipping@mapmysoul.com</span>
+                  <span>Email: info@mapmysoul.com</span>
                 </div>
                 <div className="flex items-center gap-2">
                   <span>Phone: +1 (555) 123-4567</span>

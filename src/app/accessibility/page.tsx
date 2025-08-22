@@ -245,7 +245,7 @@ const AccessibilityStatement = () => {
               </p>
               <div className="space-y-2 text-sm">
                 <div className="flex items-center gap-2">
-                  <span>Email: accessibility@mapmysoul.com</span>
+                  <span>Email: info@mapmysoul.com</span>
                 </div>
                 <div className="flex items-center gap-2">
                   <span>Phone: +1 (555) 123-4567 (TTY available)</span>

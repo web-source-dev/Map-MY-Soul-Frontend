@@ -27,6 +27,7 @@ const Navigation = () => {
     { name: "Services", path: "/services" },
     { name: "Products", path: "/products" },
     { name: "About", path: "/about" },
+    { name: "Contact", path: "/contact" },
   ];
 
   return (
@@ -45,7 +46,7 @@ const Navigation = () => {
               />
             </div>
             <div className="flex flex-col">
-              <span className="text-lg font-bold font-display text-foreground">Map My Soul Marketplace</span>
+              <span className="text-lg font-bold font-display text-foreground">Map My Soul</span>
               <span className="text-xs text-muted-foreground font-medium">Your Holistic Wellness</span>
             </div>
           </Link>
@@ -82,10 +83,12 @@ const Navigation = () => {
                     <Crown className="w-4 h-4" />
                   </Button>
                 )}
-                <Button variant="ghost" size="sm" className="rounded-lg">
-                  <User className="w-4 h-4" />
-                  <span className="ml-2 text-sm">{user?.firstName}</span>
-                </Button>
+                <Link href="/dashboard">
+                  <Button variant="ghost" size="sm" className="rounded-lg">
+                    <User className="w-4 h-4" />
+                    <span className="ml-2 text-sm">Dashboard</span>
+                  </Button>
+                </Link>
                 <LogoutButton variant="ghost" size="sm" className="rounded-lg">
                 </LogoutButton>
               </div>
@@ -156,6 +159,12 @@ const Navigation = () => {
                       <User className="w-4 h-4 mr-2" />
                       {user?.firstName} {user?.lastName}
                     </div>
+                    <Link href="/dashboard">
+                      <Button variant="outline" size="sm" className="w-full rounded-lg">
+                        <User className="w-4 h-4 mr-2" />
+                        Dashboard
+                      </Button>
+                    </Link>
                     <LogoutButton variant="outline" size="sm" className="w-full rounded-lg">
                       <LogOut className="w-4 h-4 mr-2" />
                       Sign Out

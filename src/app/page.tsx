@@ -4,10 +4,12 @@ import HeroSection from "@/components/HeroSection";
 import ProductCard from "@/components/ProductCard";
 import ServiceCard from "@/components/ServiceCard";
 import { Button } from "@/components/ui/button";  
-import { Star, ArrowRight, Heart, Sparkles, Zap, Leaf, Brain } from "lucide-react";
+import { Star, ArrowRight, Heart, Sparkles, Zap, Leaf, Brain, Shield } from "lucide-react";
 import Image from "next/image";
 import { useEffect, useState } from "react";
-import { catalogApi } from "@/lib/api";
+import { catalogApi, newsletterApi } from "@/lib/api";
+import { showToast } from "@/lib/utils";
+import { CustomTextInput } from "@/components/ui/custom-inputs";
 
 const Index = () => {
   // Add CSS animations for the carousel
@@ -63,6 +65,8 @@ const Index = () => {
   const [products, setProducts] = useState<ProductItem[]>([]);
   const [services, setServices] = useState<ServiceItem[]>([]);
   const [podcasts, setPodcasts] = useState<PodcastItem[]>([]);
+  const [newsletterEmail, setNewsletterEmail] = useState("");
+  const [isNewsletterSubmitting, setIsNewsletterSubmitting] = useState(false);
 
   useEffect(() => {
     let isMounted = true;
@@ -84,6 +88,24 @@ const Index = () => {
     fetchData();
     return () => { isMounted = false; };
   }, []);
+
+  const handleNewsletterSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!newsletterEmail) return;
+    
+    setIsNewsletterSubmitting(true);
+    
+    try {
+      await newsletterApi.subscribe(newsletterEmail, 'homepage');
+      showToast.success('Successfully subscribed to Map My Soul Daily!');
+      setNewsletterEmail("");
+    } catch (error) {
+      console.error('Newsletter subscription error:', error);
+      showToast.error(error instanceof Error ? error.message : 'Failed to subscribe to newsletter');
+    } finally {
+      setIsNewsletterSubmitting(false);
+    }
+  };
 
   const testimonials = [
     {
@@ -747,8 +769,15 @@ const Index = () => {
 
       {/* Newsletter Section - Inspired by Mindvalley */}
       <section className="py-24 bg-gradient-to-br from-pink-100 via-purple-50 to-blue-100 relative overflow-hidden">
-        <div className="max-w-7xl mx-auto px-4 lg:px-10">
-          <div className="rounded-lg md:rounded-xl flex flex-col md:grid grid-cols-12 gap-4 md:gap-10 lg:gap-16 overflow-hidden bg-white/80 backdrop-blur-sm shadow-soft">
+        {/* Background decorative elements */}
+        <div className="absolute inset-0 overflow-hidden">
+          <div className="absolute top-10 right-20 w-64 h-64 bg-pink-200/20 rounded-full blur-3xl"></div>
+          <div className="absolute bottom-10 left-20 w-48 h-48 bg-purple-200/20 rounded-full blur-3xl"></div>
+          <div className="absolute top-1/2 right-1/3 w-32 h-32 bg-blue-200/20 rounded-full blur-2xl"></div>
+        </div>
+        
+        <div className="max-w-7xl mx-auto px-4 lg:px-10 relative z-10">
+          <div className="rounded-2xl md:rounded-3xl flex flex-col md:grid grid-cols-12 gap-4 md:gap-10 lg:gap-16 overflow-hidden bg-white/90 backdrop-blur-sm shadow-2xl border border-white/20">
             
             {/* Image Column */}
             <div className="col-span-4 relative">
@@ -786,45 +815,57 @@ const Index = () => {
             </div>
             
             {/* Content Column */}
-            <div className="col-span-8 px-4 md:px-0 pb-5 md:pb-0 md:pl-2 flex flex-col justify-center">
-              <div className="text-cool-grey-700">
-                <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-4 md:mb-6">
+            <div className="col-span-8 px-6 md:px-8 pb-8 md:pb-8 md:pl-4 flex flex-col justify-center">
+              <div className="text-gray-900">
+                <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-4 md:mb-6 bg-gradient-to-r from-purple-600 via-pink-600 to-blue-600 bg-clip-text text-transparent">
                   Become 1% Better Every Day
                 </h2>
-                <h3 className="text-xl md:text-2xl text-cool-grey-700 mb-4 md:mb-6 font-medium">
+                <h3 className="text-xl md:text-2xl text-gray-800 mb-4 md:mb-6 font-medium">
                   Upgrade Your Soul. Elevate Your Life. Shape Your Destiny.
                 </h3>
-                <p className="text-cool-grey-600 text-lg mb-4 md:mb-12 leading-relaxed">
+                <p className="text-gray-600 text-lg mb-6 md:mb-8 leading-relaxed">
                   Welcome to MapMySoul Daily. We&apos;ll send you the latest breakthroughs in spiritual growth, 
                   personal transformation, and soul awakening—straight to your inbox.
                 </p>
                 
                 {/* Newsletter Form */}
                 <div className="w-full max-w-xl"> 
-                  <form className="w-full">
-                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
-                      <div className="lg:col-span-1 relative">
-                        <input 
-                          id="newsletter-email"
-                          type="email" 
-                          placeholder="Your email address"
-                          required
-                          className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent transition-all duration-200"
+                  <form onSubmit={handleNewsletterSubmit} className="w-full">
+                    <div className="flex flex-col sm:flex-row gap-3">
+                      <div className="flex-1 relative">
+                        <CustomTextInput 
+                          placeholder="Enter your email address"
+                          type="email"
+                          value={newsletterEmail}
+                          onChange={(value: string) => setNewsletterEmail(value)}
+                          disabled={isNewsletterSubmitting}
+                          className="w-full h-12 px-4 py-3 bg-white/90 backdrop-blur-sm border border-white/30 rounded-xl focus:ring-2 focus:ring-white/50 focus:border-white/50 transition-all duration-300 text-gray-900 placeholder-gray-600 shadow-lg"
                         />
-                        
                       </div>
-                      <div className="lg:col-span-1 flex justify-end">
+                      <div className="flex-shrink-0">
                         <Button 
                           type="submit"
-                          className="w-full lg:w-auto bg-primary hover:bg-primary/90 text-primary-foreground font-semibold px-8 py-3 rounded-lg transition-all duration-200"
+                          disabled={isNewsletterSubmitting}
+                          className="w-full sm:w-auto h-12 bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-700 hover:to-indigo-700 text-white font-semibold px-8 py-3 rounded-xl transition-all duration-300 shadow-lg hover:shadow-xl border-0"
                         >
-                          Subscribe
+                          {isNewsletterSubmitting ? (
+                            <div className="flex items-center justify-center space-x-2">
+                              <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin"></div>
+                              <span>Subscribing...</span>
+                            </div>
+                          ) : (
+                            <div className="flex items-center justify-center space-x-2">
+                              <Sparkles className="w-4 h-4" />
+                              <span>Subscribe</span>
+                            </div>
+                          )}
                         </Button>
                       </div>
                     </div>
                   </form>
-                  <p className="text-cool-grey-600 text-sm mt-4">
-                    Your information is safe with us. Unsubscribe anytime.
+                  <p className="text-gray-500 text-sm mt-4 flex items-center justify-center space-x-1">
+                    <Shield className="w-3 h-3" />
+                    <span>Your information is safe with us. Unsubscribe anytime.</span>
                   </p>
                 </div>
               </div>

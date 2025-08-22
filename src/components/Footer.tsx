@@ -1,13 +1,35 @@
 import Link from "next/link";
-import { Heart, Mail, Phone, MapPin, Star, Clock, ArrowRight, Sparkles, Leaf, Zap, Shield, Linkedin } from "lucide-react";
+import { Mail, Phone, MapPin, Star, Clock, ArrowRight, Sparkles, Zap, Shield, Linkedin } from "lucide-react";
 import Image from "next/image";
 import {CustomTextInput} from "@/components/ui/custom-inputs";
+import { useState } from "react";
+import { newsletterApi } from "@/lib/api";
+import { showToast } from "@/lib/utils";
 
 // Logo URL from Wixstatic CDN
 const logoUrl = "https://static.wixstatic.com/media/bdbc7d_0c6ab12123064711a5f85e34030152c8~mv2.png/v1/fill/w_536,h_531,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/bdbc7d_0c6ab12123064711a5f85e34030152c8~mv2.png";
 
 const Footer = () => {
- 
+  const [newsletterEmail, setNewsletterEmail] = useState("");
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
+  const handleNewsletterSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!newsletterEmail) return;
+    
+    setIsSubmitting(true);
+    
+    try {
+      await newsletterApi.subscribe(newsletterEmail, 'footer');
+      showToast.success('Successfully subscribed to our newsletter!');
+      setNewsletterEmail("");
+    } catch (error) {
+      console.error('Newsletter subscription error:', error);
+      showToast.error(error instanceof Error ? error.message : 'Failed to subscribe to newsletter');
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
 
   return (
     <footer className="bg-white">
@@ -55,16 +77,27 @@ const Footer = () => {
                   Stay Connected
                 </h4>
                 <p className="text-black/60 text-sm mb-4">Get weekly insights on spiritual growth and wellness</p>
-                <div className="flex group">
+                <form onSubmit={handleNewsletterSubmit} className="flex group">
                   <CustomTextInput
                     placeholder="Your email address"
                     className="flex-1 px-4 py-3 bg-white/10 border border-black/20 rounded-l-xl rounded-r-none text-black placeholder-black/50 focus:outline-none focus:ring-2 focus:ring-purple-400 focus:border-transparent transition-all duration-300"
                     type="email"
+                    value={newsletterEmail}
+                    onChange={(value) => setNewsletterEmail(value)}
+                    disabled={isSubmitting}
                   />
-                  <button className="px-6 py-3 bg-primary text-white rounded-r-xl transition-all duration-300 group-hover:shadow-lg group-hover:shadow-purple-500/25">
-                    <ArrowRight className="w-5 h-5" />
+                  <button 
+                    type="submit"
+                    disabled={isSubmitting}
+                    className="px-6 py-3 bg-primary text-white rounded-r-xl transition-all duration-300 group-hover:shadow-lg group-hover:shadow-purple-500/25 disabled:opacity-50 disabled:cursor-not-allowed"
+                  >
+                    {isSubmitting ? (
+                      <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin"></div>
+                    ) : (
+                      <ArrowRight className="w-5 h-5" />
+                    )}
                   </button>
-                </div>
+                </form>
               </div>
 
                              {/* Enhanced Social Links */}
@@ -106,7 +139,8 @@ const Footer = () => {
                    { to: "/services", label: "Services" },
                    { to: "/products", label: "Products" },
                    { to: "/quiz", label: "Soul Path Quiz" },
-                   { to: "/about", label: "About Us" }
+                   { to: "/about", label: "About Us" },
+                   { to: "/contact", label: "Contact Us" }
                  ].map((link, index) => (
                    <li key={index}>
                      <Link href={link.to} className="text-black/70 hover:text-black transition-all duration-300 flex items-center group">
@@ -126,7 +160,7 @@ const Footer = () => {
               </h3>
               <ul className="space-y-6">
                 {[
-                  { icon: Mail, label: "Email", value: "hello@mapmysoul.com", color: "text-purple-300" },
+                  { icon: Mail, label: "Email", value: "info@mapmysoul.com", color: "text-purple-300" },
                   { icon: Phone, label: "Phone", value: "+1 (555) 123-4567", color: "text-blue-300" },
                   { icon: MapPin, label: "Location", value: "Everywhere, Virtually", color: "text-green-300" },
                   { icon: Clock, label: "Support", value: "24/7 Available", color: "text-yellow-300" }
