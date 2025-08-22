@@ -227,7 +227,7 @@ const Index = () => {
           </div>
           
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
-            {(products && products.length > 0 ? products : []).map((product, index) => (
+            {(products && products.length > 0 ? products : []).slice(0, 3).map((product, index) => (
               <div key={index} className="hover-scale">
                 <ProductCard
                   product={{
@@ -425,7 +425,7 @@ const Index = () => {
           </div>
           
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
-            {(services && services.length > 0 ? services : []).map((service, index) => (
+            {(services && services.length > 0 ? services : []).slice(0, 3).map((service, index) => (
               <div key={index} className="hover-scale">
                 <ServiceCard
                   serviceId={service._id}

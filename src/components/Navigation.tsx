@@ -4,7 +4,7 @@ import { useState } from "react";
 import Link from "next/link";
 import { Menu, X, User, Sparkles, LogOut, Crown } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import Image from "next/image";
 import { useAuth } from "@/contexts/AuthContext";
 import { LogoutButton } from "@/components/auth/LogoutButton";
@@ -18,7 +18,7 @@ const Navigation = () => {
   const [isOpen, setIsOpen] = useState(false);
   const pathname = usePathname();
   const { isAuthenticated, isAdmin, user } = useAuth();
-
+  const router = useRouter();
   const isActive = (path: string) => pathname === path;
 
   const navItems = [
@@ -102,9 +102,10 @@ const Navigation = () => {
               variant="default" 
               size="sm" 
               className="bg-primary hover:bg-primary/90 text-primary-foreground font-medium px-4 py-2 rounded-lg shadow-soft transition-all duration-200"
+              onClick={() => router.push('/quiz')}
             >
               <Sparkles className="w-4 h-4 mr-2" />
-              Book Reading
+              Take Quiz
             </Button>
           </div>
 
@@ -168,9 +169,9 @@ const Navigation = () => {
                     </Button>
                   </Link>
                 )}
-                <Button variant="default" size="sm" className="w-full rounded-lg">
+                <Button variant="default" size="sm" className="w-full rounded-lg" onClick={() => router.push('/quiz')}>
                   <Sparkles className="w-4 h-4 mr-2" />
-                  Book Reading
+                  Take Quiz
                 </Button>
               </div>
             </div>
