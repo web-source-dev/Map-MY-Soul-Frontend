@@ -15,7 +15,7 @@ const Footer = () => {
 
         {/* Main Footer Content */} 
         <div className="max-w-7xl mx-auto container-padding py-20">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-12">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12">
             {/* Enhanced Brand Section */}
             <div className="lg:col-span-2">
               <div className="flex items-center space-x-4 mb-8">
@@ -94,53 +94,28 @@ const Footer = () => {
                </div>
             </div>
 
-            {/* Enhanced Services */}
-            <div>
-              <h3 className="text-xl font-bold text-black mb-8 flex items-center">
-                <Sparkles className="w-6 h-6 mr-3 text-purple-300" />
-                Services
-              </h3>
-              <ul className="space-y-4">
-                {[
-                  "Soul Reading",
-                  "Crystal Therapy", 
-                  "Tarot Reading",
-                  "Energy Healing",
-                  "Meditation Sessions"
-                ].map((service, index) => (
-                  <li key={index}>
-                    <Link href="/services" className="text-black/70 hover:text-black transition-all duration-300 flex items-center group">
-                      <div className="w-2 h-2 bg-purple-400 rounded-full mr-3 group-hover:scale-150 transition-transform duration-300"></div>
-                      <span className="group-hover:translate-x-1 transition-transform duration-300">{service}</span>
-                    </Link>
-                  </li>
-                ))}
-              </ul>
-            </div>
-
-            {/* Enhanced Wellness */}
-            <div>
-              <h3 className="text-xl font-bold text-black mb-8 flex items-center">
-                <Leaf className="w-6 h-6 mr-3 text-green-300" />
-                Wellness
-              </h3>
-              <ul className="space-y-4">
-                {[
-                  "Crystals & Stones",
-                  "Essential Oils",
-                  "Sacred Tools", 
-                  "Wellness Books",
-                  "Soul Path Quiz"
-                ].map((item, index) => (
-                  <li key={index}>
-                    <Link href="/products" className="text-black/70 hover:text-black transition-all duration-300 flex items-center group">
-                      <div className="w-2 h-2 bg-green-400 rounded-full mr-3 group-hover:scale-150 transition-transform duration-300"></div>
-                      <span className="group-hover:translate-x-1 transition-transform duration-300">{item}</span>
-                    </Link>
-                  </li>
-                ))}
-              </ul>
-            </div>
+                         {/* Enhanced Services */}
+             <div>
+               <h3 className="text-xl font-bold text-black mb-8 flex items-center">
+                 <Sparkles className="w-6 h-6 mr-3 text-purple-300" />
+                 Services
+               </h3>
+               <ul className="space-y-4">
+                 {[
+                   { to: "/services", label: "Services" },
+                   { to: "/products", label: "Products" },
+                   { to: "/quiz", label: "Soul Path Quiz" },
+                   { to: "/about", label: "About Us" }
+                 ].map((link, index) => (
+                   <li key={index}>
+                     <Link href={link.to} className="text-black/70 hover:text-black transition-all duration-300 flex items-center group">
+                       <div className="w-2 h-2 bg-purple-400 rounded-full mr-3 group-hover:scale-150 transition-transform duration-300"></div>
+                       <span className="group-hover:translate-x-1 transition-transform duration-300">{link.label}</span>
+                     </Link>
+                   </li>
+                 ))}
+               </ul>
+             </div>
 
             {/* Enhanced Contact Info */}
             <div>
@@ -185,8 +160,9 @@ const Footer = () => {
               <div className="flex flex-wrap justify-center space-x-8">
                 {[
                   { to: "/privacy", label: "Privacy Policy" },
-                  { to: "/terms", label: "Terms of Service" },
-                  { to: "/cookies", label: "Cookie Policy" },
+                  { to: "/terms", label: "Terms & Conditions" },
+                  { to: "/refund", label: "Refund Policy" },
+                  { to: "/shipping", label: "Shipping Policy" },
                   { to: "/accessibility", label: "Accessibility" }
                 ].map((link, index) => (
                   <Link 

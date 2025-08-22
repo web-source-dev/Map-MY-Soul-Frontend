@@ -10,6 +10,27 @@ import { useEffect, useState } from "react";
 import { catalogApi } from "@/lib/api";
 
 const Index = () => {
+  // Add CSS animations for the carousel
+  useEffect(() => {
+    const style = document.createElement('style');
+    style.textContent = `
+      @keyframes scrollLeft {
+        0% { transform: rotate(-1deg) translateX(-1669px); }
+        100% { transform: rotate(-1deg) translateX(0px); }
+      }
+      @keyframes scrollRight {
+        0% { transform: rotate(-1deg) translateX(-1020px); }
+        100% { transform: rotate(-1deg) translateX(-2000px); }
+      }
+    `;
+    document.head.appendChild(style);
+    return () => {
+      if (document.head.contains(style)) {
+        document.head.removeChild(style);
+      }
+    };
+  }, []);
+
   interface ProductItem {
     _id: string;
     name: string;
@@ -452,8 +473,9 @@ const Index = () => {
 
       {/* Podcasts Section - Inspired by Mindvalley's auto-carousel */}
       <section 
-        className="py-20 bg-background relative overflow-hidden"
+        className="py-20 bg-background relative"
         style={{
+          overflow: 'visible',
           WebkitFontSmoothing: 'antialiased',
           color: '#0f131a',
           fontSize: '16px',
@@ -534,15 +556,16 @@ const Index = () => {
         </div>
 
         {/* Auto Carousel Section - Full Viewport Width */}
-        <div className="w-full overflow-hidden">
-          <div className="mv-auto-carousel">
+        <div className="w-full" style={{ padding: '10px 0', overflow: 'hidden', minHeight: '450px' }}>
+          <div className="mv-auto-carousel" style={{ overflow: 'visible' }}>
             {/* First Strip - Top Row */}
             <div 
               id="stripFlexTop" 
               className="--strip flex gap-4"
               style={{
-                transform: 'matrix(1, 0, 0, 1, -1669, 0)',
-                animation: 'scrollLeft 30s linear infinite'
+                transform: 'rotate(-1deg) translateX(-1669px)',
+                animation: 'scrollRight 30s linear infinite',
+                transformOrigin: 'center center'
               }}
             >
               {/* Dynamic Podcast Cards */}
@@ -626,8 +649,9 @@ const Index = () => {
               id="stripFlexBottom" 
               className="--strip flex gap-4 mt-6"
               style={{
-                transform: 'matrix(1, 0, 0, 1, -1020, 0)',
-                animation: 'scrollRight 25s linear infinite'
+                transform: 'rotate(-1deg) translateX(-1020px)',
+                animation: 'scrollLeft 25s linear infinite',
+                transformOrigin: 'center center'
               }}
             >
               {/* Dynamic Podcast Cards - Bottom Row */}
@@ -729,25 +753,12 @@ const Index = () => {
             {/* Image Column */}
             <div className="col-span-4 relative">
               <div className="w-full hidden md:block relative">
-                <div className="absolute bottom-4 left-4 right-4 z-20 text-center">
-                   <div className="mb-2">
-                     <Image 
-                       src="https://static.wixstatic.com/media/bdbc7d_0c6ab12123064711a5f85e34030152c8~mv2.png/v1/fill/w_536,h_531,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/bdbc7d_0c6ab12123064711a5f85e34030152c8~mv2.png" 
-                       alt="MapMySoul Logo" 
-                       width="243" 
-                       height="68" 
-                       style={{ opacity: 0.3}}
-                       className="mx-auto"
-                     />
-                   </div>
-                   <p className="text-white text-sm font-medium drop-shadow-lg">Co-founder and CEO of MapMySoul</p>
-                 </div>
                 <div className="relative">
                   <Image 
-                    src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=331&h=524&fit=crop&crop=face" 
+                    src="/tayyab.webp" 
                     alt="Co-founder portrait" 
                     width={331} 
-                    height={524} 
+                    height={524}  
                     className="w-full h-auto object-cover rounded-lg mystical-pulse"
                     style={{
                       filter: 'drop-shadow(0 0 20px hsl(var(--mystic-purple) / 0.4)) drop-shadow(0 0 40px hsl(var(--primary-glow) / 0.3))'
@@ -758,21 +769,10 @@ const Index = () => {
               
               {/* Mobile Image */}
               <div className="w-full block md:hidden relative">
-                <div className="absolute bottom-4 left-4 right-4 z-20 text-center">
-                   <div className="mb-2">
-                     <Image 
-                       src="https://static.wixstatic.com/media/bdbc7d_0c6ab12123064711a5f85e34030152c8~mv2.png/v1/fill/w_536,h_531,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/bdbc7d_0c6ab12123064711a5f85e34030152c8~mv2.png" 
-                       alt="MapMySoul Logo" 
-                       width="243" 
-                       height="68" 
-                       className="mx-auto"
-                     />
-                   </div>
-                   <p className="text-white text-sm font-medium drop-shadow-lg">Co-founder and CEO of MapMySoul</p>
-                 </div>
+                
                 <div className="relative">
                   <Image 
-                    src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=685&h=682&fit=crop&crop=face" 
+                    src="/tayyab.webp" 
                     alt="Co-founder portrait" 
                     width={685} 
                     height={682} 

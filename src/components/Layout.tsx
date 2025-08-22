@@ -6,9 +6,10 @@ import { useNewsletterPopup } from "@/hooks/use-newsletter-popup";
 
 interface LayoutProps {
   children: ReactNode;
+  isFooter?: boolean;
 }
 
-const Layout = ({ children }: LayoutProps) => {
+const Layout = ({ children, isFooter = true }: LayoutProps) => {
   const { isOpen, closePopup } = useNewsletterPopup();
 
   return (
@@ -17,7 +18,7 @@ const Layout = ({ children }: LayoutProps) => {
       <main className="flex-1">
         {children}
       </main>
-      <Footer />
+      {isFooter && <Footer />}
       <NewsletterPopup isOpen={isOpen} onClose={closePopup} />
     </div>
   );

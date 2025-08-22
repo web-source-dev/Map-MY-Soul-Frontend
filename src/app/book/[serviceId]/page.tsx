@@ -288,7 +288,7 @@ const BookingPage = () => {
       setBookingSuccess(true);
       
       setTimeout(() => {
-        router.push('/my-bookings');
+        router.push('/');
       }, 2000);
 
     } catch (error: unknown) {
@@ -353,7 +353,7 @@ const BookingPage = () => {
   }
 
   return (
-    <Layout>
+    <Layout isFooter={false}>
       <div className="min-h-screen py-10">
         <div className="max-w-7xl mx-auto container-padding">
           <div className="mb-2">

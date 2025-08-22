@@ -55,18 +55,18 @@ interface Question {
 const Quiz = () => {
   const router = useRouter();
   const { isAuthenticated } = useAuth();
-  
+
   // Initialize with current timezone
   const [currentTimezone, setCurrentTimezone] = useState<number | null>(null);
   const [showLoginPrompt, setShowLoginPrompt] = useState(false);
-  
+
   useEffect(() => {
     if (typeof window !== 'undefined') {
       const timezone = getCurrentTimezone();
       setCurrentTimezone(timezone.offset);
     }
   }, []);
-  
+
   const questions: Question[] = [
     {
       id: "birth_info",
@@ -169,7 +169,7 @@ const Quiz = () => {
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [quizStartTime] = useState(Date.now()); // Track when quiz started
-  
+
   const getQuestionIcon = (type: string) => {
     switch (type) {
       case "date":
@@ -187,7 +187,7 @@ const Quiz = () => {
 
   const handleAnswer = useCallback((value: string | string[] | BirthInfo | Preferences | FinalPreferences) => {
     const currentQ = questions[currentQuestion];
-    
+
     const newAnswers = {
       ...answers,
       [currentQ.id]: {
@@ -214,7 +214,7 @@ const Quiz = () => {
   const handleMultiChoiceChange = (option: string, checked: boolean) => {
     const currentQ = questions[currentQuestion];
     const currentAnswers = (answers[currentQ.id]?.value as string[]) || [];
-    
+
     let newAnswers: string[];
     if (checked) {
       if (currentAnswers.length < (currentQ.maxSelect || 2)) {
@@ -225,14 +225,14 @@ const Quiz = () => {
     } else {
       newAnswers = currentAnswers.filter(ans => ans !== option);
     }
-    
+
     handleAnswer(newAnswers);
   };
 
   const shouldShowQuestion = (question: Question, questionIndex: number) => {
     // Always show the first question
     if (questionIndex === 0) return true;
-    
+
     // Check conditional logic for specific questions
     if (question.id === "energy_type_calc") {
       // Only show energy_type_calc if user doesn't know their energy type
@@ -240,11 +240,11 @@ const Quiz = () => {
       const shouldShow = energyTypeAnswer && energyTypeAnswer.value === "I'm not sure";
       return shouldShow;
     }
-    
+
     // For all other questions, show them if the previous question has been answered
     const prevQuestion = questions[questionIndex - 1];
     const prevAnswer = answers[prevQuestion.id];
-    
+
     // If the previous question is energy_type_calc, check if it should be shown
     if (prevQuestion.id === "energy_type_calc") {
       const energyTypeAnswer = answers["energy_type"];
@@ -258,7 +258,7 @@ const Quiz = () => {
         }
       }
     }
-    
+
     const shouldShow = !!prevAnswer;
     return shouldShow;
   };
@@ -270,36 +270,36 @@ const Quiz = () => {
   const canProceed = () => {
     const currentQ = questions[currentQuestion];
     const currentAnswer = answers[currentQ.id];
-    
+
     if (!currentAnswer) return false;
-    
+
     // For the last question, check if user is authenticated
     const isLastQuestion = getVisibleQuestions().findIndex(q => q.id === questions[currentQuestion].id) === getVisibleQuestions().length - 1;
     if (isLastQuestion) return true;
-    
+
     if (currentQ.type === "multiChoice") {
       return (currentAnswer.value as string[]).length > 0;
     }
-    
+
     if (currentQ.type === "birthInfo") {
       const birthData = currentAnswer.value as BirthInfo;
       return birthData.dob && birthData.birthPlace && birthData.timezone_offset !== undefined;
     }
-    
+
     if (currentQ.type === "preferences") {
       const prefData = currentAnswer.value as Preferences;
       return prefData.budget && prefData.timeCommitment && prefData.sessionPreference;
     }
-    
+
     if (currentQ.type === "finalPreferences") {
       const finalPrefData = currentAnswer.value as FinalPreferences;
       return finalPrefData.eligibleNonprofit && finalPrefData.productInterest;
     }
-    
+
     if (currentQ.type === "text" || currentQ.type === "date" || currentQ.type === "time") {
       return (currentAnswer.value as string).trim().length > 0;
     }
-    
+
     return true;
   };
 
@@ -309,9 +309,9 @@ const Quiz = () => {
       setShowLoginPrompt(true);
       return;
     }
-    
+
     setIsSubmitting(true);
-    
+
     try {
       // Prepare quiz data for backend
       const quizData = {
@@ -320,29 +320,29 @@ const Quiz = () => {
         birthTime: (answers["birth_info"]?.value as BirthInfo)?.birthTime,
         birthPlace: (answers["birth_info"]?.value as BirthInfo)?.birthPlace,
         timezoneOffset: (answers["birth_info"]?.value as BirthInfo)?.timezone_offset,
-        
+
         // Energy type
         energyType: answers["energy_type"]?.value,
         calculateEnergyType: answers["energy_type_calc"]?.value,
-        
+
         // Wellness focus
         currentChallenge: answers["wellness_focus"]?.value,
-        
+
         // Balance activities
         balanceActivities: answers["balance_activities"]?.value,
-        
+
         // Preferences
         budget: (answers["preferences"]?.value as Preferences)?.budget,
         timeCommitment: (answers["preferences"]?.value as Preferences)?.timeCommitment,
         sessionPreference: (answers["preferences"]?.value as Preferences)?.sessionPreference,
-        
+
         // Practitioner type
         practitionerType: answers["practitioner_type"]?.value,
-        
+
         // Final preferences
         eligibleNonprofit: (answers["final_preferences"]?.value as FinalPreferences)?.eligibleNonprofit,
         productInterest: (answers["final_preferences"]?.value as FinalPreferences)?.productInterest,
-        
+
         // Analytics
         completionTime: Math.round((Date.now() - quizStartTime) / 1000),
         timeSpentOnQuestions: [], // Could be enhanced to track per question
@@ -352,20 +352,20 @@ const Quiz = () => {
 
       // Submit directly to backend using API function
       const result = await quizApi.submit(quizData);
-      
+
       // Store results in localStorage
       if (typeof window !== 'undefined') {
         localStorage.setItem('quizSessionId', (result as { sessionId: string }).sessionId);
         localStorage.setItem('quizResults', JSON.stringify((result as { results: unknown }).results));
-        
+
         // Clear quiz progress
         localStorage.removeItem('quizProgress');
         localStorage.removeItem('quizAnswers');
       }
-      
+
       // Navigate to results page
       router.push('/quiz-results');
-      
+
     } catch (error) {
       console.error('Quiz submission error:', error);
       // Show error to user instead of fallback
@@ -378,7 +378,7 @@ const Quiz = () => {
   const nextQuestion = () => {
     const visibleQuestions = getVisibleQuestions();
     const currentVisibleIndex = visibleQuestions.findIndex(q => q.id === questions[currentQuestion].id);
-    
+
     if (currentVisibleIndex < visibleQuestions.length - 1) {
       const nextVisibleQuestion = visibleQuestions[currentVisibleIndex + 1];
       const nextQ = questions.findIndex(q => q.id === nextVisibleQuestion.id);
@@ -395,39 +395,13 @@ const Quiz = () => {
   const prevQuestion = () => {
     const visibleQuestions = getVisibleQuestions();
     const currentVisibleIndex = visibleQuestions.findIndex(q => q.id === questions[currentQuestion].id);
-    
+
     if (currentVisibleIndex > 0) {
       const prevVisibleQuestion = visibleQuestions[currentVisibleIndex - 1];
       const prevQ = questions.findIndex(q => q.id === prevVisibleQuestion.id);
       setCurrentQuestion(prevQ);
       if (typeof window !== 'undefined') {
         localStorage.setItem('quizProgress', prevQ.toString());
-      }
-    }
-  };
-
-  // Update current question when answers change to show/hide conditional questions
-  const updateCurrentQuestionIfNeeded = () => {
-    const visibleQuestions = getVisibleQuestions();
-    const currentVisibleIndex = visibleQuestions.findIndex(q => q.id === questions[currentQuestion].id);
-    
-    // If current question is no longer visible, move to the next visible question
-    if (currentVisibleIndex === -1) {
-      const nextVisibleQuestion = visibleQuestions.find(q => {
-        const qIndex = questions.findIndex(originalQ => originalQ.id === q.id);
-        return qIndex > currentQuestion;
-      });
-      
-      if (nextVisibleQuestion) {
-        const nextQ = questions.findIndex(q => q.id === nextVisibleQuestion.id);
-        setCurrentQuestion(nextQ);
-        if (typeof window !== 'undefined') {
-          localStorage.setItem('quizProgress', nextQ.toString());
-        }
-        
-        // Show skip message
-        setSkipMessage("Skipping irrelevant question...");
-        setTimeout(() => setSkipMessage(null), 2000);
       }
     }
   };
@@ -453,7 +427,7 @@ const Quiz = () => {
                 placeholder="Select your birth date"
               />
             </div>
-            
+
             <div className="space-y-2">
               <Label htmlFor="birthTime" className="text-sm font-medium">Time of Birth (if known)</Label>
               <CustomTimeInput
@@ -464,14 +438,14 @@ const Quiz = () => {
               />
               <p className="text-xs text-muted-foreground">This helps us calculate your astrological profile more accurately</p>
             </div>
-            
+
             <div className="space-y-2">
               <Label className="text-sm font-medium">Place of Birth</Label>
               <CitySearch
                 value={birthData.birthPlace || ""}
                 onChange={(city, timezoneOffset) => {
-                  handleAnswer({ 
-                    ...birthData, 
+                  handleAnswer({
+                    ...birthData,
                     birthPlace: city,
                     timezone_offset: timezoneOffset
                   });
@@ -482,13 +456,13 @@ const Quiz = () => {
               />
               <p className="text-xs text-muted-foreground">Select your birth city for accurate timezone calculations</p>
             </div>
-            
+
             <div className="space-y-2">
               <TimezoneSelector
                 value={birthData.timezone_offset ?? (currentTimezone ?? 0)}
                 onChange={(timezoneOffset) => {
-                  handleAnswer({ 
-                    ...birthData, 
+                  handleAnswer({
+                    ...birthData,
                     timezone_offset: timezoneOffset
                   });
                 }}
@@ -500,7 +474,7 @@ const Quiz = () => {
                 Select the timezone for your birth location. This ensures accurate astrological calculations.
               </p>
             </div>
-            
+
             {birthData.dob && birthData.birthTime && birthData.birthPlace && (
               <div className="p-4 bg-blue-50 border border-blue-200 rounded-lg">
                 <div className="text-sm font-medium text-blue-800 mb-2">Birth Information Summary</div>
@@ -529,8 +503,8 @@ const Quiz = () => {
                 {["Under $50", "$50–$100", "$100–$200", "$200+"].map((option, index) => (
                   <div key={index} className="flex items-center space-x-3 p-3 rounded-lg hover:bg-muted/50 transition-colors duration-200">
                     <RadioGroupItem value={option} id={`budget-${index}`} />
-                    <Label 
-                      htmlFor={`budget-${index}`} 
+                    <Label
+                      htmlFor={`budget-${index}`}
                       className="text-sm cursor-pointer hover:text-primary transition-colors duration-200 flex-1"
                     >
                       {option}
@@ -539,7 +513,7 @@ const Quiz = () => {
                 ))}
               </RadioGroup>
             </div>
-            
+
             <div className="space-y-2">
               <Label className="text-sm font-medium">Weekly Time Commitment</Label>
               <RadioGroup
@@ -550,8 +524,8 @@ const Quiz = () => {
                 {["Less than 1 hour", "1–2 hours", "3–5 hours", "5+ hours"].map((option, index) => (
                   <div key={index} className="flex items-center space-x-3 p-3 rounded-lg hover:bg-muted/50 transition-colors duration-200">
                     <RadioGroupItem value={option} id={`time-${index}`} />
-                    <Label 
-                      htmlFor={`time-${index}`} 
+                    <Label
+                      htmlFor={`time-${index}`}
                       className="text-sm cursor-pointer hover:text-primary transition-colors duration-200 flex-1"
                     >
                       {option}
@@ -560,7 +534,7 @@ const Quiz = () => {
                 ))}
               </RadioGroup>
             </div>
-            
+
             <div className="space-y-2">
               <Label className="text-sm font-medium">Session Preference</Label>
               <RadioGroup
@@ -571,8 +545,8 @@ const Quiz = () => {
                 {["In-person", "Online (Zoom, video call)", "Either is fine"].map((option, index) => (
                   <div key={index} className="flex items-center space-x-3 p-3 rounded-lg hover:bg-muted/50 transition-colors duration-200">
                     <RadioGroupItem value={option} id={`session-${index}`} />
-                    <Label 
-                      htmlFor={`session-${index}`} 
+                    <Label
+                      htmlFor={`session-${index}`}
                       className="text-sm cursor-pointer hover:text-primary transition-colors duration-200 flex-1"
                     >
                       {option}
@@ -599,8 +573,8 @@ const Quiz = () => {
                 {["Yes", "No"].map((option, index) => (
                   <div key={index} className="flex items-center space-x-3 p-3 rounded-lg hover:bg-muted/50 transition-colors duration-200">
                     <RadioGroupItem value={option} id={`nonprofit-${index}`} />
-                    <Label 
-                      htmlFor={`nonprofit-${index}`} 
+                    <Label
+                      htmlFor={`nonprofit-${index}`}
                       className="text-sm cursor-pointer hover:text-primary transition-colors duration-200 flex-1"
                     >
                       {option}
@@ -609,7 +583,7 @@ const Quiz = () => {
                 ))}
               </RadioGroup>
             </div>
-            
+
             {finalPrefData.eligibleNonprofit === "Yes" && (
               <div className="space-y-2">
                 <Label htmlFor="nonprofitReason" className="text-sm font-medium">Briefly describe your situation (Optional)</Label>
@@ -621,7 +595,7 @@ const Quiz = () => {
                 />
               </div>
             )}
-            
+
             <div className="space-y-2">
               <Label className="text-sm font-medium">Product Recommendations</Label>
               <p className="text-xs text-muted-foreground mb-3">Would you like to receive product recommendations (e.g., crystals, wellness tools) alongside your service suggestions?</p>
@@ -633,8 +607,8 @@ const Quiz = () => {
                 {["Yes, please", "No, just services"].map((option, index) => (
                   <div key={index} className="flex items-center space-x-3 p-3 rounded-lg hover:bg-muted/50 transition-colors duration-200">
                     <RadioGroupItem value={option} id={`product-${index}`} />
-                    <Label 
-                      htmlFor={`product-${index}`} 
+                    <Label
+                      htmlFor={`product-${index}`}
                       className="text-sm cursor-pointer hover:text-primary transition-colors duration-200 flex-1"
                     >
                       {option}
@@ -700,8 +674,8 @@ const Quiz = () => {
             {currentQ.options?.map((option, index) => (
               <div key={index} className="flex items-center space-x-3 p-3 rounded-lg hover:bg-muted/50 transition-colors duration-200">
                 <RadioGroupItem value={option} id={`option-${index}`} />
-                <Label 
-                  htmlFor={`option-${index}`} 
+                <Label
+                  htmlFor={`option-${index}`}
                   className="text-sm cursor-pointer hover:text-primary transition-colors duration-200 flex-1"
                 >
                   {option}
@@ -722,8 +696,8 @@ const Quiz = () => {
                   checked={selectedOptions.includes(option)}
                   onCheckedChange={(checked) => handleMultiChoiceChange(option, checked as boolean)}
                 />
-                <Label 
-                  htmlFor={`option-${index}`} 
+                <Label
+                  htmlFor={`option-${index}`}
                   className="text-sm cursor-pointer hover:text-primary transition-colors duration-200 flex-1"
                 >
                   {option}
@@ -747,10 +721,10 @@ const Quiz = () => {
 
   return (
     <QuizLayout>
-      <LoginPrompt 
-        isOpen={showLoginPrompt} 
-        onClose={() => setShowLoginPrompt(false)} 
-        action="booking"
+      <LoginPrompt
+        isOpen={showLoginPrompt}
+        onClose={() => setShowLoginPrompt(false)}
+        action="quiz"
       />
       <section className="section-padding min-h-[70vh] flex items-center">
         <div className="max-w-3xl mx-auto container-padding">
@@ -761,42 +735,35 @@ const Quiz = () => {
             <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-foreground mb-6">
               Soul Path Discovery Quiz
             </h1>
-                         <p className="text-lg text-muted-foreground">
-               Answer a few questions to find your perfect healing journey
-             </p>
-             {skipMessage && (
-               <div className="mt-4 p-3 bg-primary/10 border border-primary/20 rounded-lg">
-                 <p className="text-sm text-primary font-medium">{skipMessage}</p>
-               </div>
-             )}
+            <p className="text-lg text-muted-foreground">
+              Answer a few questions to find your perfect healing journey
+            </p>
+            {skipMessage && (
+              <div className="mt-4 p-3 bg-primary/10 border border-primary/20 rounded-lg">
+                <p className="text-sm text-primary font-medium">{skipMessage}</p>
+              </div>
+            )}
           </div>
-          
-                     <Card className="modern-card slide-up transition-all duration-300 opacity-100">
+          <Card>
             <CardHeader>
-                             <div className="flex justify-between items-center mb-4">
-                 <span className="text-sm text-muted-foreground">
-                   Question {getVisibleQuestions().findIndex(q => q.id === questions[currentQuestion].id) + 1} of {getVisibleQuestions().length}
-                 </span>
-                                   <div className="flex space-x-1">
-                    {questions.map((question, index) => {
-                      const isVisible = shouldShowQuestion(question, index);
-                      const isCurrent = question.id === questions[currentQuestion].id;
-                      const isCompleted = answers[question.id];
-                      
-                      return (
-                        <div
-                          key={index}
-                          className={`w-2 h-2 rounded-full transition-all duration-200 ${
-                            !isVisible ? 'bg-gray-300 opacity-30' :
-                            isCurrent ? 'bg-primary' :
-                            isCompleted ? 'bg-primary/60' : 'bg-muted'
-                          }`}
-                          title={!isVisible ? 'Question skipped' : question.question}
-                        />
-                      );
-                    })}
-                  </div>
-               </div>
+              <div className="flex justify-between items-center mb-4">
+                <span className="text-sm text-muted-foreground">
+                </span>
+                <div className="flex space-x-1">
+                  {questions.map((question, index) => {
+                    const isVisible = shouldShowQuestion(question, index);
+                    const isCurrent = question.id === questions[currentQuestion].id;
+                    const isCompleted = answers[question.id];
+
+                    return (
+                      <div key={index} className={`w-2 h-2 rounded-full transition-all duration-200 ${!isVisible ? 'bg-gray-300 opacity-30' :
+                        isCurrent ? 'bg-primary' :
+                          isCompleted ? 'bg-primary/60' : 'bg-muted'
+                        }`} />
+                    );
+                  })}
+                </div>
+              </div>
               <CardTitle className="text-xl flex items-center gap-3">
                 {getQuestionIcon(questions[currentQuestion].type)}
                 {questions[currentQuestion].question}
@@ -804,7 +771,7 @@ const Quiz = () => {
             </CardHeader>
             <CardContent>
               {renderQuestionInput()}
-              
+
               {/* Show authentication message on last question */}
               {getVisibleQuestions().findIndex(q => q.id === questions[currentQuestion].id) === getVisibleQuestions().length - 1 && !isAuthenticated && (
                 <div className="mt-4 p-3 bg-amber-50 border border-amber-200 rounded-lg">
@@ -813,7 +780,7 @@ const Quiz = () => {
                   </p>
                 </div>
               )}
-              
+
               <div className="flex justify-between mt-8">
                 <Button
                   variant="outline"
@@ -835,10 +802,10 @@ const Quiz = () => {
                       Processing...
                     </>
                   ) : (
-                                         <>
-                       {getVisibleQuestions().findIndex(q => q.id === questions[currentQuestion].id) === getVisibleQuestions().length - 1 ? 'Get Results' : 'Next'}
-                       <ArrowRight className="w-4 h-4 ml-2" />
-                     </>
+                    <>
+                      {getVisibleQuestions().findIndex(q => q.id === questions[currentQuestion].id) === getVisibleQuestions().length - 1 ? 'Get Results' : 'Next'}
+                      <ArrowRight className="w-4 h-4 ml-2" />
+                    </>
                   )}
                 </Button>
               </div>
