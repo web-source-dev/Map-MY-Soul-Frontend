@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { Heart, Mail, Phone, MapPin, Star, Clock, ArrowRight, Sparkles, Leaf, Zap, Shield, Linkedin } from "lucide-react";
 import Image from "next/image";
+import {CustomTextInput} from "@/components/ui/custom-inputs";
 
 // Logo URL from Wixstatic CDN
 const logoUrl = "https://static.wixstatic.com/media/bdbc7d_0c6ab12123064711a5f85e34030152c8~mv2.png/v1/fill/w_536,h_531,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/bdbc7d_0c6ab12123064711a5f85e34030152c8~mv2.png";
@@ -55,12 +56,12 @@ const Footer = () => {
                 </h4>
                 <p className="text-black/60 text-sm mb-4">Get weekly insights on spiritual growth and wellness</p>
                 <div className="flex group">
-                  <input 
-                    type="email" 
+                  <CustomTextInput
                     placeholder="Your email address"
-                    className="flex-1 px-4 py-3 bg-white/10 border border-black/20 rounded-l-xl text-black placeholder-black/50 focus:outline-none focus:ring-2 focus:ring-purple-400 focus:border-transparent transition-all duration-300"
+                    className="flex-1 px-4 py-3 bg-white/10 border border-black/20 rounded-l-xl rounded-r-none text-black placeholder-black/50 focus:outline-none focus:ring-2 focus:ring-purple-400 focus:border-transparent transition-all duration-300"
+                    type="email"
                   />
-                  <button className="px-6 py-3 bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-700 hover:to-indigo-700 text-black rounded-r-xl transition-all duration-300 group-hover:shadow-lg group-hover:shadow-purple-500/25">
+                  <button className="px-6 py-3 bg-primary text-white rounded-r-xl transition-all duration-300 group-hover:shadow-lg group-hover:shadow-purple-500/25">
                     <ArrowRight className="w-5 h-5" />
                   </button>
                 </div>
@@ -153,7 +154,7 @@ const Footer = () => {
                 <div className="flex items-center space-x-2">
                   <Shield className="w-5 h-5 text-purple-300" />
                   <p className="text-black/70 text-sm">
-                    © 2024 Map My Soul. Made with <Heart className="w-4 h-4 inline text-red-400 animate-pulse" /> for spiritual wellness.
+                    © {new Date().getFullYear()} Map My Soul. All rights reserved.
                   </p>
                 </div>
               </div>
