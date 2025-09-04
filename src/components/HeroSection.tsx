@@ -30,17 +30,17 @@ const HeroSection = () => {
             {/* Main Heading */}
             <div className="space-y-6">
               <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold text-foreground leading-tight tracking-tight">
-                A better you
+                An Integrative Journey
               </h1>
               <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold gradient-text leading-tight tracking-tight">
-                every day
+                to Healing
               </h1>
             </div>
             
             {/* Subtitle */}
             <p className="text-xl md:text-2xl text-muted-foreground leading-relaxed max-w-2xl">
-              Be part of the world&apos;s most powerful spiritual transformation platform. 
-              Connect with trusted healers, discover sacred tools, and awaken your highest potential.
+              Discover your path in as little as 20 min. Connect with trusted healers, 
+              discover sacred tools, and awaken your highest potential.
             </p>
             
             {/* Social Proof */}

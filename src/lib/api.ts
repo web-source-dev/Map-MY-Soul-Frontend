@@ -317,6 +317,100 @@ export const recommendationsApi = {
   },
 };
 
+// Admin API functions
+export const adminApi = {
+  getOverview: async () => {
+    return await backendRequest('/api/admin/overview');
+  },
+
+  getUsers: async (params?: { page?: number; limit?: number; search?: string; role?: string }) => {
+    const queryParams = new URLSearchParams();
+    if (params?.page) queryParams.append('page', params.page.toString());
+    if (params?.limit) queryParams.append('limit', params.limit.toString());
+    if (params?.search) queryParams.append('search', params.search);
+    if (params?.role) queryParams.append('role', params.role);
+    
+    const queryString = queryParams.toString();
+    return await backendRequest(`/api/admin/users${queryString ? `?${queryString}` : ''}`);
+  },
+
+  getBookings: async (params?: { page?: number; limit?: number; status?: string; serviceId?: string }) => {
+    const queryParams = new URLSearchParams();
+    if (params?.page) queryParams.append('page', params.page.toString());
+    if (params?.limit) queryParams.append('limit', params.limit.toString());
+    if (params?.status) queryParams.append('status', params.status);
+    if (params?.serviceId) queryParams.append('serviceId', params.serviceId);
+    
+    const queryString = queryParams.toString();
+    return await backendRequest(`/api/admin/bookings${queryString ? `?${queryString}` : ''}`);
+  },
+
+  getContacts: async (params?: { page?: number; limit?: number; status?: string; contactType?: string }) => {
+    const queryParams = new URLSearchParams();
+    if (params?.page) queryParams.append('page', params.page.toString());
+    if (params?.limit) queryParams.append('limit', params.limit.toString());
+    if (params?.status) queryParams.append('status', params.status);
+    if (params?.contactType) queryParams.append('contactType', params.contactType);
+    
+    const queryString = queryParams.toString();
+    return await backendRequest(`/api/admin/contacts${queryString ? `?${queryString}` : ''}`);
+  },
+
+  updateContactStatus: async (contactId: string, status: string, responseMessage?: string) => {
+    return await backendRequest(`/api/admin/contacts/${contactId}/status`, {
+      method: 'PUT',
+      body: JSON.stringify({ status, responseMessage }),
+    });
+  },
+
+  deleteContact: async (contactId: string) => {
+    return await backendRequest(`/api/admin/contacts/${contactId}`, {
+      method: 'DELETE',
+    });
+  },
+
+  updateUserStatus: async (userId: string, isActive: boolean) => {
+    return await backendRequest(`/api/admin/users/${userId}/status`, {
+      method: 'PUT',
+      body: JSON.stringify({ isActive }),
+    });
+  },
+
+  deleteUser: async (userId: string) => {
+    return await backendRequest(`/api/admin/users/${userId}`, {
+      method: 'DELETE',
+    });
+  },
+
+  updateBookingStatus: async (bookingId: string, status: string) => {
+    return await backendRequest(`/api/admin/bookings/${bookingId}/status`, {
+      method: 'PUT',
+      body: JSON.stringify({ status }),
+    });
+  },
+
+  deleteBooking: async (bookingId: string) => {
+    return await backendRequest(`/api/admin/bookings/${bookingId}`, {
+      method: 'DELETE',
+    });
+  },
+
+  getAuditLogs: async (params?: { page?: number; limit?: number; action?: string; resource?: string }) => {
+    const queryParams = new URLSearchParams();
+    if (params?.page) queryParams.append('page', params.page.toString());
+    if (params?.limit) queryParams.append('limit', params.limit.toString());
+    if (params?.action) queryParams.append('action', params.action);
+    if (params?.resource) queryParams.append('resource', params.resource);
+    
+    const queryString = queryParams.toString();
+    return await backendRequest(`/api/admin/audit-logs${queryString ? `?${queryString}` : ''}`);
+  },
+
+  getSystemStats: async () => {
+    return await backendRequest('/api/admin/system-stats');
+  },
+};
+
 // Dashboard API functions
 export const dashboardApi = {
   getOverview: async () => {

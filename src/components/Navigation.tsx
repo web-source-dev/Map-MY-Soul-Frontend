@@ -121,20 +121,22 @@ const Navigation = () => {
                   </DropdownMenuLabel>
                   <DropdownMenuSeparator />
                   <DropdownMenuItem asChild>
-                    <Link href="/dashboard" className="flex items-center">
+                    <Link href={isAdmin ? "/admin" : "/dashboard"} className="flex items-center">
                       <User className="mr-2 h-4 w-4" />
                       <span>Dashboard</span>
                     </Link>
                   </DropdownMenuItem>
+                  {!isAdmin && (
                   <DropdownMenuItem asChild>
-                    <Link href="/dashboard/profile" className="flex items-center">
+                    <Link href="/dashboard/profile" className="flex items-center cursor-pointer">
                       <Settings className="mr-2 h-4 w-4" />
                       <span>Profile Settings</span>
                     </Link>
                   </DropdownMenuItem>
+                  )}
                   <DropdownMenuSeparator />
                   <DropdownMenuItem asChild>
-                    <LogoutButton variant="ghost" className="w-full justify-start p-0 h-auto">
+                    <LogoutButton variant="ghost" className="w-full justify-start p-2 h-auto cursor-pointer">
                       <span>Sign Out</span>
                     </LogoutButton>
                   </DropdownMenuItem>
@@ -221,18 +223,21 @@ const Navigation = () => {
                         )}
                       </div>
                     </div>
-                    <Link href="/dashboard">
+                    <Link href={isAdmin ? "/admin" : "/dashboard"}>
                       <Button variant="outline" size="sm" className="w-full rounded-lg">
                         <User className="w-4 h-4 mr-2" />
                         Dashboard
                       </Button>
                     </Link>
+                    {!isAdmin && (
                     <Link href="/dashboard/profile">
                       <Button variant="outline" size="sm" className="w-full rounded-lg">
                         <Settings className="w-4 h-4 mr-2" />
                         Profile Settings
                       </Button>
                     </Link>
+                    )}
+
                     <LogoutButton variant="outline" size="sm" className="w-full rounded-lg">
                       <LogOut className="w-4 h-4 mr-2" />
                       Sign Out

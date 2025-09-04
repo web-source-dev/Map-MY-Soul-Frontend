@@ -79,51 +79,73 @@ Refined colors with better contrast and enhanced mystical animations for immersi
 
   .dark {
     --background: 222 84% 5%;
-    --foreground: 210 40% 98%;
+    --background: 0 0% 100%;
+    --foreground: 222 84% 5%;
 
-    --card: 222 84% 5%;
-    --card-foreground: 210 40% 98%;
+    --card: 0 0% 100%;
+    --card-foreground: 222 84% 5%;
 
-    --popover: 222 84% 5%;
-    --popover-foreground: 210 40% 98%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 222 84% 5%;
 
-    --primary: 262 83% 68%;
-    --primary-foreground: 222 84% 5%;
-    --primary-glow: 262 83% 58%;
+    --primary: 262 83% 58%;
+    --primary-foreground: 0 0% 100%;
+    --primary-glow: 262 83% 68%;
 
-    --secondary: 217 33% 17%;
-    --secondary-foreground: 210 40% 98%;
+    --secondary: 210 40% 96%;
+    --secondary-foreground: 222 84% 5%;
 
-    --muted: 217 33% 17%;
-    --muted-foreground: 215 20% 65%;
+    --muted: 210 40% 96%;
+    --muted-foreground: 215 16% 47%;
 
-    --accent: 262 83% 58%;
-    --accent-foreground: 210 40% 98%;
+    --accent: 262 83% 68%;
+    --accent-foreground: 0 0% 100%;
 
-    --destructive: 0 63% 31%;
-    --destructive-foreground: 210 40% 98%;
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 100%;
 
-    --border: 217 33% 17%;
-    --input: 217 33% 17%;
-    --ring: 262 83% 68%;
+    --border: 214 32% 91%;
+    --input: 214 32% 91%;
+    --ring: 262 83% 58%;
 
-    /* Dark mode custom tokens */
-    --mystic-purple: 262 83% 68%;
-    --mystic-purple-light: 262 83% 78%;
-    --mystic-purple-dark: 262 83% 58%;
+    /* Refined spiritual design tokens */
+    --mystic-purple: 262 83% 58%;
+    --mystic-purple-light: 262 83% 68%;
+    --mystic-purple-dark: 262 83% 48%;
     --golden-warm: 43 96% 56%;
     --golden-light: 45 93% 47%;
-    --cream-soft: 222 84% 5%;
-    --earth-brown: 217 33% 17%;
-    
-    --sidebar-background: 222 84% 5%;
-    --sidebar-foreground: 210 40% 98%;
-    --sidebar-primary: 262 83% 68%;
-    --sidebar-primary-foreground: 222 84% 5%;
-    --sidebar-accent: 217 33% 17%;
-    --sidebar-accent-foreground: 210 40% 98%;
-    --sidebar-border: 217 33% 17%;
-    --sidebar-ring: 262 83% 68%;
+    --cream-soft: 60 9% 98%;
+    --earth-brown: 25 5% 84%;
+
+    /* Modern gradients */
+    --gradient-mystical: linear-gradient(135deg, hsl(var(--mystic-purple)), hsl(var(--mystic-purple-light)));
+    --gradient-warm: linear-gradient(135deg, hsl(var(--golden-warm)), hsl(var(--golden-light)));
+    --gradient-hero: linear-gradient(135deg, hsl(var(--mystic-purple) / 0.95), hsl(var(--mystic-purple-light) / 0.85));
+    --gradient-card: linear-gradient(145deg, hsl(var(--card)), hsl(var(--cream-soft)));
+
+    /* Enhanced shadows with HSL values */
+    --shadow-soft: 0 4px 20px -4px hsl(var(--mystic-purple) / 0.08), 0 25px 25px -5px hsl(var(--mystic-purple) / 0.04);
+    --shadow-mystical: 0 10px 30px -10px hsl(var(--mystic-purple) / 0.25), 0 0 40px hsl(var(--primary-glow) / 0.15);
+    --shadow-golden: 0 8px 25px -8px hsl(var(--golden-warm) / 0.3), 0 0 30px hsl(var(--golden-light) / 0.2);
+    --shadow-elevation: 0 1px 3px hsl(var(--mystic-purple) / 0.12), 0 1px 2px hsl(var(--mystic-purple) / 0.24);
+
+    /* Enhanced animation timing */
+    --transition-fast: all 0.15s ease-out;
+    --transition-normal: all 0.2s ease-out;
+    --transition-slow: all 0.3s ease-out;
+    --transition-mystical: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-smooth: all 0.3s ease-in-out;
+
+    --radius: 0.75rem;
+
+    --sidebar-background: 0 0% 98%;
+    --sidebar-foreground: 222 84% 5%;
+    --sidebar-primary: 222 84% 5%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 210 40% 96%;
+    --sidebar-accent-foreground: 222 84% 5%;
+    --sidebar-border: 214 32% 91%;
+    --sidebar-ring: 262 83% 58%;
   }
 }
 

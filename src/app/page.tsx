@@ -12,26 +12,7 @@ import { showToast } from "@/lib/utils";
 import { CustomTextInput } from "@/components/ui/custom-inputs";
 
 const Index = () => {
-  // Add CSS animations for the carousel
-  useEffect(() => {
-    const style = document.createElement('style');
-    style.textContent = `
-      @keyframes scrollLeft {
-        0% { transform: rotate(-1deg) translateX(-1669px); }
-        100% { transform: rotate(-1deg) translateX(0px); }
-      }
-      @keyframes scrollRight {
-        0% { transform: rotate(-1deg) translateX(-1020px); }
-        100% { transform: rotate(-1deg) translateX(-2000px); }
-      }
-    `;
-    document.head.appendChild(style);
-    return () => {
-      if (document.head.contains(style)) {
-        document.head.removeChild(style);
-      }
-    };
-  }, []);
+
 
   interface ProductItem {
     _id: string;
@@ -53,18 +34,10 @@ const Index = () => {
     serviceProviderEmail?: string;
   }
 
-  interface PodcastItem {
-    _id?: string;
-    title: string;
-    description?: string;
-    podcastImageUrl?: string;
-    podcastUrl?: string;
-    podcastType?: string;
-  }
+
 
   const [products, setProducts] = useState<ProductItem[]>([]);
   const [services, setServices] = useState<ServiceItem[]>([]);
-  const [podcasts, setPodcasts] = useState<PodcastItem[]>([]);
   const [newsletterEmail, setNewsletterEmail] = useState("");
   const [isNewsletterSubmitting, setIsNewsletterSubmitting] = useState(false);
 
@@ -72,15 +45,13 @@ const Index = () => {
     let isMounted = true;
     const fetchData = async () => {
       try {
-        const [productsRes, servicesRes, podcastsRes] = await Promise.all([
+        const [productsRes, servicesRes] = await Promise.all([
           catalogApi.getProducts().catch(() => ({ products: [] })),
           catalogApi.getServices().catch(() => ({ services: [] })),
-          catalogApi.getPodcasts().catch(() => ({ podcasts: [] })),
         ]);
         if (!isMounted) return;
         setProducts((productsRes as { products: ProductItem[] }).products || []);
         setServices((servicesRes as { services: ServiceItem[] }).services || []);
-        setPodcasts((podcastsRes as { podcasts: PodcastItem[] }).podcasts || []);
       } catch (e) {
         console.error('Error fetching data:', e);
       }
@@ -493,279 +464,7 @@ const Index = () => {
         </div>
       </section>
 
-      {/* Podcasts Section - Inspired by Mindvalley's auto-carousel */}
-      <section 
-        className="py-20 bg-background relative"
-        style={{
-          overflow: 'visible',
-          WebkitFontSmoothing: 'antialiased',
-          color: '#0f131a',
-          fontSize: '16px',
-          textRendering: 'optimizeLegibility',
-          WebkitTextSizeAdjust: '100%',
-          lineHeight: 1.5,
-          '--swiper-theme-color': '#007aff',
-          '--swiper-navigation-size': '44px',
-          '--vs-colors--lightest': 'rgba(60,60,60,0.26)',
-          '--vs-colors--light': 'rgba(60,60,60,0.5)',
-          '--vs-colors--dark': '#333',
-          '--vs-colors--darkest': 'rgba(0,0,0,0.15)',
-          '--vs-search-input-color': 'inherit',
-          '--vs-search-input-bg': '#fff',
-          '--vs-search-input-placeholder-color': 'inherit',
-          '--vs-font-size': '1rem',
-          '--vs-line-height': 1.4,
-          '--vs-state-disabled-bg': '#f8f8f8',
-          '--vs-state-disabled-color': 'var(--vs-colors--light)',
-          '--vs-state-disabled-controls-color': 'var(--vs-colors--light)',
-          '--vs-state-disabled-cursor': 'not-allowed',
-          '--vs-border-color': 'var(--vs-colors--lightest)',
-          '--vs-border-width': '1px',
-          '--vs-border-style': 'solid',
-          '--vs-border-radius': '4px',
-          '--vs-actions-padding': '4px 6px 0 3px',
-          '--vs-controls-color': 'var(--vs-colors--light)',
-          '--vs-controls-size': 1,
-          '--vs-controls--deselect-text-shadow': '0 1px 0 #fff',
-          '--vs-selected-bg': '#f0f0f0',
-          '--vs-selected-color': 'var(--vs-colors--dark)',
-          '--vs-selected-border-color': 'var(--vs-border-color)',
-          '--vs-selected-border-style': 'var(--vs-border-style)',
-          '--vs-selected-border-width': 'var(--vs-border-width)',
-          '--vs-dropdown-bg': '#fff',
-          '--vs-dropdown-color': 'inherit',
-          '--vs-dropdown-z-index': 1000,
-          '--vs-dropdown-min-width': '160px',
-          '--vs-dropdown-max-height': '350px',
-          '--vs-dropdown-box-shadow': '0px 3px 6px 0px var(--vs-colors--darkest)',
-          '--vs-dropdown-option-bg': '#000',
-          '--vs-dropdown-option-color': 'var(--vs-dropdown-color)',
-          '--vs-dropdown-option-padding': '3px 20px',
-          '--vs-dropdown-option--active-bg': '#5897fb',
-          '--vs-dropdown-option--active-color': '#fff',
-          '--vs-dropdown-option--deselect-bg': '#fb5858',
-          '--vs-dropdown-option--deselect-color': '#fff',
-          '--vs-transition-timing-function': 'cubic-bezier(1,0.5,0.8,1)',
-          '--vs-transition-duration': '0.15s',
-          '--vs-disabled-bg': 'var(--vs-state-disabled-bg)',
-          '--vs-disabled-color': 'var(--vs-state-disabled-color)',
-          '--vs-disabled-cursor': 'var(--vs-state-disabled-cursor)',
-          fontFamily: 'Grotesk-Regular,sans-serif',
-          fontWeight: 400,
-          border: '0 solid',
-          boxSizing: 'border-box',
-          marginTop: '1rem',
-          minHeight: 'fit-content'
-        } as React.CSSProperties}
-      >
-        {/* Header Section - Centered */}
-        <div className="max-w-7xl mx-auto container-padding mb-6 lg:mb-12">
-          <div className="w-full lg:w-4/6">
-            <div className="text-aqua-dark text-sm font-medium mb-4">
-              <p>growth in all areas</p>
-            </div>
-            <div className="text-cool-grey-700 pt-4 lg:py-5">
-              <h3 className="text-2xl md:text-3xl lg:text-4xl font-bold">
-                100+ of the world&apos;s top programs for personal growth and transformation
-              </h3>
-            </div>
-            <div className="text-cool-grey-600 hidden lg:block">
-              <p className="text-lg leading-relaxed">
-                Forge lasting transformations in your mind, body, soul, love and career with 20-minute micro-coaching sessions each day led by top-tier teachers worldwide.
-              </p>
-            </div>
-          </div>
-        </div>
 
-        {/* Auto Carousel Section - Full Viewport Width */}
-        <div className="w-full" style={{ padding: '10px 0', overflow: 'hidden', minHeight: '450px' }}>
-          <div className="mv-auto-carousel" style={{ overflow: 'visible' }}>
-            {/* First Strip - Top Row */}
-            <div 
-              id="stripFlexTop" 
-              className="--strip flex gap-4"
-              style={{
-                transform: 'rotate(-1deg) translateX(-1669px)',
-                animation: 'scrollRight 30s linear infinite',
-                transformOrigin: 'center center'
-              }}
-            >
-              {/* Dynamic Podcast Cards */}
-              {podcasts && podcasts.length > 0 && (
-                <>
-                  {podcasts.slice(0, 5).map((podcast, index) => (
-                    <div 
-                      key={`podcast-${index}`} 
-                      className="--item rounded-xl three-items w-1/5 h-48 flex-shrink-0 relative group cursor-pointer hover:scale-105 transition-transform duration-300"
-                      onClick={() => podcast.podcastUrl && window.open(podcast.podcastUrl, '_blank')}
-                    >
-                      <div className="relative overflow-hidden rounded-xl shadow-lg">
-                        <Image 
-                          src={podcast.podcastImageUrl || ""} 
-                          alt={podcast.title} 
-                          width="320" 
-                          height="400" 
-                          loading="lazy" 
-                          className="w-full h-48 object-cover rounded-xl"
-                        />
-                        {/* Gradient Overlay */}
-                        <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent rounded-xl"></div>
-                        
-                        {/* Content Overlay */}
-                        <div className="absolute inset-0 p-2 flex flex-col justify-end bg-black/20">
-                          <div className="space-y-2">
-                            <h4 className="font-bold text-xl text-white leading-tight">{podcast.title}</h4>
-                            {/* Play Button */}
-                            <div className="flex items-center space-x-2 mt-3">
-                              <div className="w-8 h-8 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center">
-                                <div className="w-0 h-0 border-l-[8px] border-l-white border-t-[6px] border-t-transparent border-b-[6px] border-b-transparent ml-1"></div>
-                              </div>
-                              <span className="text-white/80 text-xs font-medium">Listen Now</span>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  ))}
-                  {/* Duplicate cards for seamless loop */}
-                  {podcasts.slice(0, 5).map((podcast, index) => (
-                    <div 
-                      key={`podcast-duplicate-${index}`} 
-                      className="--item rounded-xl three-items w-1/5 h-48 flex-shrink-0 relative group cursor-pointer hover:scale-105 transition-transform duration-300"
-                      onClick={() => podcast.podcastUrl && window.open(podcast.podcastUrl, '_blank')}
-                    >
-                      <div className="relative overflow-hidden rounded-xl shadow-lg">
-                        <Image 
-                          src={podcast.podcastImageUrl || ""} 
-                          alt={podcast.title} 
-                          width="320" 
-                          height="400" 
-                          loading="lazy" 
-                          className="w-full h-48 object-cover rounded-xl"
-                        />
-                        {/* Gradient Overlay */}
-                        <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent rounded-xl"></div>
-                        
-                        {/* Content Overlay */}
-                        <div className="absolute inset-0 p-2 flex flex-col justify-end bg-black/20">
-                          <div className="space-y-2">
-                            <h4 className="font-bold text-xl text-white leading-tight">{podcast.title}</h4>
-                            {/* Play Button */}
-                            <div className="flex items-center space-x-2 mt-3">
-                              <div className="w-8 h-8 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center">
-                                <div className="w-0 h-0 border-l-[8px] border-l-white border-t-[6px] border-t-transparent border-b-[6px] border-b-transparent ml-1"></div>
-                              </div>
-                              <span className="text-white/80 text-xs font-medium">Listen Now</span>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  ))}
-                </>
-              )}
-            </div>
-
-            {/* Second Strip - Bottom Row */}
-            <div 
-              id="stripFlexBottom" 
-              className="--strip flex gap-4 mt-6"
-              style={{
-                transform: 'rotate(-1deg) translateX(-1020px)',
-                animation: 'scrollLeft 25s linear infinite',
-                transformOrigin: 'center center'
-              }}
-            >
-              {/* Dynamic Podcast Cards - Bottom Row */}
-              {podcasts && podcasts.length > 0 && (
-                <>
-                  {podcasts.slice(5, 10).map((podcast, index) => (
-                    <div 
-                      key={`podcast-bottom-${index}`} 
-                      className="--item rounded-xl three-items flex-shrink-0 w-100 relative group cursor-pointer hover:scale-105 transition-transform duration-300"
-                      onClick={() => podcast.podcastUrl && window.open(podcast.podcastUrl, '_blank')}
-                    >
-                      <div className="relative overflow-hidden rounded-xl shadow-lg">
-                        <Image 
-                          src={podcast.podcastImageUrl || ""} 
-                          alt={podcast.title} 
-                          width="320" 
-                          height="400" 
-                          loading="lazy" 
-                          className="w-full h-48 object-cover rounded-xl"
-                        />
-                        {/* Gradient Overlay */}
-                        <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent rounded-xl"></div>
-                        
-                        {/* Content Overlay */}
-                        <div className="absolute inset-0 p-2 flex flex-col justify-end bg-black/20">
-                          <div className="space-y-2">
-                            <h4 className="font-bold text-xl text-white leading-tight">{podcast.title}</h4>
-                            {/* Play Button */}
-                            <div className="flex items-center space-x-2 mt-3">
-                              <div className="w-8 h-8 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center">
-                                <div className="w-0 h-0 border-l-[8px] border-l-white border-t-[6px] border-t-transparent border-b-[6px] border-b-transparent ml-1"></div>
-                              </div>
-                              <span className="text-white/80 text-xs font-medium">Listen Now</span>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  ))}
-                  {/* Duplicate cards for seamless loop */}
-                  {podcasts.slice(5, 10).map((podcast, index) => (
-                    <div 
-                      key={`podcast-bottom-duplicate-${index}`} 
-                      className="--item rounded-xl three-items flex-shrink-0 w-100 relative group cursor-pointer hover:scale-105 transition-transform duration-300"
-                      onClick={() => podcast.podcastUrl && window.open(podcast.podcastUrl, '_blank')}
-                    >
-                      <div className="relative overflow-hidden rounded-xl shadow-lg">
-                        <Image 
-                          src={podcast.podcastImageUrl || ""} 
-                          alt={podcast.title} 
-                          width="320" 
-                          height="400" 
-                          loading="lazy" 
-                          className="w-full h-48 object-cover rounded-xl"
-                        />
-                        {/* Gradient Overlay */}
-                        <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent rounded-xl"></div>
-                        
-                        {/* Content Overlay */}
-                        <div className="absolute inset-0 p-2 flex flex-col justify-end bg-black/20">
-                          <div className="space-y-2">
-                            <h4 className="font-bold text-xl text-white leading-tight">{podcast.title}</h4>
-                            {/* Play Button */}
-                            <div className="flex items-center space-x-2 mt-3">
-                              <div className="w-8 h-8 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center">
-                                <div className="w-0 h-0 border-l-[8px] border-l-white border-t-[6px] border-t-transparent border-b-[6px] border-b-transparent ml-1"></div>
-                              </div>
-                              <span className="text-white/80 text-xs font-medium">Listen Now</span>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  ))}
-                </>
-              )}
-            </div>
-          </div>
-        </div>
-        
-        {/* CTA Button - Centered */}
-        <div className="max-w-7xl mx-auto container-padding text-center mt-12">
-          <Button 
-            variant="outline" 
-            size="lg"
-            className="border-2 border-primary/30 text-primary hover:bg-primary/5 hover:border-primary/50 px-8 py-4 rounded-xl font-semibold text-lg transition-all duration-200"
-          >
-            Explore All Programs
-            <ArrowRight className="w-5 h-5 ml-2" />
-          </Button>
-        </div>
-      </section>
 
       {/* Newsletter Section - Inspired by Mindvalley */}
       <section className="py-24 bg-gradient-to-br from-pink-100 via-purple-50 to-blue-100 relative overflow-hidden">
