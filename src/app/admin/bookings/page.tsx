@@ -1,16 +1,16 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { DataTable } from '@/components/admin/DataTable';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
-import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
+import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { adminApi } from '@/lib/api';
 import { showToast, formatDate } from '@/lib/utils';
-import { Eye, Edit, Trash2, CheckCircle, XCircle, Clock, Calendar } from 'lucide-react';
+import { Eye, Edit, Trash2 } from 'lucide-react';
 
-interface Booking {
+interface Booking extends Record<string, unknown> {
   _id: string;
   serviceName: string;
   servicePrice: number;
@@ -57,7 +57,14 @@ interface BookingsResponse {
 
 export default function AdminBookings() {
   const [bookings, setBookings] = useState<Booking[]>([]);
-  const [pagination, setPagination] = useState<any>(null);
+  const [pagination, setPagination] = useState<{
+    currentPage: number;
+    totalPages: number;
+    totalBookings: number;
+    totalItems: number;
+    hasNext: boolean;
+    hasPrev: boolean;
+  } | null>(null);
   const [loading, setLoading] = useState(true);
   const [currentPage, setCurrentPage] = useState(1);
   const [searchTerm, setSearchTerm] = useState('');
@@ -66,12 +73,7 @@ export default function AdminBookings() {
   const [isViewDialogOpen, setIsViewDialogOpen] = useState(false);
   const [isEditDialogOpen, setIsEditDialogOpen] = useState(false);
   const [isUpdating, setIsUpdating] = useState(false);
-
-  useEffect(() => {
-    fetchBookings();
-  }, [currentPage, searchTerm, statusFilter]);
-
-  const fetchBookings = async () => {
+  const fetchBookings = useCallback(async () => {
     try {
       setLoading(true);
       const response = await adminApi.getBookings({
@@ -82,7 +84,10 @@ export default function AdminBookings() {
 
       if (response.success) {
         setBookings(response.data.bookings);
-        setPagination(response.data.pagination);
+        setPagination({
+          ...response.data.pagination,
+          totalItems: response.data.pagination.totalBookings
+        });
       } else {
         showToast.error('Failed to fetch bookings');
       }
@@ -92,7 +97,12 @@ export default function AdminBookings() {
     } finally {
       setLoading(false);
     }
-  };
+  }, [currentPage, statusFilter]);
+  useEffect(() => {
+    fetchBookings();
+  }, [fetchBookings]);
+
+
 
   const handlePageChange = (page: number) => {
     setCurrentPage(page);
@@ -219,7 +229,7 @@ export default function AdminBookings() {
     {
       key: 'customer',
       label: 'Customer',
-      render: (value: any, row: Booking) => (
+      render: (value: unknown, row: Booking) => (
         <div>
           <div className="font-medium">{row.customerName}</div>
           <div className="text-sm text-gray-600">{row.customerEmail}</div>
@@ -232,7 +242,7 @@ export default function AdminBookings() {
     {
       key: 'service',
       label: 'Service',
-      render: (value: any, row: Booking) => (
+      render: (value: unknown, row: Booking) => (
         <div>
           <div className="font-medium">{row.serviceName}</div>
           <div className="text-sm text-gray-600">{row.serviceProviderName}</div>
@@ -243,7 +253,7 @@ export default function AdminBookings() {
     {
       key: 'booking',
       label: 'Booking Details',
-      render: (value: any, row: Booking) => (
+      render: (value: unknown, row: Booking) => (
         <div>
           <div className="font-medium">{formatDate(row.bookingDate)}</div>
           <div className="text-sm text-gray-600">{row.bookingTime}</div>
@@ -254,7 +264,7 @@ export default function AdminBookings() {
     {
       key: 'session',
       label: 'Session',
-      render: (value: any, row: Booking) => (
+      render: (value: unknown, row: Booking) => (
         <div>
           <Badge variant="outline" className="capitalize">
             {row.sessionType.replace('_', ' ')}
@@ -266,7 +276,7 @@ export default function AdminBookings() {
     {
       key: 'status',
       label: 'Status',
-      render: (value: any, row: Booking) => (
+      render: (value: unknown, row: Booking) => (
         <div className="space-y-1">
           <Badge className={getStatusColor(row.status)}>
             {row.status}
@@ -280,9 +290,9 @@ export default function AdminBookings() {
     {
       key: 'createdAt',
       label: 'Booked',
-      render: (value: string) => (
+      render: (value: unknown) => (
         <div className="text-sm text-gray-600">
-          {formatDate(value)}
+          {formatDate(value as string)}
         </div>
       )
     }
@@ -308,11 +318,11 @@ export default function AdminBookings() {
         <p className="text-gray-600 mt-1">Manage all service bookings and appointments</p>
       </div>
 
-      <DataTable
+      <DataTable<Booking>
         title="Bookings"
         data={bookings}
         columns={columns}
-        pagination={pagination}
+        pagination={pagination || { currentPage: 1, totalPages: 1, totalItems: 0, hasNext: false, hasPrev: false }}
         loading={loading}
         searchPlaceholder="Search bookings by customer name or email..."
         filters={filters}

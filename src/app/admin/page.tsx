@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
@@ -12,13 +12,9 @@ import {
   Mail, 
   Package, 
   Headphones, 
-  Heart,
   DollarSign,
-  TrendingUp,
   Activity,
-  Clock,
   UserPlus,
-  BookOpen,
   AlertCircle
 } from 'lucide-react';
 import { adminApi } from '@/lib/api';
@@ -55,12 +51,34 @@ interface AdminOverviewData {
     admin: number;
   };
   recentActivity: {
-    bookings: any[];
-    contacts: any[];
-    users: any[];
-    auditLogs: any[];
+    bookings: Array<{
+      _id: string;
+      serviceName: string;
+      customerId?: {
+        firstName: string;
+        lastName: string;
+      };
+      bookingDate: string;
+      status: string;
+    }>;
+    contacts: Array<{
+      _id: string;
+      name: string;
+      email: string;
+      createdAt: string;
+      status: string;
+    }>;
+    users: Array<{
+      _id: string;
+      firstName: string;
+      lastName: string;
+      email: string;
+      createdAt: string;
+      role: string;
+    }>;
+    auditLogs: Array<Record<string, unknown>>;
   };
-  monthlyStats: any[];
+  monthlyStats: Array<Record<string, unknown>>;
 }
 
 export default function AdminOverview() {
@@ -166,7 +184,7 @@ export default function AdminOverview() {
       <div className="flex items-center justify-between">
         <div>
           <h1 className="text-3xl font-bold text-gray-900">Admin Dashboard</h1>
-          <p className="text-gray-600 mt-1">Overview of your platform's performance and activity</p>
+          <p className="text-gray-600 mt-1">Overview of your platform&apos;s performance and activity</p>
         </div>
         <Button onClick={fetchAdminData} variant="outline">
           <Activity className="h-4 w-4 mr-2" />
@@ -368,7 +386,7 @@ export default function AdminOverview() {
               <CardContent>
                 <div className="space-y-3">
                   {data.recentActivity.bookings.length > 0 ? (
-                    data.recentActivity.bookings.map((booking: any) => (
+                    data.recentActivity.bookings.map((booking) => (
                       <div key={booking._id} className="flex items-center justify-between p-3 border rounded-lg">
                         <div>
                           <p className="font-medium">{booking.serviceName}</p>
@@ -407,7 +425,7 @@ export default function AdminOverview() {
               <CardContent>
                 <div className="space-y-3">
                   {data.recentActivity.contacts.length > 0 ? (
-                    data.recentActivity.contacts.map((contact: any) => (
+                    data.recentActivity.contacts.map((contact) => (
                       <div key={contact._id} className="flex items-center justify-between p-3 border rounded-lg">
                         <div>
                           <p className="font-medium">{contact.name}</p>
@@ -445,7 +463,7 @@ export default function AdminOverview() {
             <CardContent>
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                 {data.recentActivity.users.length > 0 ? (
-                  data.recentActivity.users.map((user: any) => (
+                  data.recentActivity.users.map((user) => (
                     <div key={user._id} className="flex items-center justify-between p-3 border rounded-lg">
                       <div>
                         <p className="font-medium">{user.firstName} {user.lastName}</p>

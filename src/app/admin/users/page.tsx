@@ -1,16 +1,14 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { DataTable } from '@/components/admin/DataTable';
 import { Badge } from '@/components/ui/badge';
-import { Button } from '@/components/ui/button';
-import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
+import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { adminApi } from '@/lib/api';
-import { showToast } from '@/lib/utils';
-import { formatDate } from '@/lib/utils';
-import { Eye, UserCheck, UserX, Trash2, Mail, Calendar } from 'lucide-react';
+import { showToast, formatDate } from '@/lib/utils';
+import { Eye, UserCheck, UserX, Trash2 } from 'lucide-react';
 
-interface User {
+interface User extends Record<string, unknown> {
   _id: string;
   firstName: string;
   lastName: string;
@@ -39,17 +37,17 @@ interface UsersResponse {
   };
 }
 
-interface ActionItem {
-  label: string;
-  icon?: React.ReactNode;
-  onClick: (row: any) => void;
-  variant?: 'default' | 'destructive' | 'outline';
-  disabled?: boolean;
-}
 
 export default function AdminUsers() {
   const [users, setUsers] = useState<User[]>([]);
-  const [pagination, setPagination] = useState<any>(null);
+  const [pagination, setPagination] = useState<{
+    currentPage: number;
+    totalPages: number;
+    totalUsers: number;
+    totalItems: number;
+    hasNext: boolean;
+    hasPrev: boolean;
+  } | undefined>(undefined);
   const [loading, setLoading] = useState(true);
   const [currentPage, setCurrentPage] = useState(1);
   const [searchTerm, setSearchTerm] = useState('');
@@ -57,11 +55,7 @@ export default function AdminUsers() {
   const [selectedUser, setSelectedUser] = useState<User | null>(null);
   const [isViewDialogOpen, setIsViewDialogOpen] = useState(false);
 
-  useEffect(() => {
-    fetchUsers();
-  }, [currentPage, searchTerm, roleFilter]);
-
-  const fetchUsers = async () => {
+  const fetchUsers = useCallback(async () => {
     try {
       setLoading(true);
       const response = await adminApi.getUsers({
@@ -73,7 +67,10 @@ export default function AdminUsers() {
 
       if (response.success) {
         setUsers(response.data.users);
-        setPagination(response.data.pagination);
+        setPagination({
+          ...response.data.pagination,
+          totalItems: response.data.pagination.totalUsers
+        });
       } else {
         showToast.error('Failed to fetch users');
       }
@@ -83,8 +80,13 @@ export default function AdminUsers() {
     } finally {
       setLoading(false);
     }
-  };
+  }, [currentPage, searchTerm, roleFilter]);
 
+  useEffect(() => {
+    fetchUsers();
+  }, [fetchUsers]);
+
+ 
   const handlePageChange = (page: number) => {
     setCurrentPage(page);
   };
@@ -158,7 +160,7 @@ export default function AdminUsers() {
       label: 'Delete User',
       icon: <Trash2 className="h-4 w-4" />,
       onClick: handleDeleteUser,
-      variant: 'destructive'
+      variant: 'destructive' as const
     }
   ];
 
@@ -166,7 +168,7 @@ export default function AdminUsers() {
     {
       key: 'name',
       label: 'Name',
-      render: (value: any, row: User) => (
+      render: (value: unknown, row: User) => (
         <div>
           <div className="font-medium">
             {row.firstName} {row.lastName}
@@ -182,23 +184,23 @@ export default function AdminUsers() {
     {
       key: 'email',
       label: 'Email',
-      render: (value: string) => (
-        <div className="text-sm">{value}</div>
+      render: (value: unknown) => (
+        <div className="text-sm">{value as string}</div>
       )
     },
     {
       key: 'role',
       label: 'Role',
-      render: (value: string) => (
-        <Badge variant={value === 'admin' ? 'default' : 'secondary'}>
-          {value}
+      render: (value: unknown) => (
+        <Badge variant={(value as string) === 'admin' ? 'default' : 'secondary'}>
+          {value as string}
         </Badge>
       )
     },
     {
       key: 'status',
       label: 'Status',
-      render: (value: any, row: User) => (
+      render: (value: unknown, row: User) => (
         <div className="space-y-1">
           <Badge variant={row.isActive ? 'default' : 'destructive'}>
             {row.isActive ? 'Active' : 'Inactive'}
@@ -214,9 +216,9 @@ export default function AdminUsers() {
     {
       key: 'createdAt',
       label: 'Joined',
-      render: (value: string) => (
+      render: (value: unknown) => (
         <div className="text-sm text-gray-600">
-          {formatDate(value)}
+          {formatDate(value as string)}
         </div>
       )
     }
@@ -240,15 +242,15 @@ export default function AdminUsers() {
         <p className="text-gray-600 mt-1">Manage all registered users on the platform</p>
       </div>
 
-      <DataTable
+      <DataTable<User>
         title="Users"
         data={users}
         columns={columns}
-        pagination={pagination}
+        pagination={pagination || { currentPage: 1, totalPages: 1, totalItems: 0, hasNext: false, hasPrev: false }}
         loading={loading}
         searchPlaceholder="Search users by name or email..."
         filters={filters}
-        actions={actions as ActionItem[]}
+        actions={actions}
         onPageChange={handlePageChange}
         onSearch={handleSearch}
         onFilterChange={handleFilterChange}

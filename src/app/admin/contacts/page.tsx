@@ -1,17 +1,17 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { DataTable } from '@/components/admin/DataTable';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
-import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
+import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { Textarea } from '@/components/ui/textarea';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { adminApi } from '@/lib/api';
 import { showToast, formatDate } from '@/lib/utils';
-import { MessageSquare, Eye, Edit, Trash2, Mail, Phone, Calendar } from 'lucide-react';
+import { Eye, Edit, Trash2 } from 'lucide-react';
 
-interface Contact {
+interface Contact extends Record<string, unknown> {
   _id: string;
   name: string;
   email: string;
@@ -40,17 +40,17 @@ interface ContactsResponse {
   };
 }
 
-interface ActionItem {
-  label: string;
-  icon?: React.ReactNode;
-  onClick: (row: any) => void;
-  variant?: 'default' | 'destructive' | 'outline';
-  disabled?: boolean;
-}
 
 export default function AdminContacts() {
   const [contacts, setContacts] = useState<Contact[]>([]);
-  const [pagination, setPagination] = useState<any>(null);
+  const [pagination, setPagination] = useState<{
+    currentPage: number;
+    totalPages: number;
+    totalContacts: number;
+    totalItems: number;
+    hasNext: boolean;
+    hasPrev: boolean;
+  } | undefined>(undefined);
   const [loading, setLoading] = useState(true);
   const [currentPage, setCurrentPage] = useState(1);
   const [searchTerm, setSearchTerm] = useState('');
@@ -61,11 +61,7 @@ export default function AdminContacts() {
   const [isEditDialogOpen, setIsEditDialogOpen] = useState(false);
   const [isUpdating, setIsUpdating] = useState(false);
 
-  useEffect(() => {
-    fetchContacts();
-  }, [currentPage, searchTerm, statusFilter, contactTypeFilter]);
-
-  const fetchContacts = async () => {
+  const fetchContacts = useCallback(async () => {
     try {
       setLoading(true);
       const response = await adminApi.getContacts({
@@ -77,7 +73,10 @@ export default function AdminContacts() {
 
       if (response.success) {
         setContacts(response.data.contacts);
-        setPagination(response.data.pagination);
+        setPagination({
+          ...response.data.pagination,
+          totalItems: response.data.pagination.totalContacts
+        });
       } else {
         showToast.error('Failed to fetch contacts');
       }
@@ -87,7 +86,11 @@ export default function AdminContacts() {
     } finally {
       setLoading(false);
     }
-  };
+  }, [currentPage, statusFilter, contactTypeFilter]);
+
+  useEffect(() => {
+    fetchContacts();
+  }, [fetchContacts]);
 
   const handlePageChange = (page: number) => {
     setCurrentPage(page);
@@ -206,7 +209,7 @@ export default function AdminContacts() {
       label: 'Delete Contact',
       icon: <Trash2 className="h-4 w-4" />,
       onClick: handleDeleteContact,
-      variant: 'destructive'
+      variant: 'destructive' as const
     }
   ];
 
@@ -214,7 +217,7 @@ export default function AdminContacts() {
     {
       key: 'name',
       label: 'Contact',
-      render: (value: any, row: Contact) => (
+      render: (value: unknown, row: Contact) => (
         <div>
           <div className="font-medium">{row.name}</div>
           <div className="text-sm text-gray-600">{row.email}</div>
@@ -224,43 +227,43 @@ export default function AdminContacts() {
     {
       key: 'subject',
       label: 'Subject',
-      render: (value: string) => (
-        <div className="text-sm font-medium">{value}</div>
+      render: (value: unknown) => (
+        <div className="text-sm font-medium">{value as string}</div>
       )
     },
     {
       key: 'contactType',
       label: 'Type',
-      render: (value: string) => (
+      render: (value: unknown) => (
         <Badge variant="outline" className="capitalize">
-          {value.replace('_', ' ')}
+          {(value as string).replace('_', ' ')}
         </Badge>
       )
     },
     {
       key: 'priority',
       label: 'Priority',
-      render: (value: string) => (
-        <Badge className={getPriorityColor(value)}>
-          {value}
+      render: (value: unknown) => (
+        <Badge className={getPriorityColor(value as string)}>
+          {value as string}
         </Badge>
       )
     },
     {
       key: 'status',
       label: 'Status',
-      render: (value: string) => (
-        <Badge className={getStatusColor(value)}>
-          {value.replace('_', ' ')}
+      render: (value: unknown) => (
+        <Badge className={getStatusColor(value as string)}>
+          {(value as string).replace('_', ' ')}
         </Badge>
       )
     },
     {
       key: 'createdAt',
       label: 'Received',
-      render: (value: string) => (
+      render: (value: unknown) => (
         <div className="text-sm text-gray-600">
-          {formatDate(value)}
+          {formatDate(value as string)}
         </div>
       )
     }
@@ -298,7 +301,7 @@ export default function AdminContacts() {
         <p className="text-gray-600 mt-1">Manage and respond to contact form submissions</p>
       </div>
 
-      <DataTable
+      <DataTable<Contact>
         title="Contacts"
         data={contacts}
         columns={columns}
@@ -306,7 +309,7 @@ export default function AdminContacts() {
         loading={loading}
         searchPlaceholder="Search contacts by name or email..."
         filters={filters}
-        actions={actions as ActionItem[]}
+        actions={actions}
         onPageChange={handlePageChange}
         onSearch={handleSearch}
         onFilterChange={handleFilterChange}

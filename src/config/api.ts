@@ -3,7 +3,7 @@ export const API_CONFIG = {
   // Backend base URL - can be overridden by environment variables
   BASE_URL: process.env.NEXT_PUBLIC_API_URL || 'https://map-my-soul.onrender.com/api',
   BACKEND_URL: process.env.BACKEND_URL || 'https://map-my-soul.onrender.com',
-   
+  
   // API endpoints
   ENDPOINTS: {
     AUTH: {

@@ -39,7 +39,7 @@ interface AuditLog {
   userAgent: string;
   country?: string;
   timestamp: string;
-  details: any;
+  details: Record<string, unknown>;
   success: boolean;
   errorMessage?: string;
   responseTime?: number;
@@ -79,8 +79,8 @@ interface SystemStatsResponse {
 
 export default function AdminAuditLogs() {
   const [logs, setLogs] = useState<AuditLog[]>([]);
-  const [systemStats, setSystemStats] = useState<any>(null);
-  const [pagination, setPagination] = useState<any>(null);
+  const [systemStats, setSystemStats] = useState<SystemStatsResponse['data'] | null>(null);
+  const [pagination, setPagination] = useState<AuditLogsResponse['data']['pagination'] | null>(null);
   const [loading, setLoading] = useState(true);
   const [currentPage, setCurrentPage] = useState(1);
   const [actionFilter, setActionFilter] = useState('');

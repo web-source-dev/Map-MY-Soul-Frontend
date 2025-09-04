@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
-import { Badge } from '@/components/ui/badge';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { 
   DropdownMenu,
@@ -20,38 +19,27 @@ import {
   RefreshCw,
   Download,
   MoreHorizontal,
-  Eye,
-  Edit,
-  Trash2,
-  UserCheck,
-  UserX,
-  Mail,
-  Phone,
-  Calendar,
-  CheckCircle,
-  XCircle,
-  Clock
 } from 'lucide-react';
 
-interface Column {
+interface Column<T = Record<string, unknown>> {
   key: string;
   label: string;
-  render?: (value: any, row: any) => React.ReactNode;
+  render?: (value: unknown, row: T) => React.ReactNode;
   sortable?: boolean;
 }
 
-interface ActionItem {
-  label: string | ((row: any) => string);
-  icon?: React.ReactNode | ((row: any) => React.ReactNode);
-  onClick: (row: any) => void;
-  variant?: 'default' | 'destructive' | 'outline' | ((row: any) => 'default' | 'destructive' | 'outline');
-  disabled?: boolean | ((row: any) => boolean);
+interface ActionItem<T = Record<string, unknown>> {
+  label: string | ((row: T) => string);
+  icon?: React.ReactNode | ((row: T) => React.ReactNode);
+  onClick: (row: T) => void;
+  variant?: 'default' | 'destructive' | 'outline' | ((row: T) => 'default' | 'destructive' | 'outline');
+  disabled?: boolean | ((row: T) => boolean);
 }
 
-interface DataTableProps {
+interface DataTableProps<T = Record<string, unknown>> {
   title: string;
-  data: any[];
-  columns: Column[];
+  data: T[];
+  columns: Column<T>[];
   pagination?: {
     currentPage: number;
     totalPages: number;
@@ -66,7 +54,7 @@ interface DataTableProps {
     label: string;
     options: { value: string; label: string }[];
   }[];
-  actions?: ActionItem[];
+  actions?: ActionItem<T>[];
   onPageChange?: (page: number) => void;
   onSearch?: (search: string) => void;
   onFilterChange?: (filterKey: string, value: string) => void;
@@ -75,7 +63,7 @@ interface DataTableProps {
   emptyMessage?: string;
 }
 
-export const DataTable: React.FC<DataTableProps> = ({
+export const DataTable = <T extends Record<string, unknown> = Record<string, unknown>>({
   title,
   data,
   columns,
@@ -90,7 +78,7 @@ export const DataTable: React.FC<DataTableProps> = ({
   onRefresh,
   onExport,
   emptyMessage = "No data available"
-}) => {
+}: DataTableProps<T>) => {
   const [searchValue, setSearchValue] = useState('');
   const [filterValues, setFilterValues] = useState<Record<string, string>>({});
 
@@ -106,14 +94,14 @@ export const DataTable: React.FC<DataTableProps> = ({
     onFilterChange?.(filterKey, apiValue);
   };
 
-  const renderCell = (column: Column, row: any) => {
+  const renderCell = (column: Column<T>, row: T): React.ReactNode => {
     const value = row[column.key];
     
     if (column.render) {
       return column.render(value, row);
     }
     
-    return value;
+    return value as React.ReactNode;
   };
 
   return (
@@ -239,13 +227,13 @@ export const DataTable: React.FC<DataTableProps> = ({
                 ) : (
                   data.map((row, index) => (
                     <tr 
-                      key={row._id || index} 
+                      key={('_id' in row ? (row._id as string) : undefined) || index} 
                       className="hover:bg-gradient-to-r hover:from-purple-50 hover:to-blue-50 transition-all duration-200 group"
                     >
                       {columns.map((column) => (
                         <td key={column.key} className="py-4 px-6 text-sm text-gray-700">
                           <div className="flex items-center">
-                            {renderCell(column, row)}
+                            {renderCell(column, row as T)}
                           </div>
                         </td>
                       ))}
