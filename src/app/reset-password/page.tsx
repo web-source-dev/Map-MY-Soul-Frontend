@@ -65,11 +65,11 @@ function ResetPasswordPage() {
 
   if (!tokenValid) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-purple-50 via-pink-50 to-indigo-50 flex items-center justify-center p-4">
+      <div className="min-h-screen bg-gradient-to-br from-primary-indigo/10 via-primary-lavender/10 to-secondary-vivid/10 flex items-center justify-center p-4">
         <Card className="w-full max-w-md mx-auto">
           <CardHeader className="space-y-1">
             <CardTitle className="text-2xl font-bold text-center flex items-center justify-center gap-2">
-              <AlertCircle className="h-6 w-6 text-red-500" />
+              <AlertCircle className="h-6 w-6 text-secondary-pop" />
               Invalid Reset Link
             </CardTitle>
             <CardDescription className="text-center">
@@ -77,8 +77,8 @@ function ResetPasswordPage() {
             </CardDescription>
           </CardHeader>
           <CardContent className="space-y-4">
-            <div className="p-4 bg-red-50 border border-red-200 rounded-md">
-              <p className="text-red-800">
+            <div className="p-4 bg-secondary-pop/10 border border-secondary-pop/30 rounded-md">
+              <p className="text-secondary-pop">
                 Please check your email for a valid reset link or request a new password reset.
               </p>
             </div>
@@ -94,11 +94,11 @@ function ResetPasswordPage() {
 
   if (success) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-purple-50 via-pink-50 to-indigo-50 flex items-center justify-center p-4">
+      <div className="min-h-screen bg-gradient-to-br from-primary-indigo/10 via-primary-lavender/10 to-secondary-vivid/10 flex items-center justify-center p-4">
         <Card className="w-full max-w-md mx-auto">
           <CardHeader className="space-y-1">
             <CardTitle className="text-2xl font-bold text-center flex items-center justify-center gap-2">
-              <CheckCircle className="h-6 w-6 text-green-500" />
+              <CheckCircle className="h-6 w-6 text-support-pastel" />
               Password Reset Successful
             </CardTitle>
             <CardDescription className="text-center">
@@ -106,8 +106,8 @@ function ResetPasswordPage() {
             </CardDescription>
           </CardHeader>
           <CardContent className="space-y-4">
-            <div className="p-4 bg-green-50 border border-green-200 rounded-md">
-              <p className="text-green-800">
+            <div className="p-4 bg-support-pastel/10 border border-support-pastel/30 rounded-md">
+              <p className="text-support-pastel">
                 You can now sign in with your new password.
               </p>
             </div>
@@ -122,7 +122,7 @@ function ResetPasswordPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-purple-50 via-pink-50 to-indigo-50 flex items-center justify-center p-4">
+    <div className="min-h-screen bg-gradient-to-br from-primary-indigo/10 via-primary-lavender/10 to-secondary-vivid/10 flex items-center justify-center p-4">
       <Card className="w-full max-w-md mx-auto">
         <CardHeader className="space-y-1">
           <CardTitle className="text-2xl font-bold text-center">Reset Password</CardTitle>
@@ -226,11 +226,11 @@ export default function ResetPasswordPageWrapper() {
       <div className="w-full max-w-md">
         <div className="bg-white rounded-lg shadow-lg p-8">
           <div className="animate-pulse">
-            <div className="h-8 bg-gray-200 rounded mb-4"></div>
-            <div className="h-4 bg-gray-200 rounded mb-2"></div>
-            <div className="h-4 bg-gray-200 rounded mb-6"></div>
-            <div className="h-10 bg-gray-200 rounded mb-4"></div>
-            <div className="h-10 bg-gray-200 rounded"></div>
+            <div className="h-8 bg-foreground/10 rounded mb-4"></div>
+            <div className="h-4 bg-foreground/10 rounded mb-2"></div>
+            <div className="h-4 bg-foreground/10 rounded mb-6"></div>
+            <div className="h-10 bg-foreground/10 rounded mb-4"></div>
+            <div className="h-10 bg-foreground/10 rounded"></div>
           </div>
         </div>
       </div>

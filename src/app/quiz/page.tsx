@@ -11,7 +11,7 @@ import { CustomDateInput } from "@/components/ui/custom-date-input";
 import { CustomTimeInput } from "@/components/ui/custom-time-input";
 import { useState, useEffect, useCallback } from "react";
 import { useRouter } from "next/navigation";
-import { Sparkles, ArrowRight, ArrowLeft, Calendar, Clock, MapPin, User } from "lucide-react";
+import { ArrowRight, ArrowLeft, Calendar, Clock, MapPin, User } from "lucide-react";
 import CitySearch from "@/components/CitySearch";
 import TimezoneSelector from "@/components/TimezoneSelector";
 import { getCurrentTimezone } from "@/lib/timezone";
@@ -406,9 +406,6 @@ const Quiz = () => {
     }
   };
 
-  // Add a small delay to show the skip animation
-  const [skipMessage, setSkipMessage] = useState<string | null>(null);
-
   const renderQuestionInput = () => {
     const currentQ = questions[currentQuestion];
     const currentAnswer = answers[currentQ.id];
@@ -436,7 +433,7 @@ const Quiz = () => {
                 placeholder="Select birth time"
                 format="12h"
               />
-              <p className="text-xs text-muted-foreground">This helps us calculate your astrological profile more accurately</p>
+              <p className="text-xs text-foreground/60">This helps us calculate your astrological profile more accurately</p>
             </div>
 
             <div className="space-y-2">
@@ -454,7 +451,7 @@ const Quiz = () => {
                 label=""
                 required
               />
-              <p className="text-xs text-muted-foreground">Select your birth city for accurate timezone calculations</p>
+              <p className="text-xs text-foreground/60">Select your birth city for accurate timezone calculations</p>
             </div>
 
             <div className="space-y-2">
@@ -470,15 +467,15 @@ const Quiz = () => {
                 required={false}
                 showCurrent={true}
               />
-              <p className="text-xs text-muted-foreground">
+              <p className="text-xs text-foreground/60">
                 Select the timezone for your birth location. This ensures accurate astrological calculations.
               </p>
             </div>
 
             {birthData.dob && birthData.birthTime && birthData.birthPlace && (
-              <div className="p-4 bg-blue-50 border border-blue-200 rounded-lg">
-                <div className="text-sm font-medium text-blue-800 mb-2">Birth Information Summary</div>
-                <div className="text-xs text-blue-700 space-y-1">
+              <div className="p-4 bg-primary-indigo/5 border border-primary-indigo/20 rounded-lg">
+                <div className="text-sm font-medium text-primary-indigo mb-2">Birth Information Summary</div>
+                <div className="text-xs text-primary-indigo/80 space-y-1">
                   <div>Date: {new Date(birthData.dob).toLocaleDateString()}</div>
                   <div>Time: {birthData.birthTime} (Local Time)</div>
                   <div>Place: {birthData.birthPlace}</div>
@@ -501,11 +498,11 @@ const Quiz = () => {
                 className="space-y-3"
               >
                 {["Under $50", "$50–$100", "$100–$200", "$200+"].map((option, index) => (
-                  <div key={index} className="flex items-center space-x-3 p-3 rounded-lg hover:bg-muted/50 transition-colors duration-200">
+                  <div key={index} className="flex items-center space-x-3 p-3 rounded-lg hover:bg-foreground/5 transition-colors duration-200">
                     <RadioGroupItem value={option} id={`budget-${index}`} />
                     <Label
                       htmlFor={`budget-${index}`}
-                      className="text-sm cursor-pointer hover:text-primary transition-colors duration-200 flex-1"
+                      className="text-sm cursor-pointer hover:text-primary-indigo transition-colors duration-200 flex-1"
                     >
                       {option}
                     </Label>
@@ -522,11 +519,11 @@ const Quiz = () => {
                 className="space-y-3"
               >
                 {["Less than 1 hour", "1–2 hours", "3–5 hours", "5+ hours"].map((option, index) => (
-                  <div key={index} className="flex items-center space-x-3 p-3 rounded-lg hover:bg-muted/50 transition-colors duration-200">
+                  <div key={index} className="flex items-center space-x-3 p-3 rounded-lg hover:bg-foreground/5 transition-colors duration-200">
                     <RadioGroupItem value={option} id={`time-${index}`} />
                     <Label
                       htmlFor={`time-${index}`}
-                      className="text-sm cursor-pointer hover:text-primary transition-colors duration-200 flex-1"
+                      className="text-sm cursor-pointer hover:text-primary-indigo transition-colors duration-200 flex-1"
                     >
                       {option}
                     </Label>
@@ -543,11 +540,11 @@ const Quiz = () => {
                 className="space-y-3"
               >
                 {["In-person", "Online (Zoom, video call)", "Either is fine"].map((option, index) => (
-                  <div key={index} className="flex items-center space-x-3 p-3 rounded-lg hover:bg-muted/50 transition-colors duration-200">
+                  <div key={index} className="flex items-center space-x-3 p-3 rounded-lg hover:bg-foreground/5 transition-colors duration-200">
                     <RadioGroupItem value={option} id={`session-${index}`} />
                     <Label
                       htmlFor={`session-${index}`}
-                      className="text-sm cursor-pointer hover:text-primary transition-colors duration-200 flex-1"
+                      className="text-sm cursor-pointer hover:text-primary-indigo transition-colors duration-200 flex-1"
                     >
                       {option}
                     </Label>
@@ -564,18 +561,18 @@ const Quiz = () => {
           <div className="space-y-6">
             <div className="space-y-2">
               <Label className="text-sm font-medium">Financial Support</Label>
-              <p className="text-xs text-muted-foreground mb-3">Are you currently facing financial hardship or other challenges that may qualify you for free or subsidized therapy?</p>
+              <p className="text-xs text-foreground/60 mb-3">Are you currently facing financial hardship or other challenges that may qualify you for free or subsidized therapy?</p>
               <RadioGroup
                 value={finalPrefData.eligibleNonprofit || ""}
                 onValueChange={(value) => handleAnswer({ ...finalPrefData, eligibleNonprofit: value })}
                 className="space-y-3"
               >
                 {["Yes", "No"].map((option, index) => (
-                  <div key={index} className="flex items-center space-x-3 p-3 rounded-lg hover:bg-muted/50 transition-colors duration-200">
+                  <div key={index} className="flex items-center space-x-3 p-3 rounded-lg hover:bg-foreground/5 transition-colors duration-200">
                     <RadioGroupItem value={option} id={`nonprofit-${index}`} />
                     <Label
                       htmlFor={`nonprofit-${index}`}
-                      className="text-sm cursor-pointer hover:text-primary transition-colors duration-200 flex-1"
+                      className="text-sm cursor-pointer hover:text-primary-indigo transition-colors duration-200 flex-1"
                     >
                       {option}
                     </Label>
@@ -598,18 +595,18 @@ const Quiz = () => {
 
             <div className="space-y-2">
               <Label className="text-sm font-medium">Product Recommendations</Label>
-              <p className="text-xs text-muted-foreground mb-3">Would you like to receive product recommendations (e.g., crystals, wellness tools) alongside your service suggestions?</p>
+              <p className="text-xs text-foreground/60 mb-3">Would you like to receive product recommendations (e.g., crystals, wellness tools) alongside your service suggestions?</p>
               <RadioGroup
                 value={finalPrefData.productInterest || ""}
                 onValueChange={(value) => handleAnswer({ ...finalPrefData, productInterest: value })}
                 className="space-y-3"
               >
                 {["Yes, please", "No, just services"].map((option, index) => (
-                  <div key={index} className="flex items-center space-x-3 p-3 rounded-lg hover:bg-muted/50 transition-colors duration-200">
+                  <div key={index} className="flex items-center space-x-3 p-3 rounded-lg hover:bg-foreground/5 transition-colors duration-200">
                     <RadioGroupItem value={option} id={`product-${index}`} />
                     <Label
                       htmlFor={`product-${index}`}
-                      className="text-sm cursor-pointer hover:text-primary transition-colors duration-200 flex-1"
+                      className="text-sm cursor-pointer hover:text-primary-indigo transition-colors duration-200 flex-1"
                     >
                       {option}
                     </Label>
@@ -630,7 +627,7 @@ const Quiz = () => {
               placeholder="Select date"
             />
             {currentAnswer?.value && (
-              <p className="text-xs text-muted-foreground">
+              <p className="text-xs text-foreground/60">
                 Selected: {new Date(currentAnswer.value as string).toLocaleDateString()}
               </p>
             )}
@@ -647,7 +644,7 @@ const Quiz = () => {
               format="24h"
             />
             {currentAnswer?.value && (
-              <p className="text-xs text-muted-foreground">
+              <p className="text-xs text-foreground/60">
                 Selected: {currentAnswer.value as string}
               </p>
             )}
@@ -672,11 +669,11 @@ const Quiz = () => {
             className="space-y-4"
           >
             {currentQ.options?.map((option, index) => (
-              <div key={index} className="flex items-center space-x-3 p-3 rounded-lg hover:bg-muted/50 transition-colors duration-200">
+              <div key={index} className="flex items-center space-x-3 p-3 rounded-lg hover:bg-foreground/5 transition-colors duration-200">
                 <RadioGroupItem value={option} id={`option-${index}`} />
                 <Label
                   htmlFor={`option-${index}`}
-                  className="text-sm cursor-pointer hover:text-primary transition-colors duration-200 flex-1"
+                  className="text-sm cursor-pointer hover:text-primary-indigo transition-colors duration-200 flex-1"
                 >
                   {option}
                 </Label>
@@ -690,7 +687,7 @@ const Quiz = () => {
         return (
           <div className="space-y-4">
             {currentQ.options?.map((option, index) => (
-              <div key={index} className="flex items-center space-x-3 p-3 rounded-lg hover:bg-muted/50 transition-colors duration-200">
+              <div key={index} className="flex items-center space-x-3 p-3 rounded-lg hover:bg-foreground/5 transition-colors duration-200">
                 <Checkbox
                   id={`option-${index}`}
                   checked={selectedOptions.includes(option)}
@@ -698,14 +695,14 @@ const Quiz = () => {
                 />
                 <Label
                   htmlFor={`option-${index}`}
-                  className="text-sm cursor-pointer hover:text-primary transition-colors duration-200 flex-1"
+                  className="text-sm cursor-pointer hover:text-primary-indigo transition-colors duration-200 flex-1"
                 >
                   {option}
                 </Label>
               </div>
             ))}
             {currentQ.maxSelect && (
-              <p className="text-xs text-muted-foreground mt-2">
+              <p className="text-xs text-foreground/60 mt-2">
                 Choose up to {currentQ.maxSelect} options
               </p>
             )}
@@ -726,23 +723,15 @@ const Quiz = () => {
         onClose={() => setShowLoginPrompt(false)}
         action="quiz"
       />
-      <section className="section-padding min-h-[70vh] flex items-center">
+      <section className="min-h-[60vh] flex items-center py-10">
         <div className="max-w-3xl mx-auto container-padding">
-          <div className="text-center mb-12 fade-in">
-            <div className="w-16 h-16 bg-primary/10 rounded-2xl flex items-center justify-center mx-auto mb-6">
-              <Sparkles className="w-8 h-8 text-primary" />
-            </div>
+          <div className="text-center mb-6 fade-in">
             <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-foreground mb-6">
               Soul Path Discovery Quiz
             </h1>
-            <p className="text-lg text-muted-foreground">
+            <p className="text-lg text-foreground/60">
               Answer a few questions to find your perfect healing journey
             </p>
-            {skipMessage && (
-              <div className="mt-4 p-3 bg-primary/10 border border-primary/20 rounded-lg">
-                <p className="text-sm text-primary font-medium">{skipMessage}</p>
-              </div>
-            )}
           </div>
           <Card>
             <CardHeader>
@@ -756,9 +745,9 @@ const Quiz = () => {
                     const isCompleted = answers[question.id];
 
                     return (
-                      <div key={index} className={`w-2 h-2 rounded-full transition-all duration-200 ${!isVisible ? 'bg-gray-300 opacity-30' :
-                        isCurrent ? 'bg-primary' :
-                          isCompleted ? 'bg-primary/60' : 'bg-muted'
+                      <div key={index} className={`w-2 h-2 rounded-full transition-all duration-200 ${!isVisible ? 'bg-foreground/20 opacity-30' :
+                        isCurrent ? 'bg-primary-indigo' :
+                          isCompleted ? 'bg-primary-indigo/60' : 'bg-foreground/30'
                         }`} />
                     );
                   })}
@@ -774,8 +763,8 @@ const Quiz = () => {
 
               {/* Show authentication message on last question */}
               {getVisibleQuestions().findIndex(q => q.id === questions[currentQuestion].id) === getVisibleQuestions().length - 1 && !isAuthenticated && (
-                <div className="mt-4 p-3 bg-amber-50 border border-amber-200 rounded-lg">
-                  <p className="text-sm text-amber-800">
+                <div className="mt-4 p-3 bg-support-pastel/10 border border-support-pastel/30 rounded-lg">
+                  <p className="text-sm text-support-dark">
                     Please sign in to get your personalized results and save your recommendations.
                   </p>
                 </div>
@@ -794,7 +783,7 @@ const Quiz = () => {
                 <Button
                   onClick={nextQuestion}
                   disabled={!canProceed() || isSubmitting}
-                  className="bg-primary hover:bg-primary/90 text-primary-foreground font-semibold rounded-lg transition-all duration-200"
+                  className="bg-primary-indigo hover:bg-primary-indigo/90 text-background font-semibold rounded-lg transition-all duration-200"
                 >
                   {isSubmitting ? (
                     <>

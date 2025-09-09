@@ -26,8 +26,8 @@ const WishlistDrawer = () => {
   return (
     <Sheet open={isOpen} onOpenChange={setIsOpen}>
       <SheetTrigger asChild>
-        <Button variant="ghost" size="sm" className="rounded-lg relative">
-          <Heart className="w-4 h-4" />
+        <Button variant="ghost" size="sm" className="rounded-lg relative border border-secondary-pop">
+          <Heart className="w-4 h-4 text-secondary-pop" />
           {wishlistCount > 0 && (
             <Badge 
               variant="destructive" 
@@ -49,9 +49,9 @@ const WishlistDrawer = () => {
         <div className="flex flex-col h-full min-h-0">
           {wishlist.length === 0 ? (
             <div className="flex-1 flex flex-col items-center justify-center text-center py-12">
-              <Heart className="w-16 h-16 text-muted-foreground mb-4" />
+              <Heart className="w-16 h-16 text-foreground/60 mb-4" />
               <h3 className="text-lg font-semibold text-foreground mb-2">Your wishlist is empty</h3>
-              <p className="text-muted-foreground">Save products you love for later</p>
+              <p className="text-foreground/60">Save products you love for later</p>
             </div>
           ) : (
             <>
@@ -69,7 +69,7 @@ const WishlistDrawer = () => {
                     
                     <div className="flex-1 min-w-0">
                       <h4 className="font-medium text-sm truncate">{item.name}</h4>
-                      <p className="text-sm text-muted-foreground">${item.price}</p>
+                      <p className="text-sm text-foreground/60">${item.price}</p>
                       
                       <div className="flex items-center gap-2 mt-2">
                         <Button
@@ -86,7 +86,7 @@ const WishlistDrawer = () => {
                         <Button
                           variant="ghost"
                           size="sm"
-                          className="h-8 w-8 p-0 text-destructive hover:text-destructive"
+                          className="h-8 w-8 p-0 text-secondary-pop hover:text-secondary-pop"
                           onClick={() => removeFromWishlist(item.productId)}
                           disabled={loading}
                         >

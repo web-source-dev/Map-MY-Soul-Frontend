@@ -5,19 +5,22 @@ import { useAuth } from '@/contexts/AuthContext';
 import { useRouter } from 'next/navigation';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { Badge } from '@/components/ui/badge';
+import { Separator } from '@/components/ui/separator';
 import { 
   Heart, 
   Trash2, 
   ShoppingCart, 
   Package, 
   Star,
-  Sparkles,
+  ArrowRight,
+  CreditCard,
+  Truck
 } from 'lucide-react';
 import { useCartWishlist } from '@/contexts/CartWishlistContext';
 import { showToast } from '@/lib/utils';
 import Link from 'next/link';
 import Image from 'next/image';
+import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip';
 
 interface WishlistItem {
   productId: string;
@@ -86,20 +89,28 @@ export default function WishlistPage() {
     }
   };
 
-  const calculateTotalValue = () => {
-    return wishlist.reduce((total, item) => total + item.price, 0);
+  const handleMoveAllToCart = async () => {
+    try {
+      for (const item of wishlist) {
+        if (!isInCart(item.productId)) {
+          await handleMoveToCart(item);
+        }
+      }
+      showToast.success('All items moved to cart');
+    } catch (error) {
+      console.error('Error moving all to cart:', error);
+      showToast.error('Failed to move all items');
+    }
   };
 
-  const getRecentlyAdded = () => {
-    return wishlist
-      .sort((a, b) => new Date(b.addedAt).getTime() - new Date(a.addedAt).getTime())
-      .slice(0, 3);
+  const calculateTotalValue = () => {
+    return wishlist.reduce((total, item) => total + item.price, 0);
   };
 
   if (loading || loadingWishlist) {
     return (
       <div className="min-h-screen flex items-center justify-center">
-        <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-purple-600"></div>
+        <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-primary-indigo"></div>
       </div>
     );
   }
@@ -114,78 +125,31 @@ export default function WishlistPage() {
       <div className="mb-8">
         <div className="flex items-center justify-between">
           <div>
-            <h1 className="text-4xl font-bold text-gray-900 mb-2">My Wishlist</h1>
-            <p className="text-gray-600 text-lg">
+            <h1 className="text-4xl font-bold text-foreground mb-2">My Wishlist</h1>
+            <p className="text-foreground/70 text-lg">
               Save items you love for later
             </p>
           </div>
-          <Button asChild className="bg-purple-600 hover:bg-purple-700">
+          <Button asChild className="bg-primary-indigo hover:bg-primary-indigo/90">
             <Link href="/products">
-              Discover More
+              Continue Shopping
             </Link>
           </Button>
         </div>
       </div>
 
-      {/* Wishlist Stats */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-        <Card className="bg-gradient-to-r from-pink-50 to-purple-50 border-pink-200">
-          <CardContent className="p-6">
-            <div className="flex items-center space-x-3">
-              <div className="p-3 bg-pink-100 rounded-full">
-                <Heart className="h-6 w-6 text-pink-600" />
-              </div>
-              <div>
-                <p className="text-sm text-gray-600">Total Items</p>
-                <p className="text-2xl font-bold text-gray-900">{wishlistCount}</p>
-              </div>
-            </div>
-          </CardContent>
-        </Card>
-
-        <Card className="bg-gradient-to-r from-purple-50 to-blue-50 border-purple-200">
-          <CardContent className="p-6">
-            <div className="flex items-center space-x-3">
-              <div className="p-3 bg-purple-100 rounded-full">
-                <Star className="h-6 w-6 text-purple-600" />
-              </div>
-              <div>
-                <p className="text-sm text-gray-600">Total Value</p>
-                <p className="text-2xl font-bold text-gray-900">${calculateTotalValue().toFixed(2)}</p>
-              </div>
-            </div>
-          </CardContent>
-        </Card>
-
-        <Card className="bg-gradient-to-r from-green-50 to-teal-50 border-green-200">
-          <CardContent className="p-6">
-            <div className="flex items-center space-x-3">
-              <div className="p-3 bg-green-100 rounded-full">
-                <Sparkles className="h-6 w-6 text-green-600" />
-              </div>
-              <div>
-                <p className="text-sm text-gray-600">In Cart</p>
-                <p className="text-2xl font-bold text-gray-900">
-                  {wishlist.filter(item => isInCart(item.productId)).length}
-                </p>
-              </div>
-            </div>
-          </CardContent>
-        </Card>
-      </div>
-
       {/* Wishlist Content */}
-      <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
         {/* Wishlist Items */}
-        <div className="lg:col-span-3">
+        <div className="lg:col-span-2">
           {wishlist.length > 0 ? (
             <div className="space-y-4">
               {wishlist.map((item) => (
-                <Card key={item.productId} className="bg-white shadow-lg hover:shadow-xl transition-shadow duration-200">
+                <Card key={item.productId} className="bg-background shadow-lg">
                   <CardContent className="p-6">
                     <div className="flex items-center space-x-4">
                       {/* Product Image */}
-                      <div className="relative w-24 h-24 bg-gray-100 rounded-lg overflow-hidden flex-shrink-0">
+                      <div className="relative w-20 h-20 bg-gray-100 rounded-lg overflow-hidden flex-shrink-0">
                         {item.imageUrl ? (
                           <Image
                             src={item.imageUrl}
@@ -195,58 +159,64 @@ export default function WishlistPage() {
                           />
                         ) : (
                           <div className="w-full h-full flex items-center justify-center">
-                            <Package className="h-10 w-10 text-gray-400" />
+                            <Package className="h-8 w-8 text-gray-400" />
                           </div>
                         )}
-                        {/* Wishlist Badge */}
-                        <div className="absolute top-2 left-2">
-                          <Badge className="bg-pink-500 text-white text-xs px-2 py-1">
-                            <Heart className="h-3 w-3 mr-1" />
-                            Saved
-                          </Badge>
-                        </div>
                       </div>
 
                       {/* Product Details */}
                       <div className="flex-1 min-w-0">
-                        <h3 className="text-lg font-semibold text-gray-900 truncate">
+                        <h3 className="text-lg font-semibold text-foreground truncate">
                           {item.name}
                         </h3>
-                        <p className="text-xl font-bold text-purple-600">
+                        <p className="text-lg font-bold text-primary-indigo">
                           ${item.price.toFixed(2)}
                         </p>
                         <p className="text-sm text-gray-500">
                           Added {new Date(item.addedAt).toLocaleDateString()}
                         </p>
-                        <div className="flex items-center space-x-2 mt-2">
-                          {isInCart(item.productId) && (
-                            <Badge variant="secondary" className="bg-green-100 text-green-800 text-xs">
-                              In Cart
-                            </Badge>
-                          )}
-                        </div>
+                      </div>
+
+                      {/* Item Total */}
+                      <div className="text-right">
+                        <p className="text-lg font-bold text-foreground">
+                          ${item.price.toFixed(2)}
+                        </p>
                       </div>
 
                       {/* Actions */}
                       <div className="flex flex-col space-y-2">
-                        <Button
-                          variant="default"
-                          size="sm"
-                          onClick={() => handleMoveToCart(item)}
-                          disabled={updatingItem === item.productId || isInCart(item.productId)}
-                          className="bg-purple-600 hover:bg-purple-700"
-                        >
-                          <ShoppingCart className="h-4 w-4 mr-2" />
-                          {isInCart(item.productId) ? 'In Cart' : 'Add to Cart'}
-                        </Button>
-                        <Button
-                          variant="ghost"
-                          size="sm"
-                          onClick={() => handleRemoveItem(item.productId)}
-                          className="text-red-600 hover:text-red-700 hover:bg-red-50"
-                        >
-                          <Trash2 className="h-4 w-4" />
-                        </Button>
+                        <Tooltip>
+                          <TooltipTrigger>
+                            <Button
+                              variant="ghost"
+                              size="sm"
+                              onClick={() => handleMoveToCart(item)}
+                              disabled={updatingItem === item.productId || isInCart(item.productId)}
+                              className="text-foreground/70 hover:text-primary-indigo border border-primary-indigo"
+                            >
+                              <ShoppingCart className={`h-4 w-4 ${isInCart(item.productId) ? 'fill-primary-indigo text-background' : ''}`} />
+                            </Button>
+                          </TooltipTrigger>
+                          <TooltipContent side="right">
+                            {isInCart(item.productId) ? 'Already in Cart' : 'Move to Cart'}
+                          </TooltipContent>
+                        </Tooltip>
+                        <Tooltip>
+                          <TooltipTrigger>
+                            <Button
+                              variant="ghost"
+                              size="sm"
+                              onClick={() => handleRemoveItem(item.productId)}
+                              className="text-foreground/70 hover:text-secondary-vivid border border-secondary-vivid"
+                            >
+                              <Trash2 className="h-4 w-4" />
+                            </Button>
+                          </TooltipTrigger>
+                          <TooltipContent side="right">
+                            Remove from Wishlist
+                          </TooltipContent>
+                        </Tooltip>
                       </div>
                     </div>
                   </CardContent>
@@ -266,16 +236,14 @@ export default function WishlistPage() {
               </div>
             </div>
           ) : (
-            <Card className="bg-white shadow-lg">
+            <Card className="bg-background shadow-lg">
               <CardContent className="p-12 text-center">
-                <div className="mx-auto w-20 h-20 bg-pink-100 rounded-full flex items-center justify-center mb-4">
-                  <Heart className="h-10 w-10 text-pink-600" />
-                </div>
-                <h3 className="text-xl font-semibold text-gray-900 mb-2">Your wishlist is empty</h3>
-                <p className="text-gray-600 mb-6">
-                  Start saving items you love to your wishlist
+                <Heart className="h-16 w-16 text-foreground/60 mx-auto mb-4" />
+                <h3 className="text-xl font-semibold text-foreground mb-2">Your wishlist is empty</h3>
+                <p className="text-foreground/70 mb-6">
+                  Start saving items you love for later
                 </p>
-                <Button asChild className="bg-purple-600 hover:bg-purple-700">
+                <Button asChild className="bg-primary-indigo hover:bg-primary-indigo/90">
                   <Link href="/products">
                     Browse Products
                   </Link>
@@ -285,69 +253,79 @@ export default function WishlistPage() {
           )}
         </div>
 
-        {/* Sidebar */}
+        {/* Wishlist Summary */}
         <div className="lg:col-span-1">
-          <div className="space-y-6">
-            {/* Quick Actions */}
-            <Card className="bg-white shadow-lg">
-              <CardHeader>
-                <CardTitle className="text-lg">Quick Actions</CardTitle>
-              </CardHeader>
-              <CardContent className="space-y-3">
-                <Button variant="outline" className="w-full justify-start">
-                  <ShoppingCart className="h-4 w-4 mr-2" />
-                  Move All to Cart
-                </Button>
-                
-            {/* Recently Added */}
-            {getRecentlyAdded().length > 0 && (
-                <div>
-                    <p className="text-lg font-bold">Recently Added</p>
-                  {getRecentlyAdded().map((item) => (
-                    <div key={item.productId} className="flex items-center space-x-3 p-2 rounded-lg hover:bg-gray-50">
-                      <div className="relative w-12 h-12 bg-gray-100 rounded overflow-hidden flex-shrink-0">
-                        {item.imageUrl ? (
-                          <Image
-                            src={item.imageUrl}
-                            alt={item.name}
-                            fill
-                            className="object-cover"
-                          />
-                        ) : (
-                          <Package className="h-6 w-6 text-gray-400 m-auto" />
-                        )}
-                      </div>
-                      <div className="flex-1 min-w-0">
-                        <p className="text-sm font-medium text-gray-900 truncate">
-                          {item.name}
-                        </p>
-                        <p className="text-xs text-gray-500">
-                          {new Date(item.addedAt).toLocaleDateString()}
-                        </p>
-                      </div>
-                    </div>
-                  ))}
+          <Card className="bg-background shadow-lg sticky top-6">
+            <CardHeader>
+              <CardTitle className="flex items-center space-x-2">
+                <Heart className="h-5 w-5" />
+                <span>Wishlist Summary</span>
+              </CardTitle>
+            </CardHeader>
+            <CardContent className="space-y-4">
+              {/* Summary Details */}
+              <div className="space-y-3">
+                <div className="flex justify-between text-sm">
+                  <span className="text-foreground/70">Items ({wishlistCount})</span>
+                  <span className="font-medium">${calculateTotalValue().toFixed(2)}</span>
                 </div>
-            )}
-              </CardContent>
-            </Card>
-          </div>
+                <div className="flex justify-between text-sm">
+                  <span className="text-foreground/70">In Cart</span>
+                  <span className="font-medium">{wishlist.filter(item => isInCart(item.productId)).length}</span>
+                </div>
+                <Separator />
+                <div className="flex justify-between text-lg font-bold">
+                  <span>Total Value</span>
+                  <span className="text-primary-indigo">${calculateTotalValue().toFixed(2)}</span>
+                </div>
+              </div>
+
+              {/* Shipping Info */}
+              <div className="bg-gray-50 p-4 rounded-lg">
+                <div className="flex items-center space-x-2 mb-2">
+                  <Truck className="h-4 w-4 text-foreground/70" />
+                  <span className="text-sm font-medium text-gray-700">Free Shipping</span>
+                </div>
+                <p className="text-xs text-gray-500">
+                  Orders over $50 qualify for free shipping
+                </p>
+              </div>
+
+              {/* Move All to Cart Button */}
+              <Button 
+                className="w-full bg-primary-indigo hover:bg-primary-indigo/90"
+                disabled={wishlist.length === 0}
+                size="lg"
+                onClick={handleMoveAllToCart}
+              >
+                <ShoppingCart className="h-4 w-4 mr-2" />
+                Move All to Cart
+                <ArrowRight className="h-4 w-4 ml-2" />
+              </Button>
+
+              {/* Security Badge */}
+              <div className="text-center">
+                <div className="flex items-center justify-center space-x-1 text-xs text-gray-500">
+                  <Star className="h-3 w-3 text-green-500" />
+                  <span>Secure Checkout</span>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
         </div>
       </div>
 
       {/* Empty State for Mobile */}
       {wishlist.length === 0 && (
         <div className="lg:hidden mt-8">
-          <Card className="bg-white shadow-lg">
+          <Card className="bg-background shadow-lg">
             <CardContent className="p-8 text-center">
-              <div className="mx-auto w-16 h-16 bg-pink-100 rounded-full flex items-center justify-center mb-4">
-                <Heart className="h-8 w-8 text-pink-600" />
-              </div>
-              <h3 className="text-lg font-semibold text-gray-900 mb-2">Your wishlist is empty</h3>
-              <p className="text-gray-600 mb-4">
-                Start saving items you love to your wishlist
+              <Heart className="h-12 w-12 text-foreground/60 mx-auto mb-4" />
+              <h3 className="text-lg font-semibold text-foreground mb-2">Your wishlist is empty</h3>
+              <p className="text-foreground/70 mb-4">
+                Start saving items you love for later
               </p>
-              <Button asChild className="bg-purple-600 hover:bg-purple-700">
+              <Button asChild className="bg-primary-indigo hover:bg-primary-indigo/90">
                 <Link href="/products">
                   Browse Products
                 </Link>

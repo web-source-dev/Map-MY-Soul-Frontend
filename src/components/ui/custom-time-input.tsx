@@ -101,7 +101,7 @@ const CustomTimeInput = React.forwardRef<HTMLDivElement, CustomTimeInputProps>(
           >
             <div className="flex items-center gap-2">
               <Clock className="h-4 w-4 opacity-50" />
-              <span className={cn(!value && "text-muted-foreground")}>
+              <span className={cn(!value && "text-foreground/50")}>
                 {value ? formatTime(selectedHour, selectedMinute, isAM) : placeholder}
               </span>
             </div>

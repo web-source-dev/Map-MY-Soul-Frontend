@@ -19,29 +19,48 @@ export default {
 		},
 		extend: {
 			fontFamily: {
-				'sans': ['Inter', 'system-ui', 'sans-serif'],
-				'serif': ['Playfair Display', 'Georgia', 'serif'],
-				'display': ['Playfair Display', 'Georgia', 'serif'],
+				'sans': ['var(--font-dm-sans)', 'system-ui', 'sans-serif'],
+				'serif': ['var(--font-forum)', 'Georgia', 'serif'],
+				'display': ['var(--font-forum)', 'Georgia', 'serif'],
+				'forum': ['var(--font-forum)', 'Georgia', 'serif'],
+				'dm-sans': ['var(--font-dm-sans)', 'system-ui', 'sans-serif'],
 			},
 			colors: {
-				border: 'hsl(var(--border))',
-				input: 'hsl(var(--input))',
-				ring: 'hsl(var(--ring))',
+				// Base colors
 				background: 'hsl(var(--background))',
 				foreground: 'hsl(var(--foreground))',
+				card: 'hsl(var(--card))',
+				'card-foreground': 'hsl(var(--card-foreground))',
+				
+				// Primary Colors - Exact hex values from image
+				'primary-indigo': '#4B2ECC',    // Indigo Grape
+				'primary-lavender': '#9C4EC4',  // Lavender Grape  
+				'primary-pastel': '#D88CFF',    // Pastel Lavender
+				
+				// Secondary Colors - Exact hex values from image
+				'secondary-vivid': '#8000FF',   // Vivid Purple
+				'secondary-pop': '#A20067',     // Pop Magenta
+				
+				// Support Colors - Exact hex values from image  
+				'support-dark': '#0A2464',      // Dark Blue
+				'support-pastel': '#C1A086',    // Pastel Gray
+				'support-light': '#D88CFF',     // Light Yellow (using pastel lavender)
+				
+				// Common aliases for easy usage
 				primary: {
-					DEFAULT: 'hsl(var(--primary))',
+					DEFAULT: '#4B2ECC',         // Maps to primary-indigo
 					foreground: 'hsl(var(--primary-foreground))',
 					glow: 'hsl(var(--primary-glow))'
 				},
 				secondary: {
-					DEFAULT: 'hsl(var(--secondary))',
+					DEFAULT: '#8000FF',         // Maps to secondary-vivid
 					foreground: 'hsl(var(--secondary-foreground))'
 				},
-				destructive: {
-					DEFAULT: 'hsl(var(--destructive))',
-					foreground: 'hsl(var(--destructive-foreground))'
-				},
+				
+				// Additional semantic colors for compatibility
+				border: 'hsl(var(--border))',
+				input: 'hsl(var(--input))',
+				ring: 'hsl(var(--ring))',
 				muted: {
 					DEFAULT: 'hsl(var(--muted))',
 					foreground: 'hsl(var(--muted-foreground))'
@@ -54,9 +73,9 @@ export default {
 					DEFAULT: 'hsl(var(--popover))',
 					foreground: 'hsl(var(--popover-foreground))'
 				},
-				card: {
-					DEFAULT: 'hsl(var(--card))',
-					foreground: 'hsl(var(--card-foreground))'
+				destructive: {
+					DEFAULT: 'hsl(var(--destructive))',
+					foreground: 'hsl(var(--destructive-foreground))'
 				},
 				'mystic-purple': {
 					DEFAULT: 'hsl(var(--mystic-purple))',

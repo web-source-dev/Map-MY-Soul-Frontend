@@ -54,8 +54,8 @@ const CustomTextInput = React.forwardRef<HTMLInputElement, CustomTextInputProps>
     }
 
     const getStatusColor = () => {
-      if (error) return "border-red-500 focus:ring-red-500"
-      if (success) return "border-green-500 focus:ring-green-500"
+      if (error) return "border-secondary-pop focus:ring-secondary-pop"
+      if (success) return "border-support-pastel focus:ring-support-pastel"
       return "border-input focus:ring-ring"
     }
 
@@ -71,7 +71,7 @@ const CustomTextInput = React.forwardRef<HTMLInputElement, CustomTextInputProps>
           )}
         >
           {icon && (
-            <div className="flex-shrink-0 text-muted-foreground">
+            <div className="flex-shrink-0 text-foreground/60">
               {icon}
             </div>
           )}
@@ -87,7 +87,7 @@ const CustomTextInput = React.forwardRef<HTMLInputElement, CustomTextInputProps>
             onFocus={() => setIsFocused(true)}
             onBlur={() => setIsFocused(false)}
             className={cn(
-              "flex-1 bg-transparent outline-none placeholder:text-muted-foreground disabled:cursor-not-allowed",
+              "flex-1 bg-transparent outline-none placeholder:text-foreground/50 disabled:cursor-not-allowed",
               "text-sm"
             )}
             {...props}
@@ -102,7 +102,7 @@ const CustomTextInput = React.forwardRef<HTMLInputElement, CustomTextInputProps>
                 disabled={disabled}
               >
                 <svg
-                  className="h-3 w-3 text-muted-foreground"
+                  className="h-3 w-3 text-foreground/60"
                   fill="none"
                   stroke="currentColor"
                   viewBox="0 0 24 24"
@@ -126,7 +126,7 @@ const CustomTextInput = React.forwardRef<HTMLInputElement, CustomTextInputProps>
               >
                 {showPassword ? (
                   <svg
-                    className="h-4 w-4 text-muted-foreground"
+                    className="h-4 w-4 text-foreground/60"
                     fill="none"
                     stroke="currentColor"
                     viewBox="0 0 24 24"
@@ -140,7 +140,7 @@ const CustomTextInput = React.forwardRef<HTMLInputElement, CustomTextInputProps>
                   </svg>
                 ) : (
                   <svg
-                    className="h-4 w-4 text-muted-foreground"
+                    className="h-4 w-4 text-foreground/60"
                     fill="none"
                     stroke="currentColor"
                     viewBox="0 0 24 24"
@@ -167,7 +167,7 @@ const CustomTextInput = React.forwardRef<HTMLInputElement, CustomTextInputProps>
         {(error || success) && (
           <div className={cn(
             "mt-1 text-xs",
-            error ? "text-red-500" : "text-green-500"
+            error ? "text-secondary-pop" : "text-support-pastel"
           )}>
             {error || success}
           </div>

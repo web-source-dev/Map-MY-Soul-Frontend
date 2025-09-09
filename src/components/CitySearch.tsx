@@ -126,7 +126,7 @@ export default function CitySearch({
       {label && (
         <Label htmlFor="city-search" className="text-sm font-medium">
           {label}
-          {required && <span className="text-red-500 ml-1">*</span>}
+          {required && <span className="text-secondary-pop ml-1">*</span>}
         </Label>
       )}
       <div className="relative">
@@ -144,41 +144,41 @@ export default function CitySearch({
         />
         <div className="absolute right-3 top-1/2 transform -translate-y-1/2 flex items-center space-x-1">
           {isLoading ? (
-            <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-gray-400"></div>
+            <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-foreground/50"></div>
           ) : (
-            <Search className="text-gray-400 h-4 w-4" />
+            <Search className="text-foreground/50 h-4 w-4" />
           )}
-          <ChevronDown className="text-gray-400 h-4 w-4" />
+          <ChevronDown className="text-foreground/50 h-4 w-4" />
         </div>
       </div>
       
       {isOpen && (
-        <div className="absolute z-50 w-full mt-1 bg-white border border-gray-200 rounded-md shadow-lg max-h-60 overflow-auto">
+        <div className="absolute z-50 w-full mt-1 bg-background border border-foreground/20 rounded-md shadow-lg max-h-60 overflow-auto">
           {suggestions.length > 0 ? (
             <div>
-              <div className="px-4 py-2 border-b border-gray-100">
-                <div className="text-xs font-medium text-gray-500 uppercase tracking-wide">
+              <div className="px-4 py-2 border-b border-foreground/10">
+                <div className="text-xs font-medium text-foreground/60 uppercase tracking-wide">
                   Suggested Cities
                 </div>
               </div>
               {suggestions.map((city, index) => (
                 <div
                   key={`${city.name}-${city.country}`}
-                  className={`px-4 py-3 cursor-pointer hover:bg-gray-50 ${
-                    index === selectedIndex ? 'bg-gray-100' : ''
+                  className={`px-4 py-3 cursor-pointer hover:bg-foreground/5 ${
+                    index === selectedIndex ? 'bg-foreground/10' : ''
                   }`}
                   onClick={() => handleCitySelect(city)}
                 >
                   <div className="flex items-center justify-between">
                     <div>
-                      <div className="text-sm font-medium text-gray-900">
+                      <div className="text-sm font-medium text-foreground">
                         {city.name}
                       </div>
-                      <div className="text-xs text-gray-500">
+                      <div className="text-xs text-foreground/60">
                         {city.country} {formatPopulation(city.population)}
                       </div>
                     </div>
-                    <div className="text-xs text-gray-400">
+                    <div className="text-xs text-foreground/50">
                       UTC{city.timezoneOffset >= 0 ? '+' : ''}{city.timezoneOffset}
                     </div>
                   </div>
@@ -186,12 +186,12 @@ export default function CitySearch({
               ))}
             </div>
           ) : searchQuery.length >= 2 && !isLoading ? (
-            <div className="px-4 py-3 text-sm text-gray-500">
+            <div className="px-4 py-3 text-sm text-foreground/60">
               <div className="flex items-center space-x-2">
                 <MapPin className="h-4 w-4" />
                 <span>No cities found. Try a different search term.</span>
               </div>
-              <div className="mt-2 text-xs text-gray-400">
+              <div className="mt-2 text-xs text-foreground/50">
                 You can still type any city name and we&apos;ll use OpenStreetMap to find coordinates.
               </div>
             </div>
@@ -200,7 +200,7 @@ export default function CitySearch({
       )}
 
       {value && !isOpen && (
-        <div className="mt-1 text-xs text-gray-500">
+        <div className="mt-1 text-xs text-foreground/60">
           <div className="flex items-center space-x-2">
             <MapPin className="h-3 w-3" />
             <span>Selected: {value}</span>

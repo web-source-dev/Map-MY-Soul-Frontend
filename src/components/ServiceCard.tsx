@@ -43,7 +43,7 @@ const ServiceCard = ({ name, price, duration, rating, image, description, servic
           {/* Rating */}
           {rating && (
             <div className="absolute top-3 left-3 flex items-center space-x-1 bg-background/90 backdrop-blur-sm rounded-lg px-2 py-1">
-              <Star className="w-3 h-3 text-golden-warm fill-current" />
+              <Star className="w-3 h-3 text-support-pastel fill-current" />
               <span className="text-xs font-medium">{rating}</span>
             </div>
           )}
@@ -53,11 +53,11 @@ const ServiceCard = ({ name, price, duration, rating, image, description, servic
           <h3 className="text-xl font-bold text-foreground mb-2">{name}</h3>
           
           {description && (
-            <p className="text-muted-foreground text-sm mb-4 line-clamp-2">{description}</p>
+            <p className="text-foreground/60 text-sm mb-4 line-clamp-2">{description}</p>
           )}
           
           <div className="flex items-center justify-between mb-4">
-            <div className="flex items-center space-x-4 text-sm text-muted-foreground">
+            <div className="flex items-center space-x-4 text-sm text-foreground/60">
               {duration && (
                 <div className="flex items-center space-x-1">
                   <Clock className="w-4 h-4" />
@@ -65,11 +65,11 @@ const ServiceCard = ({ name, price, duration, rating, image, description, servic
                 </div>
               )}
             </div>
-            <span className="text-2xl font-bold text-primary">${price}</span>
+            <span className="text-2xl font-bold text-primary-indigo">${price}</span>
           </div>
           
           <Button 
-            className="w-full bg-primary hover:bg-primary/90 text-primary-foreground font-medium rounded-lg transition-all duration-200"
+            className="w-full bg-primary-indigo hover:bg-primary-indigo/90 text-background font-medium rounded-lg transition-all duration-200"
             onClick={handleBookClick}
           >
             <Calendar className="w-4 h-4 mr-2" />

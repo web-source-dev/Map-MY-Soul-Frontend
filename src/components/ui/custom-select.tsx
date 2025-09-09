@@ -123,7 +123,7 @@ const CustomSelect = React.forwardRef<HTMLDivElement, CustomSelectProps>(
                   {selectedOptions.slice(0, 2).map((option) => (
                     <span
                       key={option.value}
-                      className="inline-flex items-center gap-1 px-2 py-1 text-xs bg-primary/10 text-primary rounded-md border border-primary/20"
+                      className="inline-flex items-center gap-1 px-2 py-1 text-xs bg-primary-indigo/10 text-primary-indigo rounded-md border border-primary-indigo/20"
                     >
                       {option.label}
                       <button
@@ -147,7 +147,7 @@ const CustomSelect = React.forwardRef<HTMLDivElement, CustomSelectProps>(
               ) : (
                 <span className={cn(
                   "truncate",
-                  !selectedOption && "text-muted-foreground"
+                  !selectedOption && "text-foreground/50"
                 )}>
                   {displayValue}
                 </span>
@@ -174,7 +174,7 @@ const CustomSelect = React.forwardRef<HTMLDivElement, CustomSelectProps>(
           <div className="p-3">
             {searchable && (
               <div className="relative mb-3">
-                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-foreground/60" />
                 <input
                   type="text"
                   placeholder="Search options..."
@@ -192,9 +192,9 @@ const CustomSelect = React.forwardRef<HTMLDivElement, CustomSelectProps>(
               style={{ maxHeight }}
             >
               {filteredOptions.length === 0 ? (
-                <div className="px-3 py-4 text-sm text-muted-foreground text-center">
+                <div className="px-3 py-4 text-sm text-foreground/60 text-center">
                   <div className="flex flex-col items-center gap-2">
-                    <Search className="h-8 w-8 text-muted-foreground/50" />
+                    <Search className="h-8 w-8 text-foreground/30" />
                     <p>No options found</p>
                     {searchTerm && (
                       <p className="text-xs">Try a different search term</p>
@@ -212,15 +212,15 @@ const CustomSelect = React.forwardRef<HTMLDivElement, CustomSelectProps>(
                       onClick={() => !isDisabled && handleSelect(option.value)}
                       disabled={isDisabled}
                       className={cn(
-                        "w-full flex items-center justify-between px-3 py-2.5 text-sm rounded-md transition-all duration-150 hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground focus:outline-none disabled:opacity-50 disabled:cursor-not-allowed",
-                        isSelected && "bg-primary/10 text-primary hover:bg-primary/20 border border-primary/20",
-                        !isSelected && "hover:border hover:border-accent-foreground/20"
+                        "w-full flex items-center justify-between px-3 py-2.5 text-sm rounded-md transition-all duration-150 hover:bg-foreground/5 hover:text-foreground focus:bg-foreground/5 focus:text-foreground focus:outline-none disabled:opacity-50 disabled:cursor-not-allowed",
+                        isSelected && "bg-primary-indigo/10 text-primary-indigo hover:bg-primary-indigo/20 border border-primary-indigo/20",
+                        !isSelected && "hover:border hover:border-foreground/20"
                       )}
                     >
                       <span className="truncate font-medium">{option.label}</span>
                       {isSelected && (
                         <div className="flex items-center gap-1">
-                          <Check className="h-4 w-4 text-primary" />
+                          <Check className="h-4 w-4 text-primary-indigo" />
                         </div>
                       )}
                     </button>
@@ -232,7 +232,7 @@ const CustomSelect = React.forwardRef<HTMLDivElement, CustomSelectProps>(
             {multiple && selectedValues.length > 0 && (
               <div className="mt-3 pt-3 border-t border-border">
                 <div className="flex items-center justify-between mb-2">
-                  <span className="text-xs text-muted-foreground">
+                  <span className="text-xs text-foreground/60">
                     {selectedValues.length} selected
                   </span>
                   <Button
@@ -251,7 +251,7 @@ const CustomSelect = React.forwardRef<HTMLDivElement, CustomSelectProps>(
                   {selectedOptions.slice(0, 3).map((option) => (
                     <span
                       key={option.value}
-                      className="inline-flex items-center gap-1 px-2 py-1 text-xs bg-primary/10 text-primary rounded-md"
+                      className="inline-flex items-center gap-1 px-2 py-1 text-xs bg-primary-indigo/10 text-primary-indigo rounded-md"
                     >
                       {option.label}
                       <button
@@ -267,7 +267,7 @@ const CustomSelect = React.forwardRef<HTMLDivElement, CustomSelectProps>(
                     </span>
                   ))}
                   {selectedOptions.length > 3 && (
-                    <span className="text-xs text-muted-foreground px-2 py-1">
+                    <span className="text-xs text-foreground/60 px-2 py-1">
                       +{selectedOptions.length - 3} more
                     </span>
                   )}

@@ -74,7 +74,7 @@ export default function RecommendationsPage() {
   if (loading || loadingRecommendations) {
     return (
       <div className="min-h-screen flex items-center justify-center">
-        <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-purple-600"></div>
+        <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-primary-indigo"></div>
       </div>
     );
   }
@@ -89,12 +89,12 @@ export default function RecommendationsPage() {
       <div className="mb-8">
         <div className="flex items-center justify-between">
           <div>
-            <h1 className="text-4xl font-bold text-gray-900 mb-2">My Recommendations</h1>
-            <p className="text-gray-600 text-lg">
+            <h1 className="text-4xl font-bold text-foreground mb-2">My Recommendations</h1>
+            <p className="text-foreground/70 text-lg">
               Personalized wellness recommendations just for you
             </p>
           </div>
-          <Button asChild className="bg-purple-600 hover:bg-purple-700">
+          <Button asChild className="bg-primary-indigo hover:bg-primary-indigo/90">
             <Link href="/quiz">
               Take Quiz Again
             </Link>
@@ -104,57 +104,57 @@ export default function RecommendationsPage() {
 
       {/* Stats */}
       <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
-        <Card className="bg-white shadow-lg">
+        <Card className="bg-background shadow-lg">
           <CardContent className="p-6">
             <div className="flex items-center">
               <div className="p-3 bg-pink-100 rounded-full">
                 <Heart className="h-6 w-6 text-pink-600" />
               </div>
               <div className="ml-4">
-                <p className="text-sm font-medium text-gray-600">Total Recommendations</p>
-                <p className="text-2xl font-bold text-gray-900">{getTotalRecommendations()}</p>
+                <p className="text-sm font-medium text-foreground/70">Total Recommendations</p>
+                <p className="text-2xl font-bold text-foreground">{getTotalRecommendations()}</p>
               </div>
             </div>
           </CardContent>
         </Card>
 
-        <Card className="bg-white shadow-lg">
+        <Card className="bg-background shadow-lg">
           <CardContent className="p-6">
             <div className="flex items-center">
               <div className="p-3 bg-blue-100 rounded-full">
                 <Calendar className="h-6 w-6 text-blue-600" />
               </div>
               <div className="ml-4">
-                <p className="text-sm font-medium text-gray-600">Services</p>
-                <p className="text-2xl font-bold text-gray-900">{recommendations.services.length}</p>
+                <p className="text-sm font-medium text-foreground/70">Services</p>
+                <p className="text-2xl font-bold text-foreground">{recommendations.services.length}</p>
               </div>
             </div>
           </CardContent>
         </Card>
 
-        <Card className="bg-white shadow-lg">
+        <Card className="bg-background shadow-lg">
           <CardContent className="p-6">
             <div className="flex items-center">
               <div className="p-3 bg-green-100 rounded-full">
                 <ShoppingCart className="h-6 w-6 text-green-600" />
               </div>
               <div className="ml-4">
-                <p className="text-sm font-medium text-gray-600">Products</p>
-                <p className="text-2xl font-bold text-gray-900">{recommendations.products.length}</p>
+                <p className="text-sm font-medium text-foreground/70">Products</p>
+                <p className="text-2xl font-bold text-foreground">{recommendations.products.length}</p>
               </div>
             </div>
           </CardContent>
         </Card>
 
-        <Card className="bg-white shadow-lg">
+        <Card className="bg-background shadow-lg">
           <CardContent className="p-6">
             <div className="flex items-center">
               <div className="p-3 bg-purple-100 rounded-full">
-                <Play className="h-6 w-6 text-purple-600" />
+                <Play className="h-6 w-6 text-primary-indigo" />
               </div>
               <div className="ml-4">
-                <p className="text-sm font-medium text-gray-600">Podcasts</p>
-                <p className="text-2xl font-bold text-gray-900">{recommendations.podcasts.length}</p>
+                <p className="text-sm font-medium text-foreground/70">Podcasts</p>
+                <p className="text-2xl font-bold text-foreground">{recommendations.podcasts.length}</p>
               </div>
             </div>
           </CardContent>
@@ -183,11 +183,11 @@ export default function RecommendationsPage() {
           {recommendations.services.length > 0 ? (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               {recommendations.services.map((service, index) => (
-                <Card key={index} className="bg-white shadow-lg hover:shadow-xl transition-all duration-300">
+                <Card key={index} className="bg-background shadow-lg hover:shadow-xl transition-all duration-300">
                   <CardHeader>
                     <div className="flex items-center justify-between">
                       <CardTitle className="text-lg">{service.name}</CardTitle>
-                      <Badge variant="secondary" className="bg-purple-100 text-purple-800">
+                      <Badge variant="secondary" className="bg-primary text-background">
                         <Sparkles className="h-3 w-3 mr-1" />
                         Recommended
                       </Badge>
@@ -201,15 +201,15 @@ export default function RecommendationsPage() {
                   <CardContent>
                     <div className="space-y-4">
                       {service.description && (
-                        <p className="text-gray-600 text-sm line-clamp-3">
+                        <p className="text-foreground/70 text-sm line-clamp-3">
                           {service.description}
                         </p>
                       )}
                       <div className="flex items-center justify-between">
-                        <span className="text-lg font-semibold text-gray-900">
+                        <span className="text-lg font-semibold text-foreground">
                           ${service.price}
                         </span>
-                        <Button asChild size="sm" className="bg-purple-600 hover:bg-purple-700">
+                        <Button asChild size="sm" className="bg-primary-indigo hover:bg-primary-indigo/90">
                           <Link href={`/book/${service.serviceId}`}>
                             Book Session
                           </Link>
@@ -221,14 +221,14 @@ export default function RecommendationsPage() {
               ))}
             </div>
           ) : (
-            <Card className="bg-white shadow-lg">
+            <Card className="bg-background shadow-lg">
               <CardContent className="p-12 text-center">
                 <Calendar className="h-16 w-16 text-gray-400 mx-auto mb-4" />
-                <h3 className="text-xl font-semibold text-gray-900 mb-2">No service recommendations</h3>
-                <p className="text-gray-600 mb-6">
+                <h3 className="text-xl font-semibold text-foreground mb-2">No service recommendations</h3>
+                <p className="text-foreground/70 mb-6">
                   Take our wellness quiz to get personalized service recommendations
                 </p>
-                <Button asChild className="bg-purple-600 hover:bg-purple-700">
+                <Button asChild className="bg-primary-indigo hover:bg-primary-indigo/90">
                   <Link href="/quiz">
                     Take Quiz
                   </Link>
@@ -243,11 +243,11 @@ export default function RecommendationsPage() {
           {recommendations.products.length > 0 ? (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               {recommendations.products.map((product, index) => (
-                <Card key={index} className="bg-white shadow-lg hover:shadow-xl transition-all duration-300">
+                <Card key={index} className="bg-background shadow-lg hover:shadow-xl transition-all duration-300">
                   <CardHeader>
                     <div className="flex items-center justify-between">
                       <CardTitle className="text-lg">{product.name}</CardTitle>
-                      <Badge variant="secondary" className="bg-green-100 text-green-800">
+                      <Badge variant="secondary" className="bg-secondary-pop text-background">
                         <Sparkles className="h-3 w-3 mr-1" />
                         Recommended
                       </Badge>
@@ -256,15 +256,15 @@ export default function RecommendationsPage() {
                   <CardContent>
                     <div className="space-y-4">
                       {product.description && (
-                        <p className="text-gray-600 text-sm line-clamp-3">
+                        <p className="text-foreground/70 text-sm line-clamp-3">
                           {product.description}
                         </p>
                       )}
                       <div className="flex items-center justify-between">
-                        <span className="text-lg font-semibold text-gray-900">
+                        <span className="text-lg font-semibold text-foreground">
                           ${product.price}
                         </span>
-                        <Button asChild size="sm" className="bg-green-600 hover:bg-green-700">
+                        <Button asChild size="sm" className="bg-secondary-pop hover:bg-primary-secondary/90">
                           <Link href={`/products/${product.productId}`}>
                             View Product
                           </Link>
@@ -276,14 +276,14 @@ export default function RecommendationsPage() {
               ))}
             </div>
           ) : (
-            <Card className="bg-white shadow-lg">
+            <Card className="bg-background shadow-lg">
               <CardContent className="p-12 text-center">
                 <ShoppingCart className="h-16 w-16 text-gray-400 mx-auto mb-4" />
-                <h3 className="text-xl font-semibold text-gray-900 mb-2">No product recommendations</h3>
-                <p className="text-gray-600 mb-6">
+                <h3 className="text-xl font-semibold text-foreground mb-2">No product recommendations</h3>
+                <p className="text-foreground/70 mb-6">
                   Take our wellness quiz to get personalized product recommendations
                 </p>
-                <Button asChild className="bg-purple-600 hover:bg-purple-700">
+                <Button asChild className="bg-primary-indigo hover:bg-primary-indigo/90">
                   <Link href="/quiz">
                     Take Quiz
                   </Link>
@@ -298,11 +298,11 @@ export default function RecommendationsPage() {
           {recommendations.podcasts.length > 0 ? (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               {recommendations.podcasts.map((podcast, index) => (
-                <Card key={index} className="bg-white shadow-lg hover:shadow-xl transition-all duration-300">
+                <Card key={index} className="bg-background shadow-lg hover:shadow-xl transition-all duration-300">
                   <CardHeader>
                     <div className="flex items-center justify-between">
                       <CardTitle className="text-lg">{podcast.title}</CardTitle>
-                      <Badge variant="secondary" className="bg-purple-100 text-purple-800">
+                      <Badge variant="secondary" className="bg-primary-pastel text-background">
                         <Sparkles className="h-3 w-3 mr-1" />
                         Recommended
                       </Badge>
@@ -316,12 +316,12 @@ export default function RecommendationsPage() {
                   <CardContent>
                     <div className="space-y-4">
                       {podcast.description && (
-                        <p className="text-gray-600 text-sm line-clamp-3">
+                        <p className="text-foreground/70 text-sm line-clamp-3">
                           {podcast.description}
                         </p>
                       )}
                       <div className="flex items-center justify-between">
-                        <Button asChild size="sm" className="bg-purple-600 hover:bg-purple-700">
+                        <Button asChild size="sm" className="bg-primary-pastel hover:bg-primary-pastel/90">
                           <Link href={podcast.link || '#'} target="_blank">
                             <Play className="h-4 w-4 mr-2" />
                             Listen Now
@@ -334,14 +334,14 @@ export default function RecommendationsPage() {
               ))}
             </div>
           ) : (
-            <Card className="bg-white shadow-lg">
+            <Card className="bg-background shadow-lg">
               <CardContent className="p-12 text-center">
                 <Play className="h-16 w-16 text-gray-400 mx-auto mb-4" />
-                <h3 className="text-xl font-semibold text-gray-900 mb-2">No podcast recommendations</h3>
-                <p className="text-gray-600 mb-6">
+                <h3 className="text-xl font-semibold text-foreground mb-2">No podcast recommendations</h3>
+                <p className="text-foreground/70 mb-6">
                   Take our wellness quiz to get personalized podcast recommendations
                 </p>
-                <Button asChild className="bg-purple-600 hover:bg-purple-700">
+                <Button asChild className="bg-primary-indigo hover:bg-primary-indigo/90">
                   <Link href="/quiz">
                     Take Quiz
                   </Link>
@@ -354,15 +354,15 @@ export default function RecommendationsPage() {
 
       {/* Empty State for All */}
       {getTotalRecommendations() === 0 && (
-        <Card className="bg-white shadow-lg mt-8">
+        <Card className="bg-background shadow-lg mt-8">
           <CardContent className="p-12 text-center">
             <Heart className="h-16 w-16 text-gray-400 mx-auto mb-4" />
-            <h3 className="text-xl font-semibold text-gray-900 mb-2">No recommendations yet</h3>
-            <p className="text-gray-600 mb-6">
+            <h3 className="text-xl font-semibold text-foreground mb-2">No recommendations yet</h3>
+            <p className="text-foreground/70 mb-6">
               Complete our wellness quiz to receive personalized recommendations for services, products, and podcasts
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Button asChild className="bg-purple-600 hover:bg-purple-700">
+              <Button asChild className="bg-primary-indigo hover:bg-primary-indigo/90">
                 <Link href="/quiz">
                   Take Wellness Quiz
                 </Link>

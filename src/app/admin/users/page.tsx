@@ -174,7 +174,7 @@ export default function AdminUsers() {
             {row.firstName} {row.lastName}
           </div>
           {row.profile?.displayName && (
-            <div className="text-sm text-gray-500 capitalize font-bold">
+            <div className="text-sm text-foreground/60 capitalize font-bold">
               {row.profile.displayName}
             </div>
           )}
@@ -217,7 +217,7 @@ export default function AdminUsers() {
       key: 'createdAt',
       label: 'Joined',
       render: (value: unknown) => (
-        <div className="text-sm text-gray-600">
+        <div className="text-sm text-foreground/70">
           {formatDate(value as string)}
         </div>
       )
@@ -238,8 +238,8 @@ export default function AdminUsers() {
   return (
     <div className="space-y-6">
       <div>
-        <h1 className="text-3xl font-bold text-gray-900">Users Management</h1>
-        <p className="text-gray-600 mt-1">Manage all registered users on the platform</p>
+        <h1 className="text-3xl font-bold text-foreground">Users Management</h1>
+        <p className="text-foreground/70 mt-1">Manage all registered users on the platform</p>
       </div>
 
       <DataTable<User>
@@ -271,47 +271,47 @@ export default function AdminUsers() {
             <div className="space-y-6">
               <div className="grid grid-cols-2 gap-4">
                 <div>
-                  <h4 className="font-medium text-gray-900">Personal Information</h4>
+                  <h4 className="font-medium text-foreground">Personal Information</h4>
                   <div className="mt-2 space-y-2">
                     <div>
-                      <span className="text-sm text-gray-600">Full Name:</span>
+                      <span className="text-sm text-foreground/70">Full Name:</span>
                       <p className="font-medium">{selectedUser.firstName} {selectedUser.lastName}</p>
                     </div>
                     <div>
-                      <span className="text-sm text-gray-600">Email:</span>
+                      <span className="text-sm text-foreground/70">Email:</span>
                       <p className="font-medium">{selectedUser.email}</p>
                     </div>
                     {selectedUser.profile?.displayName && (
                       <div>
-                        <span className="text-sm text-gray-600">Display Name:</span>
+                        <span className="text-sm text-foreground/70">Display Name:</span>
                         <p className="font-medium">{selectedUser.profile.displayName}</p>
                       </div>
                     )}
                   </div>
                 </div>
                 <div>
-                  <h4 className="font-medium text-gray-900">Account Information</h4>
+                  <h4 className="font-medium text-foreground">Account Information</h4>
                   <div className="mt-2 space-y-2">
                     <div>
-                      <span className="text-sm text-gray-600">Role:</span>
+                      <span className="text-sm text-foreground/70">Role:</span>
                       <Badge variant={selectedUser.role === 'admin' ? 'default' : 'secondary'}>
                         {selectedUser.role}
                       </Badge>
                     </div>
                     <div>
-                      <span className="text-sm text-gray-600">Status:</span>
+                      <span className="text-sm text-foreground/70">Status:</span>
                       <Badge variant={selectedUser.isActive ? 'default' : 'destructive'}>
                         {selectedUser.isActive ? 'Active' : 'Inactive'}
                       </Badge>
                     </div>
                     <div>
-                      <span className="text-sm text-gray-600">Verification:</span>
+                      <span className="text-sm text-foreground/70">Verification:</span>
                       <Badge variant={selectedUser.isVerified ? 'default' : 'outline'}>
                         {selectedUser.isVerified ? 'Verified' : 'Not Verified'}
                       </Badge>
                     </div>
                     <div>
-                      <span className="text-sm text-gray-600">Joined:</span>
+                      <span className="text-sm text-foreground/70">Joined:</span>
                       <p className="font-medium">{formatDate(selectedUser.createdAt)}</p>
                     </div>
                   </div>

@@ -32,16 +32,16 @@ const Footer = () => {
   };
 
   return (
-    <footer className="bg-white">
+    <footer className="bg-background text-foreground">
 
       <div className="relative z-10">
 
         {/* Main Footer Content */} 
-        <div className="max-w-7xl mx-auto container-padding py-20">
+        <div className="max-w-7xl mx-auto container-padding py-5">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12">
             {/* Enhanced Brand Section */}
             <div className="lg:col-span-2">
-              <div className="flex items-center space-x-4 mb-8">
+              <div className="flex items-center space-x-4 mb-2">
                 <div className="relative">
                   <Image 
                     src={logoUrl} 
@@ -50,37 +50,37 @@ const Footer = () => {
                     height={64}
                     className="w-16 h-16" 
                   />
-                  <div className="absolute -inset-2 bg-purple-500/20 rounded-full blur-lg"></div>
+                  <div className="absolute -inset-2 bg-primary-lavender/20 rounded-full blur-lg"></div>
                 </div>
                 <div>
-                  <div className="text-2xl font-bold text-black">Map My Soul</div>
-                  <div className="text-sm text-black/70 font-medium">Marketplace</div>
+                  <div className="text-2xl font-bold text-foreground">Map My Soul</div>
+                  <div className="text-sm text-foreground/70 font-medium">Marketplace</div>
                   <div className="flex items-center mt-1">
                     <div className="flex">
                       {[...Array(5)].map((_, i) => (
                         <Star key={i} className="w-4 h-4 text-yellow-400 fill-current" />
                       ))}
                     </div>
-                    <span className="text-xs text-white/60 ml-2">4.9/5</span>
+                    <span className="text-xs text-foreground/60 ml-2">4.9/5</span>
                   </div>
                 </div>
               </div>
-              <p className="text-black/80 mb-8 max-w-md leading-relaxed text-lg">
+              <p className="text-foreground/80 mb-2 max-w-md leading-relaxed text-lg">
                 Your holistic wellness hub for personalized healing. Connect with trusted healers, 
                 discover spiritual products, and embark on your journey of self-discovery and transformation.
               </p>
               
               {/* Enhanced Newsletter Signup */}
-              <div className="mb-8">
-                <h4 className="text-lg font-semibold text-black mb-4 flex items-center">
-                  <Sparkles className="w-5 h-5 mr-2 text-purple-300" />
+              <div className="mb-2">
+                <h4 className="text-lg font-semibold text-foreground mb-2 flex items-center">
+                  <Sparkles className="w-5 h-5 mr-2 text-primary-indigo" />
                   Stay Connected
                 </h4>
-                <p className="text-black/60 text-sm mb-4">Get weekly insights on spiritual growth and wellness</p>
-                <form onSubmit={handleNewsletterSubmit} className="flex group">
+                <p className="text-foreground/60 text-sm mb-2">Get weekly insights on spiritual growth and wellness.</p>
+                <form onSubmit={handleNewsletterSubmit} className="flex group w-full">
                   <CustomTextInput
                     placeholder="Your email address"
-                    className="flex-1 px-4 py-3 bg-white/10 border border-black/20 rounded-l-xl rounded-r-none text-black placeholder-black/50 focus:outline-none focus:ring-2 focus:ring-purple-400 focus:border-transparent transition-all duration-300"
+                    className="flex-1 px-4 w-72 py-3 bg-card/10 rounded-l-xl rounded-r-none text-foreground placeholder-foreground/50 transition-all duration-300"
                     type="email"
                     value={newsletterEmail}
                     onChange={(value) => setNewsletterEmail(value)}
@@ -89,10 +89,10 @@ const Footer = () => {
                   <button 
                     type="submit"
                     disabled={isSubmitting}
-                    className="px-6 py-3 bg-primary text-white rounded-r-xl transition-all duration-300 group-hover:shadow-lg group-hover:shadow-purple-500/25 disabled:opacity-50 disabled:cursor-not-allowed"
+                    className="px-6 py-3 bg-primary-indigo text-background rounded-r-xl transition-all duration-300 group-hover:shadow-lg group-hover:shadow-primary-lavender/25 disabled:opacity-50 disabled:cursor-not-allowed"
                   >
                     {isSubmitting ? (
-                      <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin"></div>
+                      <div className="w-5 h-5 border-2 border-background/30 border-t-background rounded-full animate-spin"></div>
                     ) : (
                       <ArrowRight className="w-5 h-5" />
                     )}
@@ -105,7 +105,7 @@ const Footer = () => {
                  {/* LinkedIn */}
                  <a 
                    href="https://www.linkedin.com/company/mapmysoul/"
-                   className="w-12 h-12 bg-gradient-to-br from-white/10 to-white/5 rounded-xl flex items-center justify-center text-black/70 hover:text-black hover:from-purple-500/20 hover:to-indigo-500/20 transition-all duration-300 hover:scale-110 hover:shadow-lg hover:shadow-purple-500/25"
+                   className="w-12 h-12 flex items-center justify-center text-foreground/70 hover:bg-primary-indigo hover:text-background hover:rounded-lg transition-all duration-300"
                    title="LinkedIn"
                  >
                    <Linkedin className="w-6 h-6" />
@@ -114,7 +114,7 @@ const Footer = () => {
                  {/* TikTok */}
                  <a 
                    href="https://www.tiktok.com/@mapmysoul"
-                   className="w-12 h-12 bg-gradient-to-br from-white/10 to-white/5 rounded-xl flex items-center justify-center text-black/70 hover:text-black hover:from-purple-500/20 hover:to-indigo-500/20 transition-all duration-300 hover:scale-110 hover:shadow-lg hover:shadow-purple-500/25"
+                   className="w-12 h-12 flex items-center justify-center text-foreground/70 hover:bg-primary-indigo hover:text-background hover:rounded-lg transition-all duration-300"
                    title="TikTok"
                  >
                    <Image 
@@ -130,8 +130,8 @@ const Footer = () => {
 
                          {/* Enhanced Services */}
              <div>
-               <h3 className="text-xl font-bold text-black mb-8 flex items-center">
-                 <Sparkles className="w-6 h-6 mr-3 text-purple-300" />
+               <h3 className="text-xl font-bold text-foreground mb-8 flex items-center">
+                 <Sparkles className="w-6 h-6 mr-3 text-primary-indigo" />
                  Services
                </h3>
                <ul className="space-y-4">
@@ -143,8 +143,8 @@ const Footer = () => {
                    { to: "/contact", label: "Contact Us" }
                  ].map((link, index) => (
                    <li key={index}>
-                     <Link href={link.to} className="text-black/70 hover:text-black transition-all duration-300 flex items-center group">
-                       <div className="w-2 h-2 bg-purple-400 rounded-full mr-3 group-hover:scale-150 transition-transform duration-300"></div>
+                     <Link href={link.to} className="text-foreground/70 hover:text-foreground transition-all duration-300 flex items-center group">
+                       <div className="w-2 h-2 bg-primary-indigo rounded-full mr-3 group-hover:scale-150 transition-transform duration-300"></div>
                        <span className="group-hover:translate-x-1 transition-transform duration-300">{link.label}</span>
                      </Link>
                    </li>
@@ -154,24 +154,24 @@ const Footer = () => {
 
             {/* Enhanced Contact Info */}
             <div>
-              <h3 className="text-xl font-bold text-black mb-8 flex items-center">
-                <Zap className="w-6 h-6 mr-3 text-yellow-300" />
+              <h3 className="text-xl font-bold text-foreground mb-8 flex items-center">
+                <Zap className="w-6 h-6 mr-3 text-support-pastel" />
                 Connect
               </h3>
               <ul className="space-y-6">
                 {[
-                  { icon: Mail, label: "Email", value: "info@mapmysoul.com", color: "text-purple-300" },
-                  { icon: Phone, label: "Phone", value: "+1 (555) 123-4567", color: "text-blue-300" },
-                  { icon: MapPin, label: "Location", value: "Everywhere, Virtually", color: "text-green-300" },
-                  { icon: Clock, label: "Support", value: "24/7 Available", color: "text-yellow-300" }
+                  { icon: Mail, label: "Email", value: "info@mapmysoul.com", color: "text-primary-pastel" },
+                  { icon: Phone, label: "Phone", value: "+1 (555) 123-4567", color: "text-primary-indigo" },
+                  { icon: MapPin, label: "Location", value: "Everywhere, Virtually", color: "text-secondary-vivid" },
+                  { icon: Clock, label: "Support", value: "24/7 Available", color: "text-support-pastel" }
                 ].map((contact, index) => (
                   <li key={index} className="flex items-start space-x-4 group">
-                    <div className={`w-10 h-10 bg-white/10 rounded-lg flex items-center justify-center group-hover:bg-white/20 transition-all duration-300 ${contact.color}`}>
+                    <div className={`w-10 h-10 bg-card/10 rounded-lg flex items-center justify-center group-hover:bg-card/20 transition-all duration-300 ${contact.color}`}>
                       <contact.icon className="w-5 h-5" />
                     </div>
                     <div>
-                      <div className="text-black font-semibold text-sm">{contact.label}</div>
-                      <div className="text-black/70 text-sm group-hover:text-black transition-colors duration-300">{contact.value}</div>
+                      <div className="text-foreground font-semibold text-sm">{contact.label}</div>
+                      <div className="text-foreground/70 text-sm group-hover:text-foreground transition-colors duration-300">{contact.value}</div>
                     </div>
                   </li>
                 ))}
@@ -181,13 +181,13 @@ const Footer = () => {
         </div>
 
         {/* Enhanced Bottom Section */}
-        <div className="border-t border-black/10 bg-gradient-to-r from-black/5 to-transparent">
-          <div className="max-w-7xl mx-auto container-padding py-10">
+        <div className="border-t border-foreground/10 bg-gradient-to-r from-foreground/5 to-transparent">
+          <div className="max-w-7xl mx-auto container-padding py-5">
             <div className="flex flex-col md:flex-row justify-between items-center">
               <div className="flex items-center space-x-6 mb-6 md:mb-0">
                 <div className="flex items-center space-x-2">
-                  <Shield className="w-5 h-5 text-purple-300" />
-                  <p className="text-black/70 text-sm">
+                  <Shield className="w-5 h-5 text-primary-indigo" />
+                  <p className="text-foreground/70 text-sm">
                     © {new Date().getFullYear()} Map My Soul. All rights reserved.
                   </p>
                 </div>
@@ -203,7 +203,7 @@ const Footer = () => {
                   <Link 
                     key={index}
                     href={link.to} 
-                    className="text-black/70 hover:text-black text-sm transition-all duration-300 hover:scale-105"
+                    className="text-foreground/70 hover:text-foreground text-sm transition-all duration-300 hover:scale-105"
                   >
                     {link.label}
                   </Link>

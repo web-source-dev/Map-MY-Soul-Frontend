@@ -25,35 +25,35 @@ const LoginPrompt = ({ isOpen, onClose, action }: LoginPromptProps) => {
     switch (action) {
       case 'cart':
         return {
-          icon: <ShoppingBag className="w-5 h-5 text-primary" />,
+          icon: <ShoppingBag className="w-5 h-5 text-primary-indigo" />,
           title: 'Add to Cart',
           description: 'add items to your cart',
           message: 'You need to be logged in to add items to your cart. This helps us provide you with a personalized shopping experience.'
         };
       case 'wishlist':
         return {
-          icon: <Heart className="w-5 h-5 text-red-500" />,
+          icon: <Heart className="w-5 h-5 text-secondary-pop" />,
           title: 'Add to Wishlist',
           description: 'add items to your wishlist',
           message: 'You need to be logged in to save items to your wishlist. This helps us provide you with a personalized shopping experience.'
         };
       case 'booking':
         return {
-          icon: <Calendar className="w-5 h-5 text-primary" />,
+          icon: <Calendar className="w-5 h-5 text-primary-indigo" />,
           title: 'Book Session',
           description: 'book your session',
           message: 'You need to be logged in to book sessions. This helps us provide you with a personalized booking experience.'
         };
       case 'quiz':
         return {
-          icon: <Sparkles className="w-5 h-5 text-primary" />,
+          icon: <Sparkles className="w-5 h-5 text-primary-indigo" />,
           title: 'Quiz Results',
           description: 'get quiz results',
           message: 'You need to be logged in to get personalized quiz results. This helps us provide you with a personalized quiz experience.'
         };
       default:
         return {
-          icon: <User className="w-5 h-5 text-primary" />,
+          icon: <User className="w-5 h-5 text-primary-indigo" />,
           title: 'Login Required',
           description: 'access this feature',
           message: 'You need to be logged in to access this feature.'
@@ -77,7 +77,7 @@ const LoginPrompt = ({ isOpen, onClose, action }: LoginPromptProps) => {
         </DialogHeader>
         
         <div className="flex flex-col gap-4">
-          <p className="text-sm text-muted-foreground">
+          <p className="text-sm text-foreground/60">
             {actionDetails.message}
           </p>
           

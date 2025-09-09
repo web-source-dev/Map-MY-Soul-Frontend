@@ -115,7 +115,7 @@ export default function BookingsPage() {
   if (loading || loadingBookings) {
     return (
       <div className="min-h-screen flex items-center justify-center">
-        <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-purple-600"></div>
+        <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-primary-indigo"></div>
       </div>
     );
   }
@@ -137,12 +137,12 @@ export default function BookingsPage() {
       <div className="mb-8">
         <div className="flex items-center justify-between">
           <div>
-            <h1 className="text-4xl font-bold text-gray-900 mb-2">My Bookings</h1>
-            <p className="text-gray-600 text-lg">
+            <h1 className="text-4xl font-bold text-foreground mb-2">My Bookings</h1>
+            <p className="text-foreground/70 text-lg">
               Manage your wellness sessions and appointments
             </p>
           </div>
-          <Button asChild className="bg-purple-600 hover:bg-purple-700">
+          <Button asChild className="bg-primary-indigo hover:bg-primary-indigo/90">
             <Link href="/services">
               Book New Session
             </Link>
@@ -152,43 +152,43 @@ export default function BookingsPage() {
 
       {/* Stats */}
       <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
-        <Card className="bg-white shadow-lg">
+        <Card className="bg-background shadow-lg">
           <CardContent className="p-6">
             <div className="flex items-center">
               <div className="p-3 bg-blue-100 rounded-full">
                 <Calendar className="h-6 w-6 text-blue-600" />
               </div>
               <div className="ml-4">
-                <p className="text-sm font-medium text-gray-600">Total Bookings</p>
-                <p className="text-2xl font-bold text-gray-900">{bookings.length}</p>
+                <p className="text-sm font-medium text-foreground/70">Total Bookings</p>
+                <p className="text-2xl font-bold text-foreground">{bookings.length}</p>
               </div>
             </div>
           </CardContent>
         </Card>
 
-        <Card className="bg-white shadow-lg">
+        <Card className="bg-background shadow-lg">
           <CardContent className="p-6">
             <div className="flex items-center">
               <div className="p-3 bg-green-100 rounded-full">
                 <CheckCircle className="h-6 w-6 text-green-600" />
               </div>
               <div className="ml-4">
-                <p className="text-sm font-medium text-gray-600">Upcoming</p>
-                <p className="text-2xl font-bold text-gray-900">{upcomingBookings.length}</p>
+                <p className="text-sm font-medium text-foreground/70">Upcoming</p>
+                <p className="text-2xl font-bold text-foreground">{upcomingBookings.length}</p>
               </div>
             </div>
           </CardContent>
         </Card>
 
-        <Card className="bg-white shadow-lg">
+        <Card className="bg-background shadow-lg">
           <CardContent className="p-6">
             <div className="flex items-center">
               <div className="p-3 bg-blue-100 rounded-full">
                 <CheckCircle className="h-6 w-6 text-blue-600" />
               </div>
               <div className="ml-4">
-                <p className="text-sm font-medium text-gray-600">Completed</p>
-                <p className="text-2xl font-bold text-gray-900">
+                <p className="text-sm font-medium text-foreground/70">Completed</p>
+                <p className="text-2xl font-bold text-foreground">
                   {bookings.filter(b => b.status === 'completed').length}
                 </p>
               </div>
@@ -196,15 +196,15 @@ export default function BookingsPage() {
           </CardContent>
         </Card>
 
-        <Card className="bg-white shadow-lg">
+        <Card className="bg-background shadow-lg">
           <CardContent className="p-6">
             <div className="flex items-center">
               <div className="p-3 bg-red-100 rounded-full">
                 <X className="h-6 w-6 text-red-600" />
               </div>
               <div className="ml-4">
-                <p className="text-sm font-medium text-gray-600">Cancelled</p>
-                <p className="text-2xl font-bold text-gray-900">
+                <p className="text-sm font-medium text-foreground/70">Cancelled</p>
+                <p className="text-2xl font-bold text-foreground">
                   {bookings.filter(b => b.status === 'cancelled').length}
                 </p>
               </div>
@@ -216,10 +216,10 @@ export default function BookingsPage() {
       {/* Upcoming Bookings */}
       {upcomingBookings.length > 0 && (
         <div className="mb-8">
-          <h2 className="text-2xl font-bold text-gray-900 mb-6">Upcoming Sessions</h2>
+          <h2 className="text-2xl font-bold text-foreground mb-6">Upcoming Sessions</h2>
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
             {upcomingBookings.map((booking) => (
-              <Card key={booking.id} className="bg-white shadow-lg">
+              <Card key={booking.id} className="bg-background shadow-lg">
                 <CardHeader>
                   <div className="flex items-center justify-between">
                     <CardTitle className="text-xl">{booking.serviceName}</CardTitle>
@@ -256,7 +256,7 @@ export default function BookingsPage() {
                     </div>
                     {booking.specialRequests && (
                       <div className="bg-gray-50 p-3 rounded-lg">
-                        <p className="text-sm text-gray-600">
+                        <p className="text-sm text-foreground/70">
                           <strong>Special Requests:</strong> {booking.specialRequests}
                         </p>
                       </div>
@@ -286,10 +286,10 @@ export default function BookingsPage() {
       {/* Past Bookings */}
       {pastBookings.length > 0 && (
         <div>
-          <h2 className="text-2xl font-bold text-gray-900 mb-6">Past Sessions</h2>
+          <h2 className="text-2xl font-bold text-foreground mb-6">Past Sessions</h2>
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
             {pastBookings.map((booking) => (
-              <Card key={booking.id} className="bg-white shadow-lg opacity-75">
+              <Card key={booking.id} className="bg-background shadow-lg opacity-75">
                 <CardHeader>
                   <div className="flex items-center justify-between">
                     <CardTitle className="text-xl">{booking.serviceName}</CardTitle>
@@ -334,14 +334,14 @@ export default function BookingsPage() {
 
       {/* Empty State */}
       {bookings.length === 0 && (
-        <Card className="bg-white shadow-lg">
+        <Card className="bg-background shadow-lg">
           <CardContent className="p-12 text-center">
             <Calendar className="h-16 w-16 text-gray-400 mx-auto mb-4" />
-            <h3 className="text-xl font-semibold text-gray-900 mb-2">No bookings yet</h3>
-            <p className="text-gray-600 mb-6">
+            <h3 className="text-xl font-semibold text-foreground mb-2">No bookings yet</h3>
+            <p className="text-foreground/70 mb-6">
               Start your wellness journey by booking your first session
             </p>
-            <Button asChild className="bg-purple-600 hover:bg-purple-700">
+            <Button asChild className="bg-primary-indigo hover:bg-primary-indigo/90">
               <Link href="/services">
                 Browse Services
               </Link>

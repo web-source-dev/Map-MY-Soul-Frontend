@@ -10,33 +10,36 @@ export function cn(...inputs: ClassValue[]) {
 
 // Toast utility functions
 export const showToast = {
-  success: (title: string, description?: string) => {
-    toast({
-      title,
-      description,
-      variant: "default",
-    })
+  success: (message: string, description?: string) => {
+    // If description is provided, use message as title and description as description
+    // Otherwise, use message as the main message
+    if (description) {
+      toast.success(message, description)
+    } else {
+      toast.success(message)
+    }
   },
   
-  error: (title: string, description?: string) => {
-    toast({
-      title,
-      description,
-      variant: "destructive",
-    })
+  error: (message: string, description?: string) => {
+    // If description is provided, use message as title and description as description
+    // Otherwise, use message as the main message
+    if (description) {
+      toast.error(message, description)
+    } else {
+      toast.error(message)
+    }
   },
   
   // Helper to show backend error messages in a user-friendly way
   backendError: (error: string | { message: string; error?: string }) => {
-    const title = "Error";
-    let description = "Something went wrong. Please try again.";
+    let errorMessage = "Something went wrong. Please try again.";
     
     if (typeof error === 'string') {
-      description = error;
+      errorMessage = error;
     } else if (error?.message) {
-      description = error.message;
+      errorMessage = error.message;
     } else if (error?.error) {
-      description = error.error;
+      errorMessage = error.error;
     }
     
     // Make error messages more user-friendly
@@ -57,15 +60,11 @@ export const showToast = {
     };
     
     // Check if we have a user-friendly message for this error
-    if (userFriendlyMessages[description]) {
-      description = userFriendlyMessages[description];
+    if (userFriendlyMessages[errorMessage]) {
+      errorMessage = userFriendlyMessages[errorMessage];
     }
     
-    toast({
-      title,
-      description,
-      variant: "destructive",
-    })
+    toast.error(errorMessage)
   },
   
   // Helper to show backend success messages
@@ -79,11 +78,7 @@ export const showToast = {
     
     const friendlyMessage = userFriendlyMessages[message] || message;
     
-    toast({
-      title: "Success",
-      description: friendlyMessage,
-      variant: "default",
-    })
+    toast.success(friendlyMessage)
   }
 }
 

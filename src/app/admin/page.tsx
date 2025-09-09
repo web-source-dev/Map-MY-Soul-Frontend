@@ -152,7 +152,7 @@ export default function AdminOverview() {
   if (loading) {
     return (
       <div className="flex items-center justify-center min-h-[400px]">
-        <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-purple-600"></div>
+        <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-primary-indigo"></div>
       </div>
     );
   }
@@ -164,8 +164,8 @@ export default function AdminOverview() {
           <CardContent className="pt-6">
             <div className="text-center">
               <AlertCircle className="h-12 w-12 text-red-500 mx-auto mb-4" />
-              <h3 className="text-lg font-semibold text-gray-900 mb-2">Error Loading Data</h3>
-              <p className="text-gray-600 mb-4">{error}</p>
+              <h3 className="text-lg font-semibold text-foreground mb-2">Error Loading Data</h3>
+              <p className="text-foreground/70 mb-4">{error}</p>
               <Button onClick={fetchAdminData}>Retry</Button>
             </div>
           </CardContent>
@@ -183,8 +183,8 @@ export default function AdminOverview() {
       {/* Header */}
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-3xl font-bold text-gray-900">Admin Dashboard</h1>
-          <p className="text-gray-600 mt-1">Overview of your platform&apos;s performance and activity</p>
+          <h1 className="text-3xl font-bold text-foreground">Admin Dashboard</h1>
+          <p className="text-foreground/70 mt-1">Overview of your platform&apos;s performance and activity</p>
         </div>
         <Button onClick={fetchAdminData} variant="outline">
           <Activity className="h-4 w-4 mr-2" />
@@ -197,11 +197,11 @@ export default function AdminOverview() {
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
             <CardTitle className="text-sm font-medium">Total Users</CardTitle>
-            <Users className="h-4 w-4 text-muted-foreground" />
+            <Users className="h-4 w-4 text-foreground/60" />
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold">{data.overview.totalUsers.toLocaleString()}</div>
-            <p className="text-xs text-muted-foreground">
+            <p className="text-xs text-foreground/60">
               {data.userStats.user} regular users, {data.userStats.admin} admins
             </p>
           </CardContent>
@@ -210,11 +210,11 @@ export default function AdminOverview() {
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
             <CardTitle className="text-sm font-medium">Total Bookings</CardTitle>
-            <Calendar className="h-4 w-4 text-muted-foreground" />
+            <Calendar className="h-4 w-4 text-foreground/60" />
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold">{data.overview.totalBookings.toLocaleString()}</div>
-            <p className="text-xs text-muted-foreground">
+            <p className="text-xs text-foreground/60">
               {data.bookingStats.pending} pending, {data.bookingStats.confirmed} confirmed
             </p>
           </CardContent>
@@ -223,11 +223,11 @@ export default function AdminOverview() {
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
             <CardTitle className="text-sm font-medium">Total Revenue</CardTitle>
-            <DollarSign className="h-4 w-4 text-muted-foreground" />
+            <DollarSign className="h-4 w-4 text-foreground/60" />
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold">{formatCurrency(data.overview.totalRevenue)}</div>
-            <p className="text-xs text-muted-foreground">
+            <p className="text-xs text-foreground/60">
               From confirmed and completed bookings
             </p>
           </CardContent>
@@ -236,11 +236,11 @@ export default function AdminOverview() {
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
             <CardTitle className="text-sm font-medium">Newsletter Subscribers</CardTitle>
-            <Mail className="h-4 w-4 text-muted-foreground" />
+            <Mail className="h-4 w-4 text-foreground/60" />
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold">{data.overview.totalNewsletterSubscribers.toLocaleString()}</div>
-            <p className="text-xs text-muted-foreground">
+            <p className="text-xs text-foreground/60">
               Active subscribers
             </p>
           </CardContent>
@@ -252,33 +252,33 @@ export default function AdminOverview() {
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
             <CardTitle className="text-sm font-medium">Services</CardTitle>
-            <Package className="h-4 w-4 text-muted-foreground" />
+            <Package className="h-4 w-4 text-foreground/60" />
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold">{data.overview.totalServices}</div>
-            <p className="text-xs text-muted-foreground">Available services</p>
+            <p className="text-xs text-foreground/60">Available services</p>
           </CardContent>
         </Card>
 
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
             <CardTitle className="text-sm font-medium">Products</CardTitle>
-            <Package className="h-4 w-4 text-muted-foreground" />
+            <Package className="h-4 w-4 text-foreground/60" />
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold">{data.overview.totalProducts}</div>
-            <p className="text-xs text-muted-foreground">Available products</p>
+            <p className="text-xs text-foreground/60">Available products</p>
           </CardContent>
         </Card>
 
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
             <CardTitle className="text-sm font-medium">Podcasts</CardTitle>
-            <Headphones className="h-4 w-4 text-muted-foreground" />
+            <Headphones className="h-4 w-4 text-foreground/60" />
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold">{data.overview.totalPodcasts}</div>
-            <p className="text-xs text-muted-foreground">Available podcasts</p>
+            <p className="text-xs text-foreground/60">Available podcasts</p>
           </CardContent>
         </Card>
       </div>
@@ -298,7 +298,7 @@ export default function AdminOverview() {
                 <CardTitle className="text-sm font-medium">Pending</CardTitle>
               </CardHeader>
               <CardContent>
-                <div className="text-2xl font-bold text-yellow-600">{data.bookingStats.pending}</div>
+                <div className="text-2xl font-bold text-support-pastel">{data.bookingStats.pending}</div>
               </CardContent>
             </Card>
             <Card>
@@ -306,7 +306,7 @@ export default function AdminOverview() {
                 <CardTitle className="text-sm font-medium">Confirmed</CardTitle>
               </CardHeader>
               <CardContent>
-                <div className="text-2xl font-bold text-blue-600">{data.bookingStats.confirmed}</div>
+                <div className="text-2xl font-bold text-primary-indigo">{data.bookingStats.confirmed}</div>
               </CardContent>
             </Card>
             <Card>
@@ -314,7 +314,7 @@ export default function AdminOverview() {
                 <CardTitle className="text-sm font-medium">Completed</CardTitle>
               </CardHeader>
               <CardContent>
-                <div className="text-2xl font-bold text-green-600">{data.bookingStats.completed}</div>
+                <div className="text-2xl font-bold text-support-pastel">{data.bookingStats.completed}</div>
               </CardContent>
             </Card>
             <Card>
@@ -322,7 +322,7 @@ export default function AdminOverview() {
                 <CardTitle className="text-sm font-medium">Cancelled</CardTitle>
               </CardHeader>
               <CardContent>
-                <div className="text-2xl font-bold text-red-600">{data.bookingStats.cancelled}</div>
+                <div className="text-2xl font-bold text-secondary-pop">{data.bookingStats.cancelled}</div>
               </CardContent>
             </Card>
           </div>
@@ -335,7 +335,7 @@ export default function AdminOverview() {
                 <CardTitle className="text-sm font-medium">New</CardTitle>
               </CardHeader>
               <CardContent>
-                <div className="text-2xl font-bold text-purple-600">{data.contactStats.new}</div>
+                <div className="text-2xl font-bold text-primary-lavender">{data.contactStats.new}</div>
               </CardContent>
             </Card>
             <Card>
@@ -343,7 +343,7 @@ export default function AdminOverview() {
                 <CardTitle className="text-sm font-medium">In Progress</CardTitle>
               </CardHeader>
               <CardContent>
-                <div className="text-2xl font-bold text-orange-600">{data.contactStats.in_progress}</div>
+                <div className="text-2xl font-bold text-support-pastel">{data.contactStats.in_progress}</div>
               </CardContent>
             </Card>
             <Card>
@@ -351,7 +351,7 @@ export default function AdminOverview() {
                 <CardTitle className="text-sm font-medium">Responded</CardTitle>
               </CardHeader>
               <CardContent>
-                <div className="text-2xl font-bold text-blue-600">{data.contactStats.responded}</div>
+                <div className="text-2xl font-bold text-primary-indigo">{data.contactStats.responded}</div>
               </CardContent>
             </Card>
             <Card>
@@ -359,7 +359,7 @@ export default function AdminOverview() {
                 <CardTitle className="text-sm font-medium">Resolved</CardTitle>
               </CardHeader>
               <CardContent>
-                <div className="text-2xl font-bold text-green-600">{data.contactStats.resolved}</div>
+                <div className="text-2xl font-bold text-support-pastel">{data.contactStats.resolved}</div>
               </CardContent>
             </Card>
             <Card>
@@ -367,7 +367,7 @@ export default function AdminOverview() {
                 <CardTitle className="text-sm font-medium">Closed</CardTitle>
               </CardHeader>
               <CardContent>
-                <div className="text-2xl font-bold text-gray-600">{data.contactStats.closed}</div>
+                <div className="text-2xl font-bold text-foreground/60">{data.contactStats.closed}</div>
               </CardContent>
             </Card>
           </div>
@@ -390,10 +390,10 @@ export default function AdminOverview() {
                       <div key={booking._id} className="flex items-center justify-between p-3 border rounded-lg">
                         <div>
                           <p className="font-medium">{booking.serviceName}</p>
-                          <p className="text-sm text-gray-600">
+                          <p className="text-sm text-foreground/70">
                             {booking.customerId?.firstName} {booking.customerId?.lastName}
                           </p>
-                          <p className="text-xs text-gray-500">{formatDate(booking.bookingDate)}</p>
+                          <p className="text-xs text-foreground/60">{formatDate(booking.bookingDate)}</p>
                         </div>
                         <Badge className={getStatusColor(booking.status)}>
                           {booking.status}
@@ -401,7 +401,7 @@ export default function AdminOverview() {
                       </div>
                     ))
                   ) : (
-                    <p className="text-gray-500 text-center py-4">No recent bookings</p>
+                    <p className="text-foreground/60 text-center py-4">No recent bookings</p>
                   )}
                 </div>
                 <div className="mt-4">
@@ -429,8 +429,8 @@ export default function AdminOverview() {
                       <div key={contact._id} className="flex items-center justify-between p-3 border rounded-lg">
                         <div>
                           <p className="font-medium">{contact.name}</p>
-                          <p className="text-sm text-gray-600">{contact.email}</p>
-                          <p className="text-xs text-gray-500">{formatDate(contact.createdAt)}</p>
+                          <p className="text-sm text-foreground/70">{contact.email}</p>
+                          <p className="text-xs text-foreground/60">{formatDate(contact.createdAt)}</p>
                         </div>
                         <Badge className={getStatusColor(contact.status)}>
                           {contact.status}
@@ -438,7 +438,7 @@ export default function AdminOverview() {
                       </div>
                     ))
                   ) : (
-                    <p className="text-gray-500 text-center py-4">No recent contacts</p>
+                    <p className="text-foreground/60 text-center py-4">No recent contacts</p>
                   )}
                 </div>
                 <div className="mt-4">
@@ -467,8 +467,8 @@ export default function AdminOverview() {
                     <div key={user._id} className="flex items-center justify-between p-3 border rounded-lg">
                       <div>
                         <p className="font-medium">{user.firstName} {user.lastName}</p>
-                        <p className="text-sm text-gray-600">{user.email}</p>
-                        <p className="text-xs text-gray-500">{formatDate(user.createdAt)}</p>
+                        <p className="text-sm text-foreground/70">{user.email}</p>
+                        <p className="text-xs text-foreground/60">{formatDate(user.createdAt)}</p>
                       </div>
                       <Badge variant={user.role === 'admin' ? 'default' : 'secondary'}>
                         {user.role}
@@ -476,7 +476,7 @@ export default function AdminOverview() {
                     </div>
                   ))
                 ) : (
-                  <p className="text-gray-500 text-center py-4 col-span-full">No recent users</p>
+                  <p className="text-foreground/60 text-center py-4 col-span-full">No recent users</p>
                 )}
               </div>
               <div className="mt-4">

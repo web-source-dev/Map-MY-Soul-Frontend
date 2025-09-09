@@ -144,26 +144,26 @@ export const ContactForm: React.FC<ContactFormProps> = ({ className = '' }) => {
             </CardHeader>
             <CardContent className="space-y-6">
               <div className="flex items-start space-x-3">
-                <Mail className="h-5 w-5 text-purple-600 mt-1" />
+                <Mail className="h-5 w-5 text-primary-indigo mt-1" />
                 <div>
                   <h4 className="font-semibold">Email</h4>
-                  <p className="text-sm text-gray-600">info@mapmysoul.com</p>
+                  <p className="text-sm text-foreground/70">info@mapmysoul.com</p>
                 </div>
               </div>
               
               <div className="flex items-start space-x-3">
-                <Phone className="h-5 w-5 text-purple-600 mt-1" />
+                <Phone className="h-5 w-5 text-primary-indigo mt-1" />
                 <div>
                   <h4 className="font-semibold">Phone</h4>
-                  <p className="text-sm text-gray-600">+1 (555) 123-4567</p>
+                  <p className="text-sm text-foreground/70">+1 (555) 123-4567</p>
                 </div>
               </div>
               
               <div className="flex items-start space-x-3">
-                <MapPin className="h-5 w-5 text-purple-600 mt-1" />
+                <MapPin className="h-5 w-5 text-primary-indigo mt-1" />
                 <div>
                   <h4 className="font-semibold">Address</h4>
-                  <p className="text-sm text-gray-600">
+                  <p className="text-sm text-foreground/70">
                     123 Spiritual Street<br />
                     Wellness City, WC 12345<br />
                     United States
@@ -173,7 +173,7 @@ export const ContactForm: React.FC<ContactFormProps> = ({ className = '' }) => {
 
               <div className="pt-4 border-t">
                 <h4 className="font-semibold mb-2">Response Time</h4>
-                <p className="text-sm text-gray-600">
+                <p className="text-sm text-foreground/70">
                   We typically respond within 24-48 hours during business days.
                 </p>
               </div>
@@ -192,9 +192,9 @@ export const ContactForm: React.FC<ContactFormProps> = ({ className = '' }) => {
             </CardHeader>
             <CardContent>
               {error && (
-                <Alert className="mb-6 border-red-200 bg-red-50">
-                  <AlertCircle className="h-4 w-4 text-red-600" />
-                  <AlertDescription className="text-red-800">
+                <Alert className="mb-6 border-secondary-pop/30 bg-secondary-pop/10">
+                  <AlertCircle className="h-4 w-4 text-secondary-pop" />
+                  <AlertDescription className="text-secondary-pop">
                     {error}
                   </AlertDescription>
                 </Alert>

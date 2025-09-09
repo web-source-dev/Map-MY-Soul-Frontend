@@ -220,7 +220,7 @@ export default function ProfilePage() {
   };
 
   const getRecentActivity = () => {
-    return profile.activityHistory?.slice(0, 5) || [];
+    return profile.activityHistory?.slice(0, 3) || [];
   };
 
   const formatActivityAction = (action: string) => {
@@ -241,7 +241,7 @@ export default function ProfilePage() {
   if (loading || loadingProfile) {
     return (
       <div className="min-h-screen flex items-center justify-center">
-        <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-purple-600"></div>
+        <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-primary-indigo"></div>
       </div>
     );
   }
@@ -253,19 +253,32 @@ export default function ProfilePage() {
   return (
     <>
       {/* Header */}
-      <div className="mb-8">
-        <h1 className="text-4xl font-bold text-gray-900 mb-2">My Profile</h1>
-        <p className="text-gray-600 text-lg">
+      <div className="mb-8 flex justify-between items-center">
+      <div>
+      <h1 className="text-4xl font-bold text-foreground mb-2">My Profile</h1>
+        <p className="text-foreground/70 text-lg">
           Manage your account information
         </p>
+      </div>
+        
+          {/* Save Button */}
+          <div className="mt-8 flex justify-end">
+            <Button 
+              onClick={updateProfile}
+              disabled={saving}
+              className="bg-primary-indigo hover:bg-primary-indigo/90"
+            >
+              {saving ? 'Saving...' : 'Save Changes'}
+            </Button>
+          </div>
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
         {/* Profile Overview */}
         <div className="lg:col-span-1">
-          <Card className="bg-white shadow-lg">
+          <Card className="bg-background shadow-lg">
             <CardHeader className="text-center">
-              <div className="relative mx-auto w-24 h-24 mb-4">
+              <div className="relative mx-auto w-24 h-24 ">
                 {profile.avatar ? (
                   <div className="relative w-24 h-24 rounded-full overflow-hidden">
                     <Image
@@ -283,14 +296,14 @@ export default function ProfilePage() {
                   </div>
                 ) : (
                   <div className="w-24 h-24 bg-purple-100 rounded-full flex items-center justify-center">
-                    <User className="h-12 w-12 text-purple-600" />
+                    <User className="h-12 w-12 text-primary-indigo" />
                   </div>
                 )}
                 
                 <button
                   onClick={() => fileInputRef.current?.click()}
                   disabled={uploadingImage}
-                  className="absolute bottom-0 right-0 bg-purple-600 text-white rounded-full p-2 hover:bg-purple-700 transition-colors disabled:opacity-50"
+                  className="absolute bottom-0 right-0 bg-primary text-white rounded-full p-2 hover:bg-primary/90 transition-colors disabled:opacity-50"
                 >
                   {uploadingImage ? (
                     <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white"></div>
@@ -309,21 +322,18 @@ export default function ProfilePage() {
               </div>
               <CardTitle className="text-xl">{profile.displayName || user?.displayName || 'User'}</CardTitle>
               <CardDescription>{user?.email}</CardDescription>
-              <Badge variant="secondary" className="mt-2">
-                {user?.role === 'admin' ? 'Administrator' : 'Member'}
-              </Badge>
             </CardHeader>
             <CardContent>
               <div className="space-y-4">
                 <div className="flex items-center justify-between">
-                  <span className="text-sm text-gray-600">Member since</span>
+                  <span className="text-sm text-foreground/70">Member since</span>
                   <span className="text-sm font-medium">
                     {new Date().toLocaleDateString()}
                   </span>
                 </div>
                 <div className="flex items-center justify-between">
-                  <span className="text-sm text-gray-600">Account status</span>
-                  <Badge variant="default" className="bg-green-100 text-green-800">
+                  <span className="text-sm text-foreground/70">Account status</span>
+                  <Badge variant="default" className="bg-secondary-pop text-background">
                     Active
                   </Badge>
                 </div>
@@ -394,7 +404,7 @@ export default function ProfilePage() {
         <div className="lg:col-span-2">
           <div className="space-y-6">
             {/* Personal Information */}
-            <Card className="bg-white shadow-lg">
+            <Card className="bg-background shadow-lg">
               <CardHeader>
                 <CardTitle className="flex items-center space-x-2">
                   <User className="h-5 w-5" />
@@ -429,7 +439,7 @@ export default function ProfilePage() {
             </Card>
 
             {/* Recent Activity */}
-            <Card className="bg-white shadow-lg">
+            <Card className="bg-background shadow-lg">
               <CardHeader>
                 <CardTitle className="flex items-center space-x-2">
                   <Activity className="h-5 w-5" />
@@ -444,11 +454,11 @@ export default function ProfilePage() {
                   <div className="space-y-3">
                     {getRecentActivity().reverse().map((activity, index) => (
                       <div key={index} className="flex items-center space-x-3 p-3 rounded-lg bg-gray-50">
-                        <div className="w-8 h-8 bg-purple-100 rounded-full flex items-center justify-center">
-                          <Activity className="h-4 w-4 text-purple-600" />
+                        <div className="w-8 h-8 bg-primary rounded-full flex items-center justify-center">
+                          <Activity className="h-4 w-4 text-background" />
                         </div>
                         <div className="flex-1">
-                          <p className="text-sm font-medium text-gray-900">
+                          <p className="text-sm font-medium text-foreground">
                             {formatActivityAction(activity.action)}
                           </p>
                           <p className="text-xs text-gray-500">
@@ -467,17 +477,6 @@ export default function ProfilePage() {
                 )}
               </CardContent>
             </Card>
-          </div>
-
-          {/* Save Button */}
-          <div className="mt-8 flex justify-end">
-            <Button 
-              onClick={updateProfile}
-              disabled={saving}
-              className="bg-purple-600 hover:bg-purple-700"
-            >
-              {saving ? 'Saving...' : 'Save Changes'}
-            </Button>
           </div>
         </div>
       </div>

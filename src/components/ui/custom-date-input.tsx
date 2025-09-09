@@ -115,10 +115,10 @@ const CustomDateInput = React.forwardRef<HTMLDivElement, CustomDateInputProps>(
           onClick={() => !disabled && handleDateSelect(day)}
           disabled={disabled}
           className={cn(
-            "h-9 w-9 rounded-md text-sm font-medium transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground focus:outline-none disabled:opacity-50 disabled:cursor-not-allowed",
-            today && "bg-primary text-primary-foreground hover:bg-primary/90",
-            selected && !today && "bg-primary/20 text-primary hover:bg-primary/30",
-            disabled && "text-muted-foreground"
+            "h-9 w-9 rounded-md text-sm font-medium transition-colors hover:bg-foreground/5 hover:text-foreground focus:bg-foreground/5 focus:text-foreground focus:outline-none disabled:opacity-50 disabled:cursor-not-allowed",
+            today && "bg-primary-indigo text-background hover:bg-primary-indigo/90",
+            selected && !today && "bg-primary-indigo/20 text-primary-indigo hover:bg-primary-indigo/30",
+            disabled && "text-foreground/50"
           )}
         >
           {day}
@@ -139,7 +139,7 @@ const CustomDateInput = React.forwardRef<HTMLDivElement, CustomDateInputProps>(
           >
             <div className="flex items-center gap-2">
               <Calendar className="h-4 w-4 opacity-50" />
-              <span className={cn(!selectedDate && "text-muted-foreground")}>
+              <span className={cn(!selectedDate && "text-foreground/50")}>
                 {selectedDate ? formatDate(selectedDate) : placeholder}
               </span>
             </div>

@@ -53,7 +53,6 @@ export default function AdminContacts() {
   } | undefined>(undefined);
   const [loading, setLoading] = useState(true);
   const [currentPage, setCurrentPage] = useState(1);
-  const [searchTerm, setSearchTerm] = useState('');
   const [statusFilter, setStatusFilter] = useState('');
   const [contactTypeFilter, setContactTypeFilter] = useState('');
   const [selectedContact, setSelectedContact] = useState<Contact | null>(null);
@@ -96,8 +95,7 @@ export default function AdminContacts() {
     setCurrentPage(page);
   };
 
-  const handleSearch = (search: string) => {
-    setSearchTerm(search);
+  const handleSearch = () => {
     setCurrentPage(1);
   };
 
@@ -220,7 +218,7 @@ export default function AdminContacts() {
       render: (value: unknown, row: Contact) => (
         <div>
           <div className="font-medium">{row.name}</div>
-          <div className="text-sm text-gray-600">{row.email}</div>
+          <div className="text-sm text-foreground/70">{row.email}</div>
         </div>
       )
     },
@@ -262,7 +260,7 @@ export default function AdminContacts() {
       key: 'createdAt',
       label: 'Received',
       render: (value: unknown) => (
-        <div className="text-sm text-gray-600">
+        <div className="text-sm text-foreground/70">
           {formatDate(value as string)}
         </div>
       )
@@ -297,8 +295,8 @@ export default function AdminContacts() {
   return (
     <div className="space-y-6">
       <div>
-        <h1 className="text-3xl font-bold text-gray-900">Contact Management</h1>
-        <p className="text-gray-600 mt-1">Manage and respond to contact form submissions</p>
+        <h1 className="text-3xl font-bold text-foreground">Contact Management</h1>
+        <p className="text-foreground/70 mt-1">Manage and respond to contact form submissions</p>
       </div>
 
       <DataTable<Contact>
@@ -330,11 +328,11 @@ export default function AdminContacts() {
             <div className="space-y-4">
               <div>
                 <h4 className="font-medium">Subject</h4>
-                <p className="text-sm text-gray-600">{selectedContact.subject}</p>
+                <p className="text-sm text-foreground/70">{selectedContact.subject}</p>
               </div>
               <div>
                 <h4 className="font-medium">Message</h4>
-                <p className="text-sm text-gray-600 whitespace-pre-wrap">{selectedContact.message}</p>
+                <p className="text-sm text-foreground/70 whitespace-pre-wrap">{selectedContact.message}</p>
               </div>
               <div className="grid grid-cols-2 gap-4">
                 <div>
@@ -353,7 +351,7 @@ export default function AdminContacts() {
               {selectedContact.responseMessage && (
                 <div>
                   <h4 className="font-medium">Response</h4>
-                  <p className="text-sm text-gray-600">{selectedContact.responseMessage}</p>
+                  <p className="text-sm text-foreground/70">{selectedContact.responseMessage}</p>
                   <p className="text-xs text-gray-500 mt-1">
                     Responded on {formatDate(selectedContact.respondedAt || '')}
                   </p>

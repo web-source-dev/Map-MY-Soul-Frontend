@@ -1,31 +1,40 @@
 'use client';
 
-import { useToast } from "@/hooks/use-toast"
 import {
   Toast,
-  ToastClose,
-  ToastDescription,
   ToastProvider,
-  ToastTitle,
   ToastViewport,
 } from "@/components/ui/toast"
+import { useToast } from "@/hooks/use-toast"
 
 export function Toaster() {
   const { toasts } = useToast()
 
   return (
     <ToastProvider>
-      {toasts.map(function ({ id, title, description, action, ...props }) {
+      {toasts.map(function ({ id, title, description, action, variant, ...props }) {
+        // Get the type name for display
+        const getTypeName = (variant?: string | null) => {
+          switch (variant) {
+            case 'success': return 'Success';
+            case 'error': return 'Error';
+            case 'warning': return 'Warning';
+            case 'info': return 'Info';
+            case 'mystical': return 'Mystical';
+            default: return 'Info';
+          }
+        };
+        
+        const typeName = getTypeName(variant);
+        const message = title || description || '';
+        
         return (
-          <Toast key={id} {...props}>
-            <div className="grid gap-1">
-              {title && <ToastTitle>{title}</ToastTitle>}
-              {description && (
-                <ToastDescription>{description}</ToastDescription>
-              )}
+          <Toast key={id} variant={variant} {...props}>
+            <div className="text-sm leading-relaxed">
+              <span className="font-medium">{typeName}:</span>{' '}
+              <span className="font-normal">{message}</span>
             </div>
             {action}
-            <ToastClose />
           </Toast>
         )
       })}

@@ -1,18 +1,23 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Forum, DM_Sans } from "next/font/google";
 import "./globals.css";
 import { AuthProvider } from "@/contexts/AuthContext";
 import { CartWishlistProvider } from "@/contexts/CartWishlistContext";
 import { Toaster } from "@/components/ui/toaster";
+import { TooltipProvider } from "@/components/ui/tooltip";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
+const forum = Forum({
+  weight: "400",
   subsets: ["latin"],
+  variable: "--font-forum",
+  display: "swap",
 });
 
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
+const dmSans = DM_Sans({
+  weight: ["400", "500", "600", "700"],
   subsets: ["latin"],
+  variable: "--font-dm-sans",
+  display: "swap",
 });
 
 export const metadata: Metadata = {
@@ -185,14 +190,16 @@ export default function RootLayout({
         />
       </head>
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={`${forum.variable} ${dmSans.variable} antialiased`}
       >
+        <TooltipProvider>
         <AuthProvider>
           <CartWishlistProvider>
             {children}
             <Toaster />
           </CartWishlistProvider>
         </AuthProvider>
+        </TooltipProvider>
       </body>
     </html>
   );

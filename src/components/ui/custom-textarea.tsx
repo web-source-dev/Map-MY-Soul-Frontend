@@ -37,8 +37,8 @@ const CustomTextarea = React.forwardRef<HTMLTextAreaElement, CustomTextareaProps
     }
 
     const getStatusColor = () => {
-      if (error) return "border-red-500 focus:ring-red-500"
-      if (success) return "border-green-500 focus:ring-green-500"
+      if (error) return "border-secondary-pop focus:ring-secondary-pop"
+      if (success) return "border-support-pastel focus:ring-support-pastel"
       return "border-input focus:ring-ring"
     }
 
@@ -80,7 +80,7 @@ const CustomTextarea = React.forwardRef<HTMLTextAreaElement, CustomTextareaProps
             onFocus={() => setIsFocused(true)}
             onBlur={() => setIsFocused(false)}
             className={cn(
-              "flex-1 w-full bg-transparent outline-none placeholder:text-muted-foreground disabled:cursor-not-allowed",
+              "flex-1 w-full bg-transparent outline-none placeholder:text-foreground/50 disabled:cursor-not-allowed",
               "text-sm px-3 py-2",
               getResizeClass(),
               "min-h-[80px]"
@@ -92,7 +92,7 @@ const CustomTextarea = React.forwardRef<HTMLTextAreaElement, CustomTextareaProps
         {(error || success) && (
           <div className={cn(
             "mt-1 text-xs",
-            error ? "text-red-500" : "text-green-500"
+            error ? "text-secondary-pop" : "text-support-pastel"
           )}>
             {error || success}
           </div>

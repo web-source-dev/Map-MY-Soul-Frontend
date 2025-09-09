@@ -151,21 +151,21 @@ const AccessibilityStatement = () => {
   return (
     <Layout>
       {/* Hero Section */}
-      <section className="py-16 bg-gradient-to-br from-primary/10 via-primary-glow/5 to-transparent">
+      <section className="py-16 bg-gradient-to-br from-primary-indigo/10 via-primary-lavender/5 to-transparent">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <div className="flex justify-center mb-6">
-            <div className="p-4 bg-primary/10 rounded-full">
-              <Accessibility className="w-8 h-8 text-primary" />
+            <div className="p-4 bg-primary-indigo/10 rounded-full">
+              <Accessibility className="w-8 h-8 text-primary-indigo" />
             </div>
           </div>
           <h1 className="text-4xl md:text-5xl font-bold text-foreground mb-6">
             Accessibility Statement
           </h1>
-          <p className="text-lg text-muted-foreground leading-relaxed mb-4">
+          <p className="text-lg text-foreground/70 leading-relaxed mb-4">
             We believe spiritual healing should be accessible to everyone. This statement outlines our commitment 
             to creating an inclusive experience for all users.
           </p>
-          <div className="flex items-center justify-center gap-2 text-sm text-muted-foreground">
+          <div className="flex items-center justify-center gap-2 text-sm text-foreground/60">
             <span>Last updated: {lastUpdated}</span>
           </div>
         </div>
@@ -179,8 +179,8 @@ const AccessibilityStatement = () => {
               <Card key={index} className="mystical-card">
                 <CardHeader>
                   <CardTitle className="flex items-center gap-3 text-xl">
-                    <div className="p-2 bg-primary/10 rounded-lg">
-                      <section.icon className="w-5 h-5 text-primary" />
+                    <div className="p-2 bg-primary-indigo/10 rounded-lg">
+                      <section.icon className="w-5 h-5 text-primary-indigo" />
                     </div>
                     {section.title}
                   </CardTitle>
@@ -191,7 +191,7 @@ const AccessibilityStatement = () => {
                       <h4 className="font-semibold text-foreground mb-2">
                         {item.subtitle}
                       </h4>
-                      <p className="text-muted-foreground leading-relaxed">
+                      <p className="text-foreground/70 leading-relaxed">
                         {item.text}
                       </p>
                     </div>
@@ -205,7 +205,7 @@ const AccessibilityStatement = () => {
           <Card className="mt-12 mystical-card">
             <CardHeader>
               <CardTitle className="flex items-center gap-3">
-                <CheckCircle className="w-5 h-5 text-primary" />
+                <CheckCircle className="w-5 h-5 text-primary-indigo" />
                 Compliance and Standards
               </CardTitle>
             </CardHeader>
@@ -214,13 +214,13 @@ const AccessibilityStatement = () => {
                 {complianceInfo.map((info, index) => (
                   <div key={index} className="flex items-start gap-3">
                     <div className="p-1 mt-1">
-                      <info.icon className="w-4 h-4 text-primary" />
+                      <info.icon className="w-4 h-4 text-primary-indigo" />
                     </div>
                     <div>
                       <h4 className="font-semibold text-foreground mb-1">
                         {info.title}
                       </h4>
-                      <p className="text-sm text-muted-foreground">
+                      <p className="text-sm text-foreground/70">
                         {info.description}
                       </p>
                     </div>
@@ -234,12 +234,12 @@ const AccessibilityStatement = () => {
           <Card className="mt-8 mystical-card">
             <CardHeader>
               <CardTitle className="flex items-center gap-3">
-                <Accessibility className="w-5 h-5 text-primary" />
+                <Accessibility className="w-5 h-5 text-primary-indigo" />
                 Contact Us About Accessibility
               </CardTitle>
             </CardHeader>
             <CardContent>
-              <p className="text-muted-foreground mb-4">
+              <p className="text-foreground/70 mb-4">
                 We welcome your feedback on accessibility. If you encounter any barriers or have suggestions 
                 for improvement, please contact us:
               </p>
@@ -258,9 +258,9 @@ const AccessibilityStatement = () => {
           </Card>
 
           {/* Additional Resources */}
-          <div className="mt-8 p-6 bg-muted/50 rounded-lg">
+          <div className="mt-8 p-6 bg-foreground/5 rounded-lg">
             <h3 className="font-semibold text-foreground mb-3">Additional Resources</h3>
-            <div className="space-y-3 text-sm text-muted-foreground">
+            <div className="space-y-3 text-sm text-foreground/70">
               <p>
                 <strong>Browser Accessibility:</strong> Most browsers offer built-in accessibility features. 
                 Check your browser&apos;s help section for information about zoom, text scaling, and keyboard navigation.

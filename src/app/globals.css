@@ -9,20 +9,35 @@ Refined colors with better contrast and enhanced mystical animations for immersi
 @layer base {
   :root {
     --background: 0 0% 100%;
-    --foreground: 222 84% 5%;
+    --foreground: 0 0% 0%;
 
     --card: 0 0% 100%;
-    --card-foreground: 222 84% 5%;
+    --card-foreground: 0 0% 0%;
 
     --popover: 0 0% 100%;
-    --popover-foreground: 222 84% 5%;
+    --popover-foreground: 0 0% 0%;
 
+    /* Primary Colors from image */
+    --primary-indigo: #4B2ECC;
+    --primary-lavender: #9C4EC4;
+    --primary-pastel: #D88CFF;
+
+    /* Secondary Colors from image */
+    --secondary-vivid: #8000FF;
+    --secondary-pop: #A20067;
+
+    /* Support Colors from image */
+    --support-dark: #0A2464;
+    --support-pastel: #C1A086;
+    --support-light: #D88CFF;
+
+    /* Default mappings for compatibility */
     --primary: 262 83% 58%;
     --primary-foreground: 0 0% 100%;
     --primary-glow: 262 83% 68%;
 
     --secondary: 210 40% 96%;
-    --secondary-foreground: 222 84% 5%;
+    --secondary-foreground: 0 0% 0%;
 
     --muted: 210 40% 96%;
     --muted-foreground: 215 16% 47%;
@@ -37,7 +52,7 @@ Refined colors with better contrast and enhanced mystical animations for immersi
     --input: 214 32% 91%;
     --ring: 262 83% 58%;
 
-    /* Refined spiritual design tokens */
+    /* Refined spiritual design tokens using new colors */
     --mystic-purple: 262 83% 58%;
     --mystic-purple-light: 262 83% 68%;
     --mystic-purple-dark: 262 83% 48%;
@@ -78,22 +93,36 @@ Refined colors with better contrast and enhanced mystical animations for immersi
   }
 
   .dark {
-    --background: 222 84% 5%;
     --background: 0 0% 100%;
-    --foreground: 222 84% 5%;
+    --foreground: 0 0% 0%;
 
     --card: 0 0% 100%;
-    --card-foreground: 222 84% 5%;
+    --card-foreground: 0 0% 0%;
 
     --popover: 0 0% 100%;
-    --popover-foreground: 222 84% 5%;
+    --popover-foreground: 0 0% 0%;
 
+    /* Primary Colors from image */
+    --primary-indigo: #4B2ECC;
+    --primary-lavender: #9C4EC4;
+    --primary-pastel: #D88CFF;
+
+    /* Secondary Colors from image */
+    --secondary-vivid: #8000FF;
+    --secondary-pop: #A20067;
+
+    /* Support Colors from image */
+    --support-dark: #0A2464;
+    --support-pastel: #C1A086;
+    --support-light: #D88CFF;
+
+    /* Default mappings for compatibility */
     --primary: 262 83% 58%;
     --primary-foreground: 0 0% 100%;
     --primary-glow: 262 83% 68%;
 
     --secondary: 210 40% 96%;
-    --secondary-foreground: 222 84% 5%;
+    --secondary-foreground: 0 0% 0%;
 
     --muted: 210 40% 96%;
     --muted-foreground: 215 16% 47%;
@@ -108,7 +137,7 @@ Refined colors with better contrast and enhanced mystical animations for immersi
     --input: 214 32% 91%;
     --ring: 262 83% 58%;
 
-    /* Refined spiritual design tokens */
+    /* Refined spiritual design tokens using new colors */
     --mystic-purple: 262 83% 58%;
     --mystic-purple-light: 262 83% 68%;
     --mystic-purple-dark: 262 83% 48%;
@@ -155,14 +184,59 @@ Refined colors with better contrast and enhanced mystical animations for immersi
   }
 
   body {
-    @apply bg-background text-foreground font-sans antialiased;
+    @apply bg-background text-foreground font-dm-sans antialiased;
     line-height: 1.6;
     font-feature-settings: "rlig" 1, "calt" 1;
   }
 
+  /* Typography Hierarchy */
   h1, h2, h3, h4, h5, h6 {
-    @apply font-display;
+    @apply font-forum;
+    line-height: 1.2;
+    letter-spacing: -0.02em;
   }
+
+  h1 {
+    font-size: clamp(2.5rem, 5vw, 4rem);
+    font-weight: 400;
+  }
+
+  h2 {
+    font-size: clamp(2rem, 4vw, 3rem);
+    font-weight: 400;
+  }
+
+  h3 {
+    font-size: clamp(1.5rem, 3vw, 2.25rem);
+    font-weight: 400;
+  }
+
+  h4 {
+    font-size: clamp(1.25rem, 2.5vw, 1.75rem);
+    font-weight: 400;
+  }
+
+  h5 {
+    font-size: clamp(1.125rem, 2vw, 1.5rem);
+    font-weight: 400;
+  }
+
+  h6 {
+    font-size: clamp(1rem, 1.5vw, 1.25rem);
+    font-weight: 400;
+  }
+
+  /* Body text and UI elements use DM Sans */
+  p, span, div, button, input, textarea, label {
+    @apply font-dm-sans;
+  }
+
+  /* Specific font weight classes */
+  .font-light { font-weight: 300; }
+  .font-normal { font-weight: 400; }
+  .font-medium { font-weight: 500; }
+  .font-semibold { font-weight: 600; }
+  .font-bold { font-weight: 700; }
 
   /* Enhanced component classes */
   .modern-card {
@@ -420,4 +494,19 @@ html {
 
 .placeholder {
   opacity: 0.8;
+}
+
+.navbar-link {
+  color: var(--foreground);
+  text-decoration: none;
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.navbar-link:hover {
+  color: white;
+  cursor: pointer;
+  background-color: var(--primary-indigo);
+  text-decoration: none;
+  transition: all 0.3s ease;
 }

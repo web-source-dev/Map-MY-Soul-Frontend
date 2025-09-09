@@ -156,21 +156,21 @@ const PrivacyPolicy = () => {
   return (
     <Layout>
       {/* Hero Section */}
-      <section className="py-16 bg-gradient-to-br from-primary/10 via-primary-glow/5 to-transparent">
+      <section className="py-16 bg-gradient-to-br from-primary-indigo/10 via-primary-lavender/5 to-transparent">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <div className="flex justify-center mb-6">
-            <div className="p-4 bg-primary/10 rounded-full">
-              <Shield className="w-8 h-8 text-primary" />
+            <div className="p-4 bg-primary-indigo/10 rounded-full">
+              <Shield className="w-8 h-8 text-primary-indigo" />
             </div>
           </div>
           <h1 className="text-4xl md:text-5xl font-bold text-foreground mb-6">
             Privacy Policy
           </h1>
-          <p className="text-lg text-muted-foreground leading-relaxed mb-4">
+          <p className="text-lg text-foreground/60 leading-relaxed mb-4">
             Your privacy and spiritual journey are sacred to us. This policy explains how we collect, 
             use, and protect your personal information on MapMySoul.
           </p>
-          <div className="flex items-center justify-center gap-2 text-sm text-muted-foreground">
+          <div className="flex items-center justify-center gap-2 text-sm text-foreground/60">
             <Calendar className="w-4 h-4" />
             <span>Last updated: {lastUpdated}</span>
           </div>
@@ -210,8 +210,8 @@ const PrivacyPolicy = () => {
               <Card key={index} className="mystical-card">
                 <CardHeader>
                   <CardTitle className="flex items-center gap-3 text-xl">
-                    <div className="p-2 bg-primary/10 rounded-lg">
-                      <section.icon className="w-5 h-5 text-primary" />
+                    <div className="p-2 bg-primary-indigo/10 rounded-lg">
+                      <section.icon className="w-5 h-5 text-primary-indigo" />
                     </div>
                     {section.title}
                   </CardTitle>
@@ -222,7 +222,7 @@ const PrivacyPolicy = () => {
                       <h4 className="font-semibold text-foreground mb-2">
                         {item.subtitle}
                       </h4>
-                      <p className="text-muted-foreground leading-relaxed">
+                      <p className="text-foreground/60 leading-relaxed">
                         {item.text}
                       </p>
                     </div>
@@ -236,25 +236,25 @@ const PrivacyPolicy = () => {
           <Card className="mt-12 mystical-card">
             <CardHeader>
               <CardTitle className="flex items-center gap-3">
-                <Mail className="w-5 h-5 text-primary" />
+                <Mail className="w-5 h-5 text-primary-indigo" />
                 Contact Us
               </CardTitle>
             </CardHeader>
             <CardContent>
-              <p className="text-muted-foreground mb-4">
+              <p className="text-foreground/60 mb-4">
                 If you have any questions about this Privacy Policy or our data practices, please contact us:
               </p>
               <div className="space-y-2 text-sm">
                 <div className="flex items-center gap-2">
-                  <Mail className="w-4 h-4 text-primary" />
+                  <Mail className="w-4 h-4 text-primary-indigo" />
                   <span>Email: info@mapmysoul.com</span>
                 </div>
                 <div className="flex items-center gap-2">
-                  <Phone className="w-4 h-4 text-primary" />
+                  <Phone className="w-4 h-4 text-primary-indigo" />
                   <span>Phone: +1 (555) 123-4567</span>
                 </div>
                 <div className="flex items-center gap-2">
-                  <Globe className="w-4 h-4 text-primary" />
+                  <Globe className="w-4 h-4 text-primary-indigo" />
                   <span>Website: www.mapmysoul.com</span>
                 </div>
               </div>

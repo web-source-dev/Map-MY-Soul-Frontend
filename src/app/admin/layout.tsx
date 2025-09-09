@@ -10,13 +10,9 @@ import {
   Users, 
   Calendar, 
   MessageSquare, 
-  Settings, 
   BarChart3,
-  Shield,
   Activity,
-  FileText,
   Crown,
-  LogOut,
   Menu,
   X
 } from 'lucide-react';
@@ -80,8 +76,8 @@ export default function AdminLayout({
 
   if (loading) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-gray-50">
-        <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-purple-600"></div>
+      <div className="min-h-screen flex items-center justify-center bg-foreground/5">
+        <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-primary-indigo"></div>
       </div>
     );
   }
@@ -105,7 +101,7 @@ export default function AdminLayout({
 
   return (
     <AdminRoute>
-      <div className="min-h-screen bg-gray-50">
+      <div className="min-h-screen bg-foreground/5">
         {/* Mobile sidebar overlay */}
         {sidebarOpen && (
           <div 
@@ -115,7 +111,7 @@ export default function AdminLayout({
         )}
 
         {/* Mobile header */}
-        <div className="lg:hidden fixed top-0 left-0 right-0 z-50 bg-white border-b border-gray-200 px-4 py-3">
+        <div className="lg:hidden fixed top-0 left-0 right-0 z-50 bg-background border-b border-foreground/20 px-4 py-3">
           <div className="flex items-center justify-between">
             <div className="flex items-center space-x-3">
               <Image 
@@ -126,8 +122,8 @@ export default function AdminLayout({
                 className="w-8 h-8" 
               />
               <div>
-                <h1 className="text-lg font-bold text-gray-900">Admin Panel</h1>
-                <p className="text-xs text-gray-500">Map My Soul</p>
+                <h1 className="text-lg font-bold text-foreground">Admin Panel</h1>
+                <p className="text-xs text-foreground/60">Map My Soul</p>
               </div>
             </div>
             <Button
@@ -142,12 +138,12 @@ export default function AdminLayout({
 
         {/* Sidebar */}
         <div className={`
-          fixed inset-y-0 left-0 z-50 w-64 bg-white shadow-lg transform transition-transform duration-300 ease-in-out flex flex-col
+          fixed inset-y-0 left-0 z-50 w-64 bg-background shadow-lg transform transition-transform duration-300 ease-in-out flex flex-col
           ${sidebarOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'}
           ${sidebarOpen ? 'top-0' : 'top-16 lg:top-0'}
         `}>
           {/* Sidebar Header */}
-          <div className="p-4 border-b border-gray-200">
+          <div className="p-4 border-b border-foreground/20">
             <Link href="/admin" className="flex items-center space-x-3">
               <Image 
                 src={logoUrl} 
@@ -157,28 +153,28 @@ export default function AdminLayout({
                 className="w-8 h-8" 
               />
               <div>
-                <h1 className="text-lg font-bold text-gray-900">Admin Panel</h1>
-                <p className="text-xs text-gray-500">Map My Soul</p>
+                <h1 className="text-lg font-bold text-foreground">Admin Panel</h1>
+                <p className="text-xs text-foreground/60">Map My Soul</p>
               </div>
             </Link>
           </div>
 
           {/* Admin User Info */}
-          <div className="p-4 border-b border-gray-200">
+          <div className="p-4 border-b border-foreground/20">
             <div className="flex items-center space-x-3">
               <Avatar className="w-10 h-10">
                 <AvatarImage src={user?.avatar} alt={user?.displayName || user?.firstName} />
-                <AvatarFallback className="bg-purple-500 text-white text-sm font-medium">
+                <AvatarFallback className="bg-primary-indigo text-background text-sm font-medium">
                   {user?.firstName ? user.firstName.charAt(0).toUpperCase() : 
                    user?.displayName ? user.displayName.charAt(0).toUpperCase() : 
                    user?.email ? user.email.charAt(0).toUpperCase() : 'A'}
                 </AvatarFallback>
               </Avatar>
               <div className="flex-1 min-w-0">
-                <p className="text-sm font-medium text-gray-900 truncate">
+                <p className="text-sm font-medium text-foreground truncate">
                   {user?.displayName || user?.firstName || 'Admin'}
                 </p>
-                <p className="text-xs text-gray-500 truncate">{user?.email}</p>
+                <p className="text-xs text-foreground/60 truncate">{user?.email}</p>
                 <Badge variant="secondary" className="mt-1 text-xs">
                   <Crown className="h-3 w-3 mr-1" />
                   Administrator
@@ -199,12 +195,12 @@ export default function AdminLayout({
                     <div className={`
                       flex items-center justify-between px-3 py-2 rounded-md transition-colors cursor-pointer
                       ${active 
-                        ? 'bg-purple-100 text-purple-700' 
-                        : 'text-gray-700 hover:bg-gray-100'
+                        ? 'bg-primary-indigo/10 text-primary-indigo' 
+                        : 'text-foreground hover:bg-foreground/5'
                       }
                     `}>
                       <div className="flex items-center space-x-3">
-                        <Icon className={`h-5 w-5 ${active ? 'text-purple-600' : 'text-gray-500'}`} />
+                        <Icon className={`h-5 w-5 ${active ? 'text-primary-indigo' : 'text-foreground/60'}`} />
                         <span className="text-sm font-medium">{item.title}</span>
                       </div>
                       {item.badge && (
@@ -213,8 +209,8 @@ export default function AdminLayout({
                           className={`
                             text-xs
                             ${active 
-                              ? 'bg-purple-200 text-purple-700' 
-                              : 'bg-gray-200 text-gray-700'
+                              ? 'bg-primary-indigo/20 text-primary-indigo' 
+                              : 'bg-foreground/20 text-foreground/70'
                             }
                           `}
                         >
@@ -229,20 +225,19 @@ export default function AdminLayout({
           </nav>
 
           {/* Sidebar Footer */}
-          <div className="p-4 border-t border-gray-200">
+          <div className="p-4 border-t border-foreground/20">
             <div className="space-y-2">
               <Link href="/" className="block">
-                <Button variant="ghost" size="sm" className="w-full justify-start text-gray-600 hover:text-gray-900 hover:bg-gray-100">
-                  <Shield className="h-4 w-4 mr-2" />
+                <Button variant="ghost" size="sm" className="w-full justify-start text-gray-600 hover:text-foreground hover:bg-gray-100">
+                  <Home className="h-4 w-4 mr-2" />
                   Back to Site
                 </Button>
               </Link>
               <LogoutButton 
                 variant="ghost" 
                 size="sm" 
-                className="w-full justify-start text-red-600 hover:text-red-700 hover:bg-red-50"
+                className="w-full justify-start text-secondary-pop hover:text-secondary-pop/90 hover:bg-secondary-pop/5"
               >
-                <LogOut className="h-4 w-4 mr-2" />
                 Sign Out
               </LogoutButton>
             </div>

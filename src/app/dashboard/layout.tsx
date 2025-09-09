@@ -11,7 +11,9 @@ import {
   Heart, 
   User, 
   ShoppingBag, 
-  Crown
+  Crown,
+  Menu,
+  X
 } from 'lucide-react';
 import Link from 'next/link';
 import { LogoutButton } from '@/components/auth/LogoutButton';
@@ -72,10 +74,15 @@ export default function DashboardLayout({
   const pathname = usePathname();
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
+  // Close sidebar when navigating on mobile
+  React.useEffect(() => {
+    setSidebarOpen(false);
+  }, [pathname]);
+
   if (loading) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-gray-50">
-        <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-purple-600"></div>
+      <div className="min-h-screen flex items-center justify-center bg-foreground/5">
+        <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-primary-indigo"></div>
       </div>
     );
   }
@@ -103,7 +110,43 @@ export default function DashboardLayout({
   };
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-foreground/5">
+      {/* Mobile Header */}
+      <div className="lg:hidden fixed top-0 left-0 right-0 z-30 bg-background shadow-sm border-b border-foreground/20">
+        <div className="flex items-center justify-between px-4 py-3">
+          <div className="flex items-center space-x-3">
+            <Button
+              variant="ghost"
+              size="sm"
+              onClick={() => setSidebarOpen(true)}
+              className="p-2"
+            >
+              <Menu className="h-5 w-5" />
+            </Button>
+            <Link href="/dashboard" className="flex items-center space-x-2">
+              <Image 
+                src={logoUrl} 
+                alt="MapMySoul" 
+                width={24}
+                height={24}
+                className="w-6 h-6" 
+              />
+              <h1 className="text-lg font-bold text-foreground">Map My Soul</h1>
+            </Link>
+          </div>
+          <div className="flex items-center space-x-2">
+            <Avatar className="w-8 h-8">
+              <AvatarImage src={user?.avatar} alt={user?.displayName || user?.firstName} />
+              <AvatarFallback className="bg-primary-indigo text-background text-xs font-medium">
+                {user?.firstName ? user.firstName.charAt(0).toUpperCase() : 
+                 user?.displayName ? user.displayName.charAt(0).toUpperCase() : 
+                 user?.email ? user.email.charAt(0).toUpperCase() : 'U'}
+              </AvatarFallback>
+            </Avatar>
+          </div>
+        </div>
+      </div>
+
       {/* Mobile sidebar overlay */}
       {sidebarOpen && (
         <div 
@@ -114,42 +157,53 @@ export default function DashboardLayout({
 
       {/* Sidebar */}
       <div className={`
-        fixed inset-y-0 left-0 z-50 w-64 bg-white shadow-lg transform transition-transform duration-300 ease-in-out flex flex-col
+        fixed inset-y-0 left-0 z-50 w-64 bg-background shadow-lg transform transition-transform duration-300 ease-in-out flex flex-col
         ${sidebarOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'}
       `}>
         {/* Sidebar Header */}
-        <div className="p-4 border-b border-gray-200">
-          <Link href="/dashboard" className="flex items-center space-x-3">
-            <Image 
-              src={logoUrl} 
-              alt="MapMySoul" 
-              width={32}
-              height={32}
-              className="w-8 h-8" 
-            />
-            <div>
-              <h1 className="text-lg font-bold text-gray-900">Map My Soul</h1>
-              <p className="text-xs text-gray-500">Dashboard</p>
-            </div>
-          </Link>
+        <div className="p-4 border-b border-foreground/20">
+          <div className="flex items-center justify-between">
+            <Link href="/dashboard" className="flex items-center space-x-3">
+              <Image 
+                src={logoUrl} 
+                alt="MapMySoul" 
+                width={32}
+                height={32}
+                className="w-8 h-8" 
+              />
+              <div>
+                <h1 className="text-lg font-bold text-foreground">Map My Soul</h1>
+                <p className="text-xs text-foreground/60">Dashboard</p>
+              </div>
+            </Link>
+            {/* Close button for mobile */}
+            <Button
+              variant="ghost"
+              size="sm"
+              onClick={() => setSidebarOpen(false)}
+              className="lg:hidden p-2"
+            >
+              <X className="h-5 w-5" />
+            </Button>
+          </div>
         </div>
 
         {/* User Info */}
-        <div className="p-4 border-b border-gray-200">
+        <div className="p-4 border-b border-foreground/20">
           <div className="flex items-center space-x-3">
             <Avatar className="w-10 h-10">
               <AvatarImage src={user?.avatar} alt={user?.displayName || user?.firstName} />
-              <AvatarFallback className="bg-purple-500 text-white text-sm font-medium">
+              <AvatarFallback className="bg-primary-indigo text-background text-sm font-medium">
                 {user?.firstName ? user.firstName.charAt(0).toUpperCase() : 
                  user?.displayName ? user.displayName.charAt(0).toUpperCase() : 
                  user?.email ? user.email.charAt(0).toUpperCase() : 'U'}
               </AvatarFallback>
             </Avatar>
             <div className="flex-1 min-w-0">
-              <p className="text-sm font-medium text-gray-900 truncate">
+              <p className="text-sm font-medium text-foreground truncate">
                 {user?.displayName || user?.firstName || 'User'}
               </p>
-              <p className="text-xs text-gray-500 truncate">{user?.email}</p>
+              <p className="text-xs text-foreground/60 truncate">{user?.email}</p>
               {isAdmin && (
                 <Badge variant="secondary" className="mt-1 text-xs">
                   <Crown className="h-3 w-3 mr-1" />
@@ -173,12 +227,12 @@ export default function DashboardLayout({
                   <div className={`
                     flex items-center justify-between px-3 py-2 rounded-md transition-colors cursor-pointer
                     ${active 
-                      ? 'bg-purple-100 text-purple-700' 
-                      : 'text-gray-700 hover:bg-gray-100'
+                      ? 'bg-primary-indigo/10 text-primary-indigo' 
+                      : 'text-foreground/80 hover:bg-foreground/5'
                     }
                   `}>
                     <div className="flex items-center space-x-3">
-                      <Icon className={`h-5 w-5 ${active ? 'text-purple-600' : 'text-gray-500'}`} />
+                      <Icon className={`h-5 w-5 ${active ? 'text-primary-indigo' : 'text-foreground/60'}`} />
                       <span className="text-sm font-medium">{item.title}</span>
                     </div>
                     {badgeContent && (
@@ -187,10 +241,10 @@ export default function DashboardLayout({
                         className={`
                           text-xs
                           ${active 
-                            ? 'bg-purple-200 text-purple-700' 
+                            ? 'bg-primary-indigo text-background' 
                             : item.badge === 'New' 
-                              ? 'bg-green-100 text-green-700' 
-                              : 'bg-gray-200 text-gray-700'
+                              ? 'bg-support-dark text-background' 
+                              : 'bg-foreground/10 text-foreground/60'
                           }
                         `}
                       >
@@ -205,10 +259,10 @@ export default function DashboardLayout({
         </nav>
 
         {/* Sidebar Footer */}
-        <div className="p-4 border-t border-gray-200">
+        <div className="p-4 border-t border-foreground/20">
           <div className="space-y-2">
             <Link href="/" className="block">
-              <Button variant="ghost" size="sm" className="w-full justify-start text-gray-600 hover:text-gray-900 hover:bg-gray-100">
+              <Button variant="ghost" size="sm" className="w-full justify-start text-gray-600 hover:text-foreground hover:bg-gray-100">
                 <Home className="h-4 w-4 mr-2" />
                 Back to Site
               </Button>
@@ -216,7 +270,7 @@ export default function DashboardLayout({
             <LogoutButton 
               variant="ghost" 
               size="sm" 
-              className="w-full justify-start text-red-600 hover:text-red-700 hover:bg-red-50"
+              className="w-full justify-start text-secondary-pop hover:text-secondary-pop/90 hover:bg-secondary-pop/5"
             >
               Sign Out
             </LogoutButton>
@@ -227,7 +281,7 @@ export default function DashboardLayout({
       {/* Main Content */}
       <div className="lg:pl-64">
         {/* Page Content */}
-        <main className="p-6">
+        <main className="p-6 pt-20 lg:pt-6">
           {children}
         </main>
       </div>

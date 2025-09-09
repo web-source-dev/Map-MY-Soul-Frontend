@@ -145,7 +145,7 @@ export default function DashboardPage() {
   if (loading || loadingData) {
     return (
       <div className="min-h-screen flex items-center justify-center">
-        <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-purple-600"></div>
+        <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-primary-indigo"></div>
       </div>
     );
   }
@@ -170,7 +170,7 @@ export default function DashboardPage() {
       description: 'Personalized wellness recommendations',
       icon: Heart,
       href: '/dashboard/recommendations',
-      color: 'bg-pink-500',
+      color: 'bg-primary-indigo',
       count: stats.recommendations,
       badge: stats.recommendations > 0 ? `${stats.recommendations} new` : null
     },
@@ -179,7 +179,7 @@ export default function DashboardPage() {
       description: 'Update your preferences and settings',
       icon: User,
       href: '/dashboard/profile',
-      color: 'bg-green-500',
+      color: 'bg-primary-pastel',
       count: null,
       badge: null
     },
@@ -188,7 +188,7 @@ export default function DashboardPage() {
       description: 'View your shopping cart',
       icon: ShoppingBag,
       href: '/dashboard/cart',
-      color: 'bg-orange-500',
+      color: 'bg-secondary-pop',
       count: stats.cartItems,
       badge: stats.cartItems > 0 ? `${stats.cartItems} items` : null
     },
@@ -197,7 +197,7 @@ export default function DashboardPage() {
       description: 'Your saved items and favorites',
       icon: Star,
       href: '/dashboard/wishlist',
-      color: 'bg-purple-500',
+      color: 'bg-secondary-vivid',
       count: stats.wishlistItems,
       badge: stats.wishlistItems > 0 ? `${stats.wishlistItems} items` : null
     }
@@ -207,67 +207,67 @@ export default function DashboardPage() {
     <>
       {/* Header */}
       <div className="mb-8">
-        <h1 className="text-4xl font-bold text-gray-900 mb-2">
+        <h1 className="text-4xl font-bold text-foreground mb-2">
           Welcome back, {user?.displayName || 'User'}! ✨
         </h1>
-        <p className="text-gray-600 text-lg">
+        <p className="text-foreground/70 text-lg">
           Your wellness journey continues here. Here&apos;s what&apos;s happening with your account.
         </p>
       </div>
 
       {/* Quick Stats */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-        <Card className="bg-white shadow-lg">
+        <Card className="bg-background shadow-lg">
           <CardContent className="p-6">
             <div className="flex items-center">
-              <div className="p-3 bg-blue-100 rounded-full">
-                <Calendar className="h-6 w-6 text-blue-600" />
+              <div className="p-3 bg-primary-indigo/10 rounded-full">
+                <Calendar className="h-6 w-6 text-primary-indigo" />
               </div>
               <div className="ml-4">
-                <p className="text-sm font-medium text-gray-600">Upcoming Bookings</p>
-                <p className="text-2xl font-bold text-gray-900">{stats.upcomingBookings}</p>
+                <p className="text-sm font-medium text-foreground/70">Upcoming Bookings</p>
+                <p className="text-2xl font-bold text-foreground">{stats.upcomingBookings}</p>
               </div>
             </div>
           </CardContent>
         </Card>
 
-        <Card className="bg-white shadow-lg">
+        <Card className="bg-background shadow-lg">
           <CardContent className="p-6">
             <div className="flex items-center">
-              <div className="p-3 bg-pink-100 rounded-full">
-                <Heart className="h-6 w-6 text-pink-600" />
+              <div className="p-3 bg-primary-indigo/10 rounded-full">
+                <Heart className="h-6 w-6 text-primary-indigo" />
               </div>
               <div className="ml-4">
-                <p className="text-sm font-medium text-gray-600">Recommendations</p>
-                <p className="text-2xl font-bold text-gray-900">{stats.recommendations}</p>
+                <p className="text-sm font-medium text-foreground/70">Recommendations</p>
+                <p className="text-2xl font-bold text-foreground">{stats.recommendations}</p>
               </div>
             </div>
           </CardContent>
         </Card>
 
-        <Card className="bg-white shadow-lg">
+        <Card className="bg-background shadow-lg">
           <CardContent className="p-6">
             <div className="flex items-center">
-              <div className="p-3 bg-orange-100 rounded-full">
-                <ShoppingBag className="h-6 w-6 text-orange-600" />
+              <div className="p-3 bg-primary-indigo/10 rounded-full">
+                <ShoppingBag className="h-6 w-6 text-primary-indigo" />
               </div>
               <div className="ml-4">
-                <p className="text-sm font-medium text-gray-600">Cart Items</p>
-                <p className="text-2xl font-bold text-gray-900">{stats.cartItems}</p>
+                <p className="text-sm font-medium text-foreground/70">Cart Items</p>
+                <p className="text-2xl font-bold text-foreground">{stats.cartItems}</p>
               </div>
             </div>
           </CardContent>
         </Card>
 
-        <Card className="bg-white shadow-lg">
+        <Card className="bg-background shadow-lg">
           <CardContent className="p-6">
             <div className="flex items-center">
-              <div className="p-3 bg-purple-100 rounded-full">
-                <Star className="h-6 w-6 text-purple-600" />
+              <div className="p-3 bg-primary-indigo/10 rounded-full">
+                <Star className="h-6 w-6 text-primary-indigo" />
               </div>
               <div className="ml-4">
-                <p className="text-sm font-medium text-gray-600">Wishlist</p>
-                <p className="text-2xl font-bold text-gray-900">{stats.wishlistItems}</p>
+                <p className="text-sm font-medium text-foreground/70">Wishlist</p>
+                <p className="text-2xl font-bold text-foreground">{stats.wishlistItems}</p>
               </div>
             </div>
           </CardContent>
@@ -277,10 +277,10 @@ export default function DashboardPage() {
       {/* Dashboard Overview */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
         {/* Upcoming Bookings */}
-        <Card className="bg-white shadow-lg">
+        <Card className="bg-background shadow-lg">
           <CardHeader>
             <CardTitle className="flex items-center space-x-2">
-              <Clock className="h-5 w-5 text-blue-600" />
+              <Clock className="h-5 w-5 text-primary-indigo" />
               <span>Upcoming Bookings</span>
             </CardTitle>
             <CardDescription>
@@ -291,13 +291,13 @@ export default function DashboardPage() {
             {getUpcomingBookings().length > 0 ? (
               <div className="space-y-4">
                 {getUpcomingBookings().map((booking: Booking, index: number) => (
-                  <div key={index} className="flex items-center justify-between p-3 rounded-lg bg-gray-50">
+                  <div key={index} className="flex items-center justify-between p-3 rounded-lg bg-foreground/5">
                     <div>
-                      <p className="font-medium text-gray-900">{booking.serviceName}</p>
-                      <p className="text-sm text-gray-600">{booking.serviceProviderName}</p>
-                      <p className="text-xs text-gray-500">{formatDate(booking.bookingDate)}</p>
+                      <p className="font-medium text-foreground">{booking.serviceName}</p>
+                      <p className="text-sm text-foreground/70">{booking.serviceProviderName}</p>
+                      <p className="text-xs text-foreground/60">{formatDate(booking.bookingDate)}</p>
                     </div>
-                    <Badge variant="secondary" className="bg-blue-100 text-blue-800">
+                    <Badge variant="secondary" className="bg-primary-indigo/10 text-blue-800">
                       {booking.sessionType}
                     </Badge>
                   </div>
@@ -308,9 +308,9 @@ export default function DashboardPage() {
               </div>
             ) : (
               <div className="text-center py-8">
-                <Calendar className="h-12 w-12 text-gray-400 mx-auto mb-4" />
-                <p className="text-gray-500">No upcoming bookings</p>
-                <p className="text-sm text-gray-400 mb-4">Book your next wellness session</p>
+                <Calendar className="h-12 w-12 text-foreground/50 mx-auto mb-4" />
+                <p className="text-foreground/60">No upcoming bookings</p>
+                <p className="text-sm text-foreground/50 mb-4">Book your next wellness session</p>
                 <Button asChild>
                   <Link href="/services">Book a Session</Link>
                 </Button>
@@ -320,7 +320,7 @@ export default function DashboardPage() {
         </Card>
 
         {/* Recent Recommendations */}
-        <Card className="bg-white shadow-lg">
+        <Card className="bg-background shadow-lg">
           <CardHeader>
             <CardTitle className="flex items-center space-x-2">
               <TrendingUp className="h-5 w-5 text-pink-600" />
@@ -334,15 +334,15 @@ export default function DashboardPage() {
             {getRecentRecommendations().length > 0 ? (
               <div className="space-y-4">
                 {getRecentRecommendations().map((item: Recommendation, index: number) => (
-                  <div key={index} className="flex items-center justify-between p-3 rounded-lg bg-gray-50">
+                  <div key={index} className="flex items-center justify-between p-3 rounded-lg bg-foreground/5">
                     <div>
-                      <p className="font-medium text-gray-900">{item.name}</p>
-                      <p className="text-sm text-gray-600">
+                      <p className="font-medium text-foreground">{item.name}</p>
+                      <p className="text-sm text-foreground/70">
                         {item.type === 'service' ? 'Wellness Service' : 
                          item.type === 'product' ? 'Product' : 'Podcast'}
                       </p>
                       {item.price && (
-                        <p className="text-xs text-gray-500">${item.price}</p>
+                        <p className="text-xs text-foreground/60">${item.price}</p>
                       )}
                     </div>
                     <Badge variant="secondary" className="bg-pink-100 text-pink-800">
@@ -356,9 +356,9 @@ export default function DashboardPage() {
               </div>
             ) : (
               <div className="text-center py-8">
-                <Heart className="h-12 w-12 text-gray-400 mx-auto mb-4" />
-                <p className="text-gray-500">No recommendations yet</p>
-                <p className="text-sm text-gray-400 mb-4">Take our wellness quiz to get personalized recommendations</p>
+                <Heart className="h-12 w-12 text-foreground/50 mx-auto mb-4" />
+                <p className="text-foreground/60">No recommendations yet</p>
+                <p className="text-sm text-foreground/50 mb-4">Take our wellness quiz to get personalized recommendations</p>
                 <Button asChild>
                   <Link href="/quiz">Take Wellness Quiz</Link>
                 </Button>
@@ -372,7 +372,7 @@ export default function DashboardPage() {
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
         {dashboardItems.map((item) => (
           <Link key={item.title} href={item.href}>
-            <Card className="bg-white shadow-lg hover:shadow-xl transition-all duration-300 cursor-pointer group">
+            <Card className="bg-background shadow-lg hover:shadow-xl transition-all duration-300 cursor-pointer group">
               <CardHeader className="pb-4">
                 <div className="flex items-center justify-between">
                   <div className={`p-3 rounded-full ${item.color} bg-opacity-10 group-hover:bg-opacity-20 transition-all duration-300`}>
@@ -386,14 +386,14 @@ export default function DashboardPage() {
                 </div>
               </CardHeader>
               <CardContent>
-                <CardTitle className="text-xl font-semibold text-gray-900 mb-2 group-hover:text-purple-600 transition-colors duration-300">
+                <CardTitle className="text-xl font-semibold text-foreground mb-2 group-hover:text-primary-indigo transition-colors duration-300">
                   {item.title}
                 </CardTitle>
-                <CardDescription className="text-gray-600">
+                <CardDescription className="text-foreground/70">
                   {item.description}
                 </CardDescription>
                 {item.count !== null && (
-                  <p className="text-sm font-medium text-purple-600 mt-2">
+                  <p className="text-sm font-medium text-primary-indigo mt-2">
                     {item.count} {item.count === 1 ? 'item' : 'items'}
                   </p>
                 )}
@@ -405,9 +405,9 @@ export default function DashboardPage() {
 
       {/* Quick Actions */}
       <div className="mt-12">
-        <h2 className="text-2xl font-bold text-gray-900 mb-6">Quick Actions</h2>
+        <h2 className="text-2xl font-bold text-foreground mb-6">Quick Actions</h2>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-          <Button asChild className="bg-purple-600 hover:bg-purple-700 h-16 text-lg">
+          <Button asChild className="bg-primary-indigo hover:bg-primary-indigo/90 h-16 text-lg">
             <Link href="/services">
               <Calendar className="h-5 w-5 mr-2" />
               Book a Session

@@ -336,7 +336,7 @@ export const calculateHumanDesign = async (
       strategy,
       authority,
       profile: profileNumber,
-      definition: determineDefinition(profile.personality, profile.design),
+      definition: determineDefinition(),
       personality: profile.personality,
       design: profile.design,
       calculationMethod: 'accurate' as const
@@ -427,7 +427,7 @@ const determineProfile = (personality: PersonalityGates, design: PersonalityGate
   return `${personalityLine}/${designLine}`;
 };
 
-const determineDefinition = (personality: PersonalityGates, design: PersonalityGates): string => {
+const determineDefinition = (): string => {
   // Simplified definition determination
   return 'Single Definition'; // Most common
 };

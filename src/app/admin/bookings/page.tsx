@@ -67,7 +67,6 @@ export default function AdminBookings() {
   } | null>(null);
   const [loading, setLoading] = useState(true);
   const [currentPage, setCurrentPage] = useState(1);
-  const [searchTerm, setSearchTerm] = useState('');
   const [statusFilter, setStatusFilter] = useState('');
   const [selectedBooking, setSelectedBooking] = useState<Booking | null>(null);
   const [isViewDialogOpen, setIsViewDialogOpen] = useState(false);
@@ -108,8 +107,7 @@ export default function AdminBookings() {
     setCurrentPage(page);
   };
 
-  const handleSearch = (search: string) => {
-    setSearchTerm(search);
+  const handleSearch = () => {
     setCurrentPage(1);
   };
 
@@ -232,9 +230,9 @@ export default function AdminBookings() {
       render: (value: unknown, row: Booking) => (
         <div>
           <div className="font-medium">{row.customerName}</div>
-          <div className="text-sm text-gray-600">{row.customerEmail}</div>
+          <div className="text-sm text-foreground/70">{row.customerEmail}</div>
           {row.customerPhone && (
-            <div className="text-sm text-gray-500">{row.customerPhone}</div>
+            <div className="text-sm text-foreground/60">{row.customerPhone}</div>
           )}
         </div>
       )
@@ -245,8 +243,8 @@ export default function AdminBookings() {
       render: (value: unknown, row: Booking) => (
         <div>
           <div className="font-medium">{row.serviceName}</div>
-          <div className="text-sm text-gray-600">{row.serviceProviderName}</div>
-          <div className="text-sm text-gray-500">{formatCurrency(row.servicePrice)}</div>
+          <div className="text-sm text-foreground/70">{row.serviceProviderName}</div>
+          <div className="text-sm text-foreground/60">{formatCurrency(row.servicePrice)}</div>
         </div>
       )
     },
@@ -256,8 +254,8 @@ export default function AdminBookings() {
       render: (value: unknown, row: Booking) => (
         <div>
           <div className="font-medium">{formatDate(row.bookingDate)}</div>
-          <div className="text-sm text-gray-600">{row.bookingTime}</div>
-          <div className="text-sm text-gray-500">{row.sessionDuration} min</div>
+          <div className="text-sm text-foreground/70">{row.bookingTime}</div>
+          <div className="text-sm text-foreground/60">{row.sessionDuration} min</div>
         </div>
       )
     },
@@ -269,7 +267,7 @@ export default function AdminBookings() {
           <Badge variant="outline" className="capitalize">
             {row.sessionType.replace('_', ' ')}
           </Badge>
-          <div className="text-sm text-gray-600 mt-1">{row.sessionPlatform}</div>
+          <div className="text-sm text-foreground/70 mt-1">{row.sessionPlatform}</div>
         </div>
       )
     },
@@ -291,7 +289,7 @@ export default function AdminBookings() {
       key: 'createdAt',
       label: 'Booked',
       render: (value: unknown) => (
-        <div className="text-sm text-gray-600">
+        <div className="text-sm text-foreground/70">
           {formatDate(value as string)}
         </div>
       )
@@ -314,8 +312,8 @@ export default function AdminBookings() {
   return (
     <div className="space-y-6">
       <div>
-        <h1 className="text-3xl font-bold text-gray-900">Bookings Management</h1>
-        <p className="text-gray-600 mt-1">Manage all service bookings and appointments</p>
+        <h1 className="text-3xl font-bold text-foreground">Bookings Management</h1>
+        <p className="text-foreground/70 mt-1">Manage all service bookings and appointments</p>
       </div>
 
       <DataTable<Booking>
@@ -350,16 +348,16 @@ export default function AdminBookings() {
                 <h4 className="font-medium mb-2">Customer Information</h4>
                 <div className="grid grid-cols-2 gap-4 text-sm">
                   <div>
-                    <span className="text-gray-600">Name:</span>
+                    <span className="text-foreground/70">Name:</span>
                     <p className="font-medium">{selectedBooking.customerName}</p>
                   </div>
                   <div>
-                    <span className="text-gray-600">Email:</span>
+                    <span className="text-foreground/70">Email:</span>
                     <p className="font-medium">{selectedBooking.customerEmail}</p>
                   </div>
                   {selectedBooking.customerPhone && (
                     <div>
-                      <span className="text-gray-600">Phone:</span>
+                      <span className="text-foreground/70">Phone:</span>
                       <p className="font-medium">{selectedBooking.customerPhone}</p>
                     </div>
                   )}
@@ -371,19 +369,19 @@ export default function AdminBookings() {
                 <h4 className="font-medium mb-2">Service Information</h4>
                 <div className="grid grid-cols-2 gap-4 text-sm">
                   <div>
-                    <span className="text-gray-600">Service:</span>
+                    <span className="text-foreground/70">Service:</span>
                     <p className="font-medium">{selectedBooking.serviceName}</p>
                   </div>
                   <div>
-                    <span className="text-gray-600">Price:</span>
+                    <span className="text-foreground/70">Price:</span>
                     <p className="font-medium">{formatCurrency(selectedBooking.servicePrice)}</p>
                   </div>
                   <div>
-                    <span className="text-gray-600">Provider:</span>
+                    <span className="text-foreground/70">Provider:</span>
                     <p className="font-medium">{selectedBooking.serviceProviderName}</p>
                   </div>
                   <div>
-                    <span className="text-gray-600">Provider Email:</span>
+                    <span className="text-foreground/70">Provider Email:</span>
                     <p className="font-medium">{selectedBooking.serviceProviderEmail}</p>
                   </div>
                 </div>
@@ -394,23 +392,23 @@ export default function AdminBookings() {
                 <h4 className="font-medium mb-2">Booking Details</h4>
                 <div className="grid grid-cols-2 gap-4 text-sm">
                   <div>
-                    <span className="text-gray-600">Date:</span>
+                    <span className="text-foreground/70">Date:</span>
                     <p className="font-medium">{formatDate(selectedBooking.bookingDate)}</p>
                   </div>
                   <div>
-                    <span className="text-gray-600">Time:</span>
+                    <span className="text-foreground/70">Time:</span>
                     <p className="font-medium">{selectedBooking.bookingTime}</p>
                   </div>
                   <div>
-                    <span className="text-gray-600">Duration:</span>
+                    <span className="text-foreground/70">Duration:</span>
                     <p className="font-medium">{selectedBooking.sessionDuration} minutes</p>
                   </div>
                   <div>
-                    <span className="text-gray-600">Type:</span>
+                    <span className="text-foreground/70">Type:</span>
                     <p className="font-medium capitalize">{selectedBooking.sessionType.replace('_', ' ')}</p>
                   </div>
                   <div>
-                    <span className="text-gray-600">Platform:</span>
+                    <span className="text-foreground/70">Platform:</span>
                     <p className="font-medium">{selectedBooking.sessionPlatform}</p>
                   </div>
                 </div>
@@ -421,38 +419,38 @@ export default function AdminBookings() {
                 <h4 className="font-medium mb-2">Status Information</h4>
                 <div className="grid grid-cols-2 gap-4 text-sm">
                   <div>
-                    <span className="text-gray-600">Booking Status:</span>
+                    <span className="text-foreground/70">Booking Status:</span>
                     <Badge className={getStatusColor(selectedBooking.status)}>
                       {selectedBooking.status}
                     </Badge>
                   </div>
                   <div>
-                    <span className="text-gray-600">Payment Status:</span>
+                    <span className="text-foreground/70">Payment Status:</span>
                     <Badge className={getPaymentStatusColor(selectedBooking.paymentStatus)}>
                       {selectedBooking.paymentStatus}
                     </Badge>
                   </div>
                   {selectedBooking.confirmedAt && (
                     <div>
-                      <span className="text-gray-600">Confirmed:</span>
+                      <span className="text-foreground/70">Confirmed:</span>
                       <p className="font-medium">{formatDate(selectedBooking.confirmedAt)}</p>
                     </div>
                   )}
                   {selectedBooking.completedAt && (
                     <div>
-                      <span className="text-gray-600">Completed:</span>
+                      <span className="text-foreground/70">Completed:</span>
                       <p className="font-medium">{formatDate(selectedBooking.completedAt)}</p>
                     </div>
                   )}
                   {selectedBooking.cancelledAt && (
                     <div>
-                      <span className="text-gray-600">Cancelled:</span>
+                      <span className="text-foreground/70">Cancelled:</span>
                       <p className="font-medium">{formatDate(selectedBooking.cancelledAt)}</p>
                     </div>
                   )}
                   {selectedBooking.cancellationReason && (
                     <div className="col-span-2">
-                      <span className="text-gray-600">Cancellation Reason:</span>
+                      <span className="text-foreground/70">Cancellation Reason:</span>
                       <p className="font-medium">{selectedBooking.cancellationReason}</p>
                     </div>
                   )}
@@ -463,7 +461,7 @@ export default function AdminBookings() {
               {selectedBooking.specialRequests && (
                 <div>
                   <h4 className="font-medium mb-2">Special Requests</h4>
-                  <p className="text-sm text-gray-600 whitespace-pre-wrap">{selectedBooking.specialRequests}</p>
+                  <p className="text-sm text-foreground/70 whitespace-pre-wrap">{selectedBooking.specialRequests}</p>
                 </div>
               )}
             </div>

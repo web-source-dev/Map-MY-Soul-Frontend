@@ -87,11 +87,6 @@ export default function AdminAuditLogs() {
   const [resourceFilter, setResourceFilter] = useState('');
   const [successFilter, setSuccessFilter] = useState('');
 
-  useEffect(() => {
-    fetchAuditLogs();
-    fetchSystemStats();
-  }, [currentPage, actionFilter, resourceFilter, successFilter]);
-
   const fetchAuditLogs = async () => {
     try {
       setLoading(true);
@@ -126,6 +121,11 @@ export default function AdminAuditLogs() {
       console.error('Error fetching system stats:', error);
     }
   };
+  useEffect(() => {
+    fetchAuditLogs();
+    fetchSystemStats();
+  }, [currentPage, actionFilter, resourceFilter, successFilter, fetchAuditLogs, fetchSystemStats]);
+
 
   const handlePageChange = (page: number) => {
     setCurrentPage(page);
@@ -235,8 +235,8 @@ export default function AdminAuditLogs() {
       {/* Header */}
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-3xl font-bold text-gray-900">Audit Logs</h1>
-          <p className="text-gray-600 mt-1">System security and activity audit logs</p>
+          <h1 className="text-3xl font-bold text-foreground">Audit Logs</h1>
+          <p className="text-foreground/70 mt-1">System security and activity audit logs</p>
         </div>
         <Button onClick={fetchAuditLogs} variant="outline">
           <RefreshCw className="h-4 w-4 mr-2" />
@@ -249,11 +249,11 @@ export default function AdminAuditLogs() {
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
             <CardTitle className="text-sm font-medium">Total Logs</CardTitle>
-            <Activity className="h-4 w-4 text-muted-foreground" />
+            <Activity className="h-4 w-4 text-foreground/60" />
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold">{pagination?.totalLogs || 0}</div>
-            <p className="text-xs text-muted-foreground">All time</p>
+            <p className="text-xs text-foreground/60">All time</p>
             {systemStats && (
               <div className="mt-2">
                 <Badge variant="outline">
@@ -267,13 +267,13 @@ export default function AdminAuditLogs() {
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
             <CardTitle className="text-sm font-medium">Security Events</CardTitle>
-            <Shield className="h-4 w-4 text-muted-foreground" />
+            <Shield className="h-4 w-4 text-foreground/60" />
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold">
               {logs.filter(log => !log.success).length}
             </div>
-            <p className="text-xs text-muted-foreground">Failed attempts</p>
+            <p className="text-xs text-foreground/60">Failed attempts</p>
             <div className="mt-2">
               <Badge variant="destructive">
                 {((logs.filter(log => !log.success).length / logs.length) * 100).toFixed(1)}% failure rate
@@ -285,13 +285,13 @@ export default function AdminAuditLogs() {
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
             <CardTitle className="text-sm font-medium">Active Sessions</CardTitle>
-            <Clock className="h-4 w-4 text-muted-foreground" />
+            <Clock className="h-4 w-4 text-foreground/60" />
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold">
               {new Set(logs.filter(log => log.action === 'LOGIN').map(log => log.sessionId)).size}
             </div>
-            <p className="text-xs text-muted-foreground">Unique sessions</p>
+            <p className="text-xs text-foreground/60">Unique sessions</p>
             <div className="mt-2">
               <Badge variant="outline">
                 {new Set(logs.map(log => log.ipAddress)).size} unique IPs
@@ -393,11 +393,11 @@ export default function AdminAuditLogs() {
             <table className="w-full">
               <thead>
                 <tr className="border-b">
-                  <th className="text-left py-3 px-4 font-medium text-gray-700">Timestamp</th>
-                  <th className="text-left py-3 px-4 font-medium text-gray-700">User</th>
-                  <th className="text-left py-3 px-4 font-medium text-gray-700">Action</th>
-                  <th className="text-left py-3 px-4 font-medium text-gray-700">Resource</th>
-                  <th className="text-left py-3 px-4 font-medium text-gray-700">Status</th>
+                  <th className="text-left py-3 px-4 font-medium text-foreground/80">Timestamp</th>
+                  <th className="text-left py-3 px-4 font-medium text-foreground/80">User</th>
+                  <th className="text-left py-3 px-4 font-medium text-foreground/80">Action</th>
+                  <th className="text-left py-3 px-4 font-medium text-foreground/80">Resource</th>
+                  <th className="text-left py-3 px-4 font-medium text-foreground/80">Status</th>
                 </tr>
               </thead>
               <tbody>
@@ -405,14 +405,14 @@ export default function AdminAuditLogs() {
                   <tr>
                     <td colSpan={7} className="text-center py-8">
                       <div className="flex items-center justify-center">
-                        <RefreshCw className="h-6 w-6 animate-spin text-gray-400 mr-2" />
+                        <RefreshCw className="h-6 w-6 animate-spin text-foreground/50 mr-2" />
                         Loading...
                       </div>
                     </td>
                   </tr>
                 ) : logs.length === 0 ? (
                   <tr>
-                    <td colSpan={7} className="text-center py-8 text-gray-500">
+                    <td colSpan={7} className="text-center py-8 text-foreground/60">
                       No audit logs found
                     </td>
                   </tr>
@@ -425,9 +425,9 @@ export default function AdminAuditLogs() {
                       return true;
                     })
                     .map((log) => (
-                      <tr key={log._id} className="border-b hover:bg-gray-50">
+                      <tr key={log._id} className="border-b hover:bg-foreground/5">
                         <td className="py-3 px-4">
-                          <div className="text-sm text-gray-600">
+                          <div className="text-sm text-foreground/70">
                             {formatTimestamp(log.timestamp)}
                           </div>
                         </td>
@@ -437,10 +437,10 @@ export default function AdminAuditLogs() {
                               <div className="font-medium">
                                 {log.userId.firstName} {log.userId.lastName}
                               </div>
-                              <div className="text-sm text-gray-600">{log.userId.email}</div>
+                              <div className="text-sm text-foreground/70">{log.userId.email}</div>
                             </div>
                           ) : (
-                            <div className="text-sm text-gray-500">
+                            <div className="text-sm text-foreground/60">
                               Anonymous ({log.sessionId ? truncateText(log.sessionId, 8) : 'No Session'})
                             </div>
                           )}
@@ -475,7 +475,7 @@ export default function AdminAuditLogs() {
           {/* Pagination */}
           {pagination && (
             <div className="flex items-center justify-between mt-6">
-              <div className="text-sm text-gray-600">
+              <div className="text-sm text-foreground/70">
                 Showing page {pagination.currentPage} of {pagination.totalPages} 
                 ({pagination.totalLogs} total logs)
               </div>
@@ -488,7 +488,7 @@ export default function AdminAuditLogs() {
                 >
                   Previous
                 </Button>
-                <span className="text-sm text-gray-600">
+                <span className="text-sm text-foreground/70">
                   Page {pagination.currentPage} of {pagination.totalPages}
                 </span>
                 <Button

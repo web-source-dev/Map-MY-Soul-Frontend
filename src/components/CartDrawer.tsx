@@ -25,8 +25,8 @@ const CartDrawer = () => {
   return (
     <Sheet open={isOpen} onOpenChange={setIsOpen}>
       <SheetTrigger asChild>
-        <Button variant="ghost" size="sm" className="rounded-lg relative">
-          <ShoppingBag className="w-4 h-4" />
+        <Button variant="ghost" size="sm" className="rounded-lg relative border border-secondary-vivid">
+          <ShoppingBag className="w-4 h-4 text-secondary-vivid" />
           {cartCount > 0 && (
             <Badge 
               variant="destructive" 
@@ -48,9 +48,9 @@ const CartDrawer = () => {
         <div className="flex flex-col h-full min-h-0">
           {cart.length === 0 ? (
             <div className="flex-1 flex flex-col items-center justify-center text-center py-12">
-              <ShoppingBag className="w-16 h-16 text-muted-foreground mb-4" />
+              <ShoppingBag className="w-16 h-16 text-foreground/60 mb-4" />
               <h3 className="text-lg font-semibold text-foreground mb-2">Your cart is empty</h3>
-              <p className="text-muted-foreground">Add some products to get started</p>
+              <p className="text-foreground/60">Add some products to get started</p>
             </div>
           ) : (
             <>
@@ -68,7 +68,7 @@ const CartDrawer = () => {
                     
                     <div className="flex-1 min-w-0">
                       <h4 className="font-medium text-sm truncate">{item.name}</h4>
-                      <p className="text-sm text-muted-foreground">${item.price}</p>
+                      <p className="text-sm text-foreground/60">${item.price}</p>
                       
                       <div className="flex items-center gap-2 mt-2">
                         <Button
@@ -98,7 +98,7 @@ const CartDrawer = () => {
                         <Button
                           variant="ghost"
                           size="sm"
-                          className="h-6 w-6 p-0 text-destructive hover:text-destructive"
+                          className="h-6 w-6 p-0 text-secondary-pop hover:text-secondary-pop"
                           onClick={() => removeFromCart(item.productId)}
                           disabled={loading}
                         >

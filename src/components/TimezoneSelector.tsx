@@ -157,33 +157,33 @@ export default function TimezoneSelector({
           required={required}
         />
         <div className="absolute right-3 top-1/2 transform -translate-y-1/2 flex items-center space-x-1">
-          <Clock className="h-4 w-4 text-gray-400" />
-          <ChevronDown className="h-4 w-4 text-gray-400" />
+          <Clock className="h-4 w-4 text-foreground/40" />
+          <ChevronDown className="h-4 w-4 text-foreground/40" />
         </div>
       </div>
 
       {isOpen && (
-        <div className="absolute z-50 w-full mt-1 bg-white border border-gray-200 rounded-md shadow-lg max-h-80 overflow-y-auto">
+        <div className="absolute z-50 w-full mt-1 bg-background border border-foreground/20 rounded-md shadow-lg max-h-80 overflow-y-auto">
           {showCurrent && (
-            <div className="px-4 py-2 border-b border-gray-100 bg-blue-50">
-              <div className="text-xs font-medium text-blue-600 uppercase tracking-wide">
+            <div className="px-4 py-2 border-b border-foreground/10 bg-primary-indigo/5">
+              <div className="text-xs font-medium text-primary-indigo uppercase tracking-wide">
                 Current Timezone
               </div>
               <div 
-                className="px-2 py-1 mt-1 cursor-pointer hover:bg-blue-100 rounded flex items-center justify-between"
+                className="px-2 py-1 mt-1 cursor-pointer hover:bg-primary-indigo/10 rounded flex items-center justify-between"
                 onClick={() => handleOptionSelect({ value: currentTimezone.offset, label: `${formatTimezoneOffset(currentTimezone.offset)} (${currentTimezone.name})` })}
               >
                 <span className="text-sm">
                   {formatTimezoneOffset(currentTimezone.offset)} ({currentTimezone.name})
                 </span>
-                <span className="text-xs text-blue-500 font-medium">Current</span>
+                <span className="text-xs text-primary-indigo font-medium">Current</span>
               </div>
             </div>
           )}
           
           {searchQuery && (
-            <div className="px-4 py-2 border-b border-gray-100 bg-gray-50">
-              <div className="text-xs font-medium text-gray-600 uppercase tracking-wide flex items-center">
+            <div className="px-4 py-2 border-b border-foreground/10 bg-foreground/5">
+              <div className="text-xs font-medium text-foreground/70 uppercase tracking-wide flex items-center">
                 <Search className="h-3 w-3 mr-1" />
                 Search Results
               </div>
@@ -195,21 +195,21 @@ export default function TimezoneSelector({
             
             return (
               <div key={region}>
-                <div className="px-4 py-2 border-b border-gray-100 bg-gray-50">
-                  <div className="text-xs font-medium text-gray-600 uppercase tracking-wide">
+                <div className="px-4 py-2 border-b border-foreground/10 bg-foreground/5">
+                  <div className="text-xs font-medium text-foreground/70 uppercase tracking-wide">
                     {region}
                   </div>
                 </div>
                 {options.map((option, index) => (
                   <div
                     key={option.value}
-                    className={`px-4 py-2 cursor-pointer hover:bg-gray-50 ${
-                      index === selectedIndex ? 'bg-gray-100' : ''
+                    className={`px-4 py-2 cursor-pointer hover:bg-foreground/5 ${
+                      index === selectedIndex ? 'bg-foreground/10' : ''
                     }`}
                     onClick={() => handleOptionSelect(option)}
                   >
                     <div className="text-sm font-medium">{option.label}</div>
-                    <div className="text-xs text-gray-500 mt-1">
+                    <div className="text-xs text-foreground/60 mt-1">
                       {formatTimezoneOffset(option.value)}
                     </div>
                   </div>
@@ -220,18 +220,18 @@ export default function TimezoneSelector({
 
           {filteredOptions.length === 0 && searchQuery && (
             <div className="px-4 py-4 text-center">
-              <div className="text-sm text-gray-500 mb-2">
+              <div className="text-sm text-foreground/60 mb-2">
                 No timezones found matching &quot;{searchQuery}&quot;
               </div>
-              <div className="text-xs text-gray-400">
+              <div className="text-xs text-foreground/40">
                 Try searching for a city name, country, or UTC offset
               </div>
             </div>
           )}
 
           {!searchQuery && (
-            <div className="px-4 py-2 border-t border-gray-100 bg-gray-50">
-              <div className="text-xs text-gray-500 text-center">
+            <div className="px-4 py-2 border-t border-foreground/10 bg-foreground/5">
+              <div className="text-xs text-foreground/60 text-center">
                 Type to search • {timezoneOptions.length} timezones available
               </div>
             </div>
@@ -240,7 +240,7 @@ export default function TimezoneSelector({
       )}
 
       {value !== undefined && !isOpen && (
-        <div className="mt-1 text-xs text-gray-500">
+        <div className="mt-1 text-xs text-foreground/60">
           Selected: {formatTimezoneOffset(value)}
         </div>
       )}

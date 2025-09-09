@@ -2,6 +2,7 @@
 
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
+import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 import { ShoppingBag, Eye, Heart } from "lucide-react";
 import Image from "next/image";
 import { useCartWishlist } from "@/contexts/CartWishlistContext";
@@ -22,7 +23,7 @@ interface ProductCardProps {
 }
 
 const ProductCard = ({ product }: ProductCardProps) => {
-  const { addToCart, addToWishlist, isInCart, isInWishlist, loading } = useCartWishlist();
+  const { addToCart, addToWishlist, removeFromWishlist, isInCart, isInWishlist, loading } = useCartWishlist();
   const { isAuthenticated } = useAuth();
   const router = useRouter();
   const [showLoginPrompt, setShowLoginPrompt] = useState(false);
@@ -49,13 +50,19 @@ const ProductCard = ({ product }: ProductCardProps) => {
       setShowLoginPrompt(true);
       return;
     }
-    await addToWishlist({
-      _id: product._id,
-      productId: product._id,
-      name: product.name,
-      price: product.price,
-      imageUrl: product.imageUrl || ''
-    });
+    
+    // Toggle wishlist: remove if already in wishlist, add if not
+    if (isInWishlist(product._id)) {
+      await removeFromWishlist(product._id);
+    } else {
+      await addToWishlist({
+        _id: product._id,
+        productId: product._id,
+        name: product.name,
+        price: product.price,
+        imageUrl: product.imageUrl || ''
+      });
+    }
   };
 
   const handleViewProduct = () => {
@@ -78,27 +85,41 @@ const ProductCard = ({ product }: ProductCardProps) => {
           
           {/* Action Buttons */}
           <div className="absolute top-3 right-3 flex gap-2 opacity-0 group-hover:opacity-100 transition-all duration-200">
-            <Button
-              variant="ghost"
-              size="sm"
-              className="bg-background/90 backdrop-blur-sm hover:bg-background rounded-lg"
-              onClick={handleViewProduct}
-            >
-              <Eye className="w-4 h-4" />
-            </Button>
-            <Button
-              variant="ghost"
-              size="sm"
-              className={`backdrop-blur-sm rounded-lg ${
-                isInWishlist(product._id) 
-                  ? 'bg-red-500/90 text-white hover:bg-red-600/90' 
-                  : 'bg-background/90 hover:bg-background'
-              }`}
-              onClick={handleAddToWishlist}
-              disabled={loading}
-            >
-              <Heart className={`w-4 h-4 ${isInWishlist(product._id) ? 'fill-current' : ''}`} />
-            </Button>
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  className="bg-background/90 backdrop-blur-sm hover:bg-background rounded-lg"
+                  onClick={handleViewProduct}
+                >
+                  <Eye className="w-4 h-4" />
+                </Button>
+              </TooltipTrigger>
+              <TooltipContent side="left">
+                View Details
+              </TooltipContent>
+            </Tooltip>
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  className={`backdrop-blur-sm rounded-lg ${
+                    isInWishlist(product._id) 
+                      ? 'bg-primary-indigo text-secondary-pop hover:bg-primary-indigo/90 hover:text-secondary-pop' 
+                      : 'bg-background hover:bg-background text-primary-indigo'
+                  }`}
+                  onClick={handleAddToWishlist}
+                  disabled={loading}
+                >
+                  <Heart className={`w-4 h-4 ${isInWishlist(product._id) ? 'fill-current' : ''}`} />
+                </Button>
+              </TooltipTrigger>
+              <TooltipContent side="top">
+                {isInWishlist(product._id) ? 'Remove from Wishlist' : 'Add to Wishlist'}
+              </TooltipContent>
+            </Tooltip>
           </div>
         </div>
         
@@ -107,19 +128,19 @@ const ProductCard = ({ product }: ProductCardProps) => {
             {product.name}
           </h3>
           <div className="flex items-center justify-between">
-            <span className="text-2xl font-bold text-primary">${product.price}</span>
+            <span className="text-2xl font-bold text-primary-indigo">${product.price}</span>
             <Button 
               size="sm" 
               className={`font-medium rounded-lg transition-all duration-200 ${
                 isInCart(product._id)
-                  ? 'bg-green-600 hover:bg-green-700 text-white'
-                  : 'bg-primary hover:bg-primary/90 text-primary-foreground'
+                  ? 'bg-secondary-pop hover:bg-secondary-pop/90 text-background'
+                  : 'bg-primary-indigo hover:bg-primary-indigo/90 text-background'
               }`}
               onClick={handleAddToCart}
               disabled={loading}
             >
               <ShoppingBag className="w-4 h-4 mr-2" />
-              {isInCart(product._id) ? 'In Cart' : 'Add to Cart'}
+              {isInCart(product._id) ? 'In Cart Add More' : 'Add to Cart'}
             </Button>
           </div>
         </div>

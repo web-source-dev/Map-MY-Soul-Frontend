@@ -23,6 +23,8 @@ import { useCartWishlist } from '@/contexts/CartWishlistContext';
 import { showToast } from '@/lib/utils';
 import Link from 'next/link';
 import Image from 'next/image';
+import { Tooltip, TooltipContent } from '@/components/ui/tooltip';
+import { TooltipTrigger } from '@/components/ui/tooltip';
 
 interface CartItem {
   productId: string;
@@ -118,7 +120,7 @@ export default function CartPage() {
   if (loading || loadingCart) {
     return (
       <div className="min-h-screen flex items-center justify-center">
-        <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-purple-600"></div>
+        <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-primary-indigo"></div>
       </div>
     );
   }
@@ -133,12 +135,12 @@ export default function CartPage() {
       <div className="mb-8">
         <div className="flex items-center justify-between">
           <div>
-            <h1 className="text-4xl font-bold text-gray-900 mb-2">My Cart</h1>
-            <p className="text-gray-600 text-lg">
+            <h1 className="text-4xl font-bold text-foreground mb-2">My Cart</h1>
+            <p className="text-foreground/70 text-lg">
               Review your items and proceed to checkout
             </p>
           </div>
-          <Button asChild className="bg-purple-600 hover:bg-purple-700">
+          <Button asChild className="bg-primary-indigo hover:bg-primary-indigo/90">
             <Link href="/products">
               Continue Shopping
             </Link>
@@ -153,7 +155,7 @@ export default function CartPage() {
           {cart.length > 0 ? (
             <div className="space-y-4">
               {cart.map((item) => (
-                <Card key={item.productId} className="bg-white shadow-lg">
+                <Card key={item.productId} className="bg-background shadow-lg">
                   <CardContent className="p-6">
                     <div className="flex items-center space-x-4">
                       {/* Product Image */}
@@ -174,10 +176,10 @@ export default function CartPage() {
 
                       {/* Product Details */}
                       <div className="flex-1 min-w-0">
-                        <h3 className="text-lg font-semibold text-gray-900 truncate">
+                        <h3 className="text-lg font-semibold text-foreground truncate">
                           {item.name}
                         </h3>
-                        <p className="text-lg font-bold text-purple-600">
+                        <p className="text-lg font-bold text-primary-indigo">
                           ${item.price.toFixed(2)}
                         </p>
                         <p className="text-sm text-gray-500">
@@ -222,30 +224,44 @@ export default function CartPage() {
 
                       {/* Item Total */}
                       <div className="text-right">
-                        <p className="text-lg font-bold text-gray-900">
+                        <p className="text-lg font-bold text-foreground">
                           ${(item.price * item.quantity).toFixed(2)}
                         </p>
                       </div>
 
                       {/* Actions */}
                       <div className="flex flex-col space-y-2">
-                        <Button
-                          variant="ghost"
-                          size="sm"
-                          onClick={() => handleMoveToWishlist(item)}
-                          disabled={isInWishlist(item.productId)}
-                          className="text-gray-600 hover:text-pink-600"
-                        >
-                          <Heart className={`h-4 w-4 ${isInWishlist(item.productId) ? 'fill-pink-600 text-pink-600' : ''}`} />
-                        </Button>
+                        <Tooltip>
+                          <TooltipTrigger>
+                            <Button
+                              variant="ghost"
+                              size="sm"
+                              onClick={() => handleMoveToWishlist(item)}
+                              disabled={isInWishlist(item.productId)}
+                              className="text-foreground/70 hover:text-secondary-pop border border-secondary-pop"
+                            >
+                              <Heart className={`h-4 w-4 ${isInWishlist(item.productId) ? 'fill-secondary-pop text-background' : ''}`} />
+                            </Button>
+                          </TooltipTrigger>
+                          <TooltipContent side="right">
+                            Move to Wishlist
+                          </TooltipContent>
+                        </Tooltip>
+                        <Tooltip>
+                        <TooltipTrigger>
                         <Button
                           variant="ghost"
                           size="sm"
                           onClick={() => handleRemoveItem(item.productId)}
-                          className="text-gray-600 hover:text-red-600"
+                          className="text-foreground/70 hover:text-secondary-vivid border border-secondary-vivid"
                         >
                           <Trash2 className="h-4 w-4" />
                         </Button>
+                        </TooltipTrigger>
+                          <TooltipContent side="right">
+                            Remove from Cart
+                          </TooltipContent>
+                        </Tooltip>
                       </div>
                     </div>
                   </CardContent>
@@ -265,14 +281,14 @@ export default function CartPage() {
               </div>
             </div>
           ) : (
-            <Card className="bg-white shadow-lg">
+            <Card className="bg-background shadow-lg">
               <CardContent className="p-12 text-center">
                 <ShoppingCart className="h-16 w-16 text-gray-400 mx-auto mb-4" />
-                <h3 className="text-xl font-semibold text-gray-900 mb-2">Your cart is empty</h3>
-                <p className="text-gray-600 mb-6">
+                <h3 className="text-xl font-semibold text-foreground mb-2">Your cart is empty</h3>
+                <p className="text-foreground/70 mb-6">
                   Start shopping to add items to your cart
                 </p>
-                <Button asChild className="bg-purple-600 hover:bg-purple-700">
+                <Button asChild className="bg-primary-indigo hover:bg-primary-indigo/90">
                   <Link href="/products">
                     Browse Products
                   </Link>
@@ -284,7 +300,7 @@ export default function CartPage() {
 
         {/* Order Summary */}
         <div className="lg:col-span-1">
-          <Card className="bg-white shadow-lg sticky top-6">
+          <Card className="bg-background shadow-lg sticky top-6">
             <CardHeader>
               <CardTitle className="flex items-center space-x-2">
                 <ShoppingCart className="h-5 w-5" />
@@ -295,24 +311,24 @@ export default function CartPage() {
               {/* Summary Details */}
               <div className="space-y-3">
                 <div className="flex justify-between text-sm">
-                  <span className="text-gray-600">Items ({cartCount})</span>
+                  <span className="text-foreground/70">Items ({cartCount})</span>
                   <span className="font-medium">${calculateSubtotal().toFixed(2)}</span>
                 </div>
                 <div className="flex justify-between text-sm">
-                  <span className="text-gray-600">Tax</span>
+                  <span className="text-foreground/70">Tax</span>
                   <span className="font-medium">${calculateTax().toFixed(2)}</span>
                 </div>
                 <Separator />
                 <div className="flex justify-between text-lg font-bold">
                   <span>Total</span>
-                  <span className="text-purple-600">${calculateTotal().toFixed(2)}</span>
+                  <span className="text-primary-indigo">${calculateTotal().toFixed(2)}</span>
                 </div>
               </div>
 
               {/* Shipping Info */}
               <div className="bg-gray-50 p-4 rounded-lg">
                 <div className="flex items-center space-x-2 mb-2">
-                  <Truck className="h-4 w-4 text-gray-600" />
+                  <Truck className="h-4 w-4 text-foreground/70" />
                   <span className="text-sm font-medium text-gray-700">Free Shipping</span>
                 </div>
                 <p className="text-xs text-gray-500">
@@ -322,7 +338,7 @@ export default function CartPage() {
 
               {/* Checkout Button */}
               <Button 
-                className="w-full bg-purple-600 hover:bg-purple-700"
+                className="w-full bg-primary-indigo hover:bg-primary-indigo/90"
                 disabled={cart.length === 0}
                 size="lg"
               >
@@ -346,14 +362,14 @@ export default function CartPage() {
       {/* Empty State for Mobile */}
       {cart.length === 0 && (
         <div className="lg:hidden mt-8">
-          <Card className="bg-white shadow-lg">
+          <Card className="bg-background shadow-lg">
             <CardContent className="p-8 text-center">
               <ShoppingCart className="h-12 w-12 text-gray-400 mx-auto mb-4" />
-              <h3 className="text-lg font-semibold text-gray-900 mb-2">Your cart is empty</h3>
-              <p className="text-gray-600 mb-4">
+              <h3 className="text-lg font-semibold text-foreground mb-2">Your cart is empty</h3>
+              <p className="text-foreground/70 mb-4">
                 Start shopping to add items to your cart
               </p>
-              <Button asChild className="bg-purple-600 hover:bg-purple-700">
+              <Button asChild className="bg-primary-indigo hover:bg-primary-indigo/90">
                 <Link href="/products">
                   Browse Products
                 </Link>

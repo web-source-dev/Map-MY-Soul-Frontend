@@ -167,21 +167,21 @@ const RefundPolicy = () => {
   return (
     <Layout>
       {/* Hero Section */}
-      <section className="py-16 bg-gradient-to-br from-primary/10 via-primary-glow/5 to-transparent">
+      <section className="py-16 bg-gradient-to-br from-primary-indigo/10 via-primary-lavender/5 to-transparent">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <div className="flex justify-center mb-6">
-            <div className="p-4 bg-primary/10 rounded-full">
-              <RefreshCw className="w-8 h-8 text-primary" />
+            <div className="p-4 bg-primary-indigo/10 rounded-full">
+              <RefreshCw className="w-8 h-8 text-primary-indigo" />
             </div>
           </div>
           <h1 className="text-4xl md:text-5xl font-bold text-foreground mb-6">
             Refund Policy
           </h1>
-          <p className="text-lg text-muted-foreground leading-relaxed mb-4">
+          <p className="text-lg text-foreground/60 leading-relaxed mb-4">
             We want you to be completely satisfied with your spiritual healing experience. This policy outlines 
             our refund and cancellation procedures.
           </p>
-          <div className="flex items-center justify-center gap-2 text-sm text-muted-foreground">
+          <div className="flex items-center justify-center gap-2 text-sm text-foreground/60">
             <Calendar className="w-4 h-4" />
             <span>Last updated: {lastUpdated}</span>
           </div>
@@ -227,8 +227,8 @@ const RefundPolicy = () => {
               <Card key={index} className="mystical-card">
                 <CardHeader>
                   <CardTitle className="flex items-center gap-3 text-xl">
-                    <div className="p-2 bg-primary/10 rounded-lg">
-                      <section.icon className="w-5 h-5 text-primary" />
+                    <div className="p-2 bg-primary-indigo/10 rounded-lg">
+                      <section.icon className="w-5 h-5 text-primary-indigo" />
                     </div>
                     {section.title}
                   </CardTitle>
@@ -239,7 +239,7 @@ const RefundPolicy = () => {
                       <h4 className="font-semibold text-foreground mb-2">
                         {item.subtitle}
                       </h4>
-                      <p className="text-muted-foreground leading-relaxed">
+                      <p className="text-foreground/60 leading-relaxed">
                         {item.text}
                       </p>
                     </div>
@@ -253,7 +253,7 @@ const RefundPolicy = () => {
           <Card className="mt-12 mystical-card">
             <CardHeader>
               <CardTitle className="flex items-center gap-3">
-                <RefreshCw className="w-5 h-5 text-primary" />
+                <RefreshCw className="w-5 h-5 text-primary-indigo" />
                 How to Request a Refund
               </CardTitle>
             </CardHeader>
@@ -261,23 +261,23 @@ const RefundPolicy = () => {
               <div className="space-y-4">
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                   <div className="text-center p-4 bg-muted/50 rounded-lg">
-                    <div className="text-2xl font-bold text-primary mb-2">1</div>
+                    <div className="text-2xl font-bold text-primary-indigo mb-2">1</div>
                     <h4 className="font-semibold text-foreground mb-2">Contact Us</h4>
-                    <p className="text-sm text-muted-foreground">
+                    <p className="text-sm text-foreground/60">
                       Email us at info@mapmysoul.com or call +1 (555) 123-4567
                     </p>
                   </div>
                   <div className="text-center p-4 bg-muted/50 rounded-lg">
-                    <div className="text-2xl font-bold text-primary mb-2">2</div>
+                    <div className="text-2xl font-bold text-primary-indigo mb-2">2</div>
                     <h4 className="font-semibold text-foreground mb-2">Provide Details</h4>
-                    <p className="text-sm text-muted-foreground">
+                    <p className="text-sm text-foreground/60">
                       Include your order number, reason for refund, and relevant information
                     </p>
                   </div>
                   <div className="text-center p-4 bg-muted/50 rounded-lg">
-                    <div className="text-2xl font-bold text-primary mb-2">3</div>
+                    <div className="text-2xl font-bold text-primary-indigo mb-2">3</div>
                     <h4 className="font-semibold text-foreground mb-2">Review & Process</h4>
-                    <p className="text-sm text-muted-foreground">
+                    <p className="text-sm text-foreground/60">
                       We&apos;ll review your request and process the refund within 2 business days
                     </p>
                   </div>
@@ -290,12 +290,12 @@ const RefundPolicy = () => {
           <Card className="mt-8 mystical-card">
             <CardHeader>
               <CardTitle className="flex items-center gap-3">
-                <RefreshCw className="w-5 h-5 text-primary" />
+                <RefreshCw className="w-5 h-5 text-primary-indigo" />
                 Contact Us
               </CardTitle>
             </CardHeader>
             <CardContent>
-              <p className="text-muted-foreground mb-4">
+              <p className="text-foreground/60 mb-4">
                 If you need to request a refund or have questions about our refund policy, please contact us:
               </p>
               <div className="space-y-2 text-sm">
@@ -318,7 +318,7 @@ const RefundPolicy = () => {
           {/* Additional Information */}
           <div className="mt-8 p-6 bg-muted/50 rounded-lg">
             <h3 className="font-semibold text-foreground mb-3">Additional Information</h3>
-            <div className="space-y-3 text-sm text-muted-foreground">
+            <div className="space-y-3 text-sm text-foreground/60">
               <p>
                 <strong>Dispute Resolution:</strong> If you are dissatisfied with our refund decision, 
                 you may request a review by our management team. We are committed to fair resolution of all disputes.

@@ -69,16 +69,16 @@ function AuthContent() {
 
 export default function AuthPage() {
   return (
-    <div className="min-h-screen bg-gradient-to-br from-purple-50 via-pink-50 to-indigo-50 flex items-center justify-center p-4">
+    <div className="min-h-screen bg-gradient-to-br from-primary-indigo/10 via-primary-lavender/10 to-secondary-vivid/10 flex items-center justify-center p-4">
       <Suspense fallback={
         <div className="w-full max-w-md">
-          <div className="bg-white rounded-lg shadow-lg p-8">
+          <div className="bg-background rounded-lg shadow-lg p-8">
             <div className="animate-pulse">
-              <div className="h-8 bg-gray-200 rounded mb-4"></div>
-              <div className="h-4 bg-gray-200 rounded mb-2"></div>
-              <div className="h-4 bg-gray-200 rounded mb-6"></div>
-              <div className="h-10 bg-gray-200 rounded mb-4"></div>
-              <div className="h-10 bg-gray-200 rounded"></div>
+              <div className="h-8 bg-foreground/10 rounded mb-4"></div>
+              <div className="h-4 bg-foreground/10 rounded mb-2"></div>
+              <div className="h-4 bg-foreground/10 rounded mb-6"></div>
+              <div className="h-10 bg-foreground/10 rounded mb-4"></div>
+              <div className="h-10 bg-foreground/10 rounded"></div>
             </div>
           </div>
         </div>

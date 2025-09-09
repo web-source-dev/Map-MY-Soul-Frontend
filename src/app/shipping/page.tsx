@@ -194,21 +194,21 @@ const ShippingPolicy = () => {
   return (
     <Layout>
       {/* Hero Section */}
-      <section className="py-16 bg-gradient-to-br from-primary/10 via-primary-glow/5 to-transparent">
+      <section className="py-16 bg-gradient-to-br from-primary-indigo/10 via-primary-lavender/5 to-transparent">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <div className="flex justify-center mb-6">
-            <div className="p-4 bg-primary/10 rounded-full">
-              <Truck className="w-8 h-8 text-primary" />
+            <div className="p-4 bg-primary-indigo/10 rounded-full">
+              <Truck className="w-8 h-8 text-primary-indigo" />
             </div>
           </div>
           <h1 className="text-4xl md:text-5xl font-bold text-foreground mb-6">
             Shipping Policy
           </h1>
-          <p className="text-lg text-muted-foreground leading-relaxed mb-4">
+          <p className="text-lg text-foreground/60 leading-relaxed mb-4">
             We carefully package and ship your spiritual products with the same care and intention 
             that goes into selecting them for your journey.
           </p>
-          <div className="flex items-center justify-center gap-2 text-sm text-muted-foreground">
+          <div className="flex items-center justify-center gap-2 text-sm text-foreground/60">
             <Calendar className="w-4 h-4" />
             <span>Last updated: {lastUpdated}</span>
           </div>
@@ -216,11 +216,11 @@ const ShippingPolicy = () => {
       </section>
 
       {/* Shipping Rates */}
-      <section className="py-8 bg-green-50 dark:bg-green-950/20">
+      <section className="py-8 ">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-          <Card className="border-green-200 dark:border-green-800">
+          <Card className="border-secondary-pop">
             <CardHeader>
-              <CardTitle className="text-green-800 dark:text-green-200 flex items-center gap-2">
+              <CardTitle className="text-secondary-pop flex items-center gap-2">
                 <Truck className="w-5 h-5" />
                 Shipping Rates and Methods
               </CardTitle>
@@ -228,19 +228,19 @@ const ShippingPolicy = () => {
             <CardContent>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 {shippingRates.map((rate, index) => (
-                  <div key={index} className="p-4 bg-green-100 dark:bg-green-900/30 rounded-lg">
+                  <div key={index} className="p-4 bg-secondary-pop rounded-lg">
                     <div className="flex justify-between items-start mb-2">
-                      <h4 className="font-semibold text-green-800 dark:text-green-200">
+                      <h4 className="font-semibold text-background">
                         {rate.method}
                       </h4>
-                      <span className="text-lg font-bold text-green-700 dark:text-green-300">
+                      <span className="text-lg font-bold text-background">
                         {rate.cost}
                       </span>
                     </div>
-                    <p className="text-sm text-green-600 dark:text-green-400 mb-1">
+                    <p className="text-sm text-background mb-1">
                       {rate.time}
                     </p>
-                    <p className="text-xs text-green-600 dark:text-green-400">
+                    <p className="text-xs text-background">
                       {rate.description}
                     </p>
                   </div>
@@ -252,11 +252,11 @@ const ShippingPolicy = () => {
       </section>
 
       {/* Shipping Timeline */}
-      <section className="py-8 bg-blue-50 dark:bg-blue-950/20">
+      <section className="py-8 bg-secondary-vivid/10">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-          <Card className="border-blue-200 dark:border-blue-800">
+          <Card className="border-secondary-vivid">
             <CardHeader>
-              <CardTitle className="text-blue-800 dark:text-blue-200 flex items-center gap-2">
+              <CardTitle className="text-secondary-vivid flex items-center gap-2">
                 <Clock className="w-5 h-5" />
                 Shipping Timeline
               </CardTitle>
@@ -264,14 +264,14 @@ const ShippingPolicy = () => {
             <CardContent>
               <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
                 {shippingTimeline.map((step, index) => (
-                  <div key={index} className="text-center p-4 bg-blue-100 dark:bg-blue-900/30 rounded-lg">
+                  <div key={index} className="text-center p-4 bg-secondary-vivid rounded-lg">
                     <div className="flex justify-center mb-2">
-                      <step.icon className="w-6 h-6 text-blue-600 dark:text-blue-400" />
+                      <step.icon className="w-6 h-6 text-background" />
                     </div>
-                    <h4 className="font-semibold text-blue-800 dark:text-blue-200 text-sm mb-1">
+                    <h4 className="font-semibold text-background text-sm mb-1">
                       {step.title}
                     </h4>
-                    <p className="text-xs text-blue-600 dark:text-blue-400">
+                    <p className="text-xs text-background">
                       {step.description}
                     </p>
                   </div>
@@ -290,8 +290,8 @@ const ShippingPolicy = () => {
               <Card key={index} className="mystical-card">
                 <CardHeader>
                   <CardTitle className="flex items-center gap-3 text-xl">
-                    <div className="p-2 bg-primary/10 rounded-lg">
-                      <section.icon className="w-5 h-5 text-primary" />
+                    <div className="p-2 bg-primary-indigo/10 rounded-lg">
+                      <section.icon className="w-5 h-5 text-primary-indigo" />
                     </div>
                     {section.title}
                   </CardTitle>
@@ -302,7 +302,7 @@ const ShippingPolicy = () => {
                       <h4 className="font-semibold text-foreground mb-2">
                         {item.subtitle}
                       </h4>
-                      <p className="text-muted-foreground leading-relaxed">
+                      <p className="text-foreground/60 leading-relaxed">
                         {item.text}
                       </p>
                     </div>
@@ -316,7 +316,7 @@ const ShippingPolicy = () => {
           <Card className="mt-12 mystical-card">
             <CardHeader>
               <CardTitle className="flex items-center gap-3">
-                <Package className="w-5 h-5 text-primary" />
+                <Package className="w-5 h-5 text-primary-indigo" />
                 Special Handling and Care
               </CardTitle>
             </CardHeader>
@@ -324,7 +324,7 @@ const ShippingPolicy = () => {
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div className="space-y-4">
                   <h4 className="font-semibold text-foreground">Crystal Care</h4>
-                  <ul className="space-y-2 text-sm text-muted-foreground">
+                  <ul className="space-y-2 text-sm text-foreground/60">
                     <li>• All crystals are individually wrapped in protective materials</li>
                     <li>• Fragile crystals are double-boxed for extra protection</li>
                     <li>• Each crystal includes care instructions</li>
@@ -333,7 +333,7 @@ const ShippingPolicy = () => {
                 </div>
                 <div className="space-y-4">
                   <h4 className="font-semibold text-foreground">Packaging Standards</h4>
-                  <ul className="space-y-2 text-sm text-muted-foreground">
+                  <ul className="space-y-2 text-sm text-foreground/60">
                     <li>• Eco-friendly packaging materials when possible</li>
                     <li>• Recyclable and biodegradable options available</li>
                     <li>• Secure packaging to prevent damage</li>
@@ -348,12 +348,12 @@ const ShippingPolicy = () => {
           <Card className="mt-8 mystical-card">
             <CardHeader>
               <CardTitle className="flex items-center gap-3">
-                <Truck className="w-5 h-5 text-primary" />
+                <Truck className="w-5 h-5 text-primary-indigo" />
                 Contact Us About Shipping
               </CardTitle>
             </CardHeader>
             <CardContent>
-              <p className="text-muted-foreground mb-4">
+              <p className="text-foreground/60 mb-4">
                 If you have questions about shipping or need assistance with your order, please contact us:
               </p>
               <div className="space-y-2 text-sm">
@@ -376,7 +376,7 @@ const ShippingPolicy = () => {
           {/* Additional Information */}
           <div className="mt-8 p-6 bg-muted/50 rounded-lg">
             <h3 className="font-semibold text-foreground mb-3">Additional Information</h3>
-            <div className="space-y-3 text-sm text-muted-foreground">
+            <div className="space-y-3 text-sm text-foreground/60">
               <p>
                 <strong>Order Tracking:</strong> Track your order through your account dashboard or using the 
                 tracking number provided in your shipping confirmation email.

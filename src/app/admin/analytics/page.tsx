@@ -10,8 +10,6 @@ import {
   TrendingUp, 
   Users, 
   DollarSign,
-  Calendar,
-  Activity,
   RefreshCw,
   AlertCircle
 } from 'lucide-react';
@@ -172,7 +170,7 @@ export default function AdminAnalytics() {
   if (loading) {
     return (
       <div className="flex items-center justify-center min-h-[400px]">
-        <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-purple-600"></div>
+        <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-primary-indigo"></div>
       </div>
     );
   }
@@ -183,9 +181,9 @@ export default function AdminAnalytics() {
         <Card className="w-full max-w-md">
           <CardContent className="pt-6">
             <div className="text-center">
-              <AlertCircle className="h-12 w-12 text-red-500 mx-auto mb-4" />
-              <h3 className="text-lg font-semibold text-gray-900 mb-2">Error Loading Data</h3>
-              <p className="text-gray-600 mb-4">{error}</p>
+              <AlertCircle className="h-12 w-12 text-secondary-pop mx-auto mb-4" />
+              <h3 className="text-lg font-semibold text-foreground mb-2">Error Loading Data</h3>
+              <p className="text-foreground/70 mb-4">{error}</p>
               <Button onClick={fetchAnalyticsData}>Retry</Button>
             </div>
           </CardContent>
@@ -208,8 +206,8 @@ export default function AdminAnalytics() {
       {/* Header */}
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-3xl font-bold text-gray-900">Analytics</h1>
-          <p className="text-gray-600 mt-1">Detailed analytics and insights for your platform</p>
+          <h1 className="text-3xl font-bold text-foreground">Analytics</h1>
+          <p className="text-foreground/70 mt-1">Detailed analytics and insights for your platform</p>
         </div>
         <div className="flex items-center space-x-4">
           <Select value={timeRange} onValueChange={setTimeRange}>
@@ -235,13 +233,13 @@ export default function AdminAnalytics() {
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
             <CardTitle className="text-sm font-medium">Revenue Growth</CardTitle>
-            <TrendingUp className="h-4 w-4 text-muted-foreground" />
+            <TrendingUp className="h-4 w-4 text-foreground/60" />
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold">
               {revenueGrowth >= 0 ? '+' : ''}{revenueGrowth.toFixed(1)}%
             </div>
-            <p className="text-xs text-muted-foreground">vs last month</p>
+            <p className="text-xs text-foreground/60">vs last month</p>
             <div className="mt-2">
               <Badge variant={revenueGrowth >= 0 ? 'default' : 'destructive'}>
                 {revenueGrowth >= 0 ? '↗' : '↘'} {formatCurrency(data.overview.totalRevenue)}
@@ -253,13 +251,13 @@ export default function AdminAnalytics() {
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
             <CardTitle className="text-sm font-medium">User Growth</CardTitle>
-            <Users className="h-4 w-4 text-muted-foreground" />
+            <Users className="h-4 w-4 text-foreground/60" />
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold">
               {userGrowth >= 0 ? '+' : ''}{userGrowth.toFixed(1)}%
             </div>
-            <p className="text-xs text-muted-foreground">vs last month</p>
+            <p className="text-xs text-foreground/60">vs last month</p>
             <div className="mt-2">
               <Badge variant={userGrowth >= 0 ? 'default' : 'destructive'}>
                 {userGrowth >= 0 ? '↗' : '↘'} {data.overview.totalUsers.toLocaleString()} users
@@ -271,13 +269,13 @@ export default function AdminAnalytics() {
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
             <CardTitle className="text-sm font-medium">Booking Rate</CardTitle>
-            <BarChart3 className="h-4 w-4 text-muted-foreground" />
+            <BarChart3 className="h-4 w-4 text-foreground/60" />
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold">
               {bookingRate >= 0 ? '+' : ''}{bookingRate.toFixed(1)}%
             </div>
-            <p className="text-xs text-muted-foreground">vs last month</p>
+            <p className="text-xs text-foreground/60">vs last month</p>
             <div className="mt-2">
               <Badge variant={bookingRate >= 0 ? 'default' : 'destructive'}>
                 {bookingRate >= 0 ? '↗' : '↘'} {data.overview.totalBookings.toLocaleString()} bookings
@@ -289,11 +287,11 @@ export default function AdminAnalytics() {
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
             <CardTitle className="text-sm font-medium">Average Order Value</CardTitle>
-            <DollarSign className="h-4 w-4 text-muted-foreground" />
+            <DollarSign className="h-4 w-4 text-foreground/60" />
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold">{formatCurrency(averageOrderValue)}</div>
-            <p className="text-xs text-muted-foreground">per booking</p>
+            <p className="text-xs text-foreground/60">per booking</p>
             <div className="mt-2">
               <Badge variant="outline">
                 {data.overview.totalBookings} total bookings
@@ -422,21 +420,21 @@ export default function AdminAnalytics() {
         </CardHeader>
         <CardContent>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-            <div className="text-center p-4 bg-blue-50 rounded-lg">
-              <div className="text-2xl font-bold text-blue-600">{data.overview.totalServices}</div>
-              <div className="text-sm text-gray-600">Services</div>
+            <div className="text-center p-4 bg-primary-indigo/5 rounded-lg">
+              <div className="text-2xl font-bold text-primary-indigo">{data.overview.totalServices}</div>
+              <div className="text-sm text-foreground/70">Services</div>
             </div>
-            <div className="text-center p-4 bg-green-50 rounded-lg">
-              <div className="text-2xl font-bold text-green-600">{data.overview.totalProducts}</div>
-              <div className="text-sm text-gray-600">Products</div>
+            <div className="text-center p-4 bg-support-pastel/10 rounded-lg">
+              <div className="text-2xl font-bold text-support-pastel">{data.overview.totalProducts}</div>
+              <div className="text-sm text-foreground/70">Products</div>
             </div>
-            <div className="text-center p-4 bg-purple-50 rounded-lg">
-              <div className="text-2xl font-bold text-purple-600">{data.overview.totalPodcasts}</div>
-              <div className="text-sm text-gray-600">Podcasts</div>
+            <div className="text-center p-4 bg-primary-lavender/10 rounded-lg">
+              <div className="text-2xl font-bold text-primary-lavender">{data.overview.totalPodcasts}</div>
+              <div className="text-sm text-foreground/70">Podcasts</div>
             </div>
-            <div className="text-center p-4 bg-orange-50 rounded-lg">
-              <div className="text-2xl font-bold text-orange-600">{data.overview.totalNewsletterSubscribers}</div>
-              <div className="text-sm text-gray-600">Newsletter Subscribers</div>
+            <div className="text-center p-4 bg-secondary-vivid/10 rounded-lg">
+              <div className="text-2xl font-bold text-secondary-vivid">{data.overview.totalNewsletterSubscribers}</div>
+              <div className="text-sm text-foreground/70">Newsletter Subscribers</div>
             </div>
           </div>
         </CardContent>

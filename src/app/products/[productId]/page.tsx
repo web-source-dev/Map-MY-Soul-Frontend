@@ -92,8 +92,8 @@ const ProductDetailPage = () => {
             <Layout>
                 <div className="min-h-screen flex items-center justify-center">
                     <div className="text-center">
-                        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary mx-auto mb-4"></div>
-                        <p className="text-muted-foreground">Loading product details...</p>
+                        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary-indigo mx-auto mb-4"></div>
+                        <p className="text-foreground/60">Loading product details...</p>
                     </div>
                 </div>
             </Layout>
@@ -106,7 +106,7 @@ const ProductDetailPage = () => {
                 <div className="min-h-screen flex items-center justify-center">
                     <div className="text-center">
                         <h2 className="text-2xl font-bold mb-4">Product Not Found</h2>
-                        <p className="text-muted-foreground mb-4">The product you&apos;re looking for doesn&apos;t exist.</p>
+                        <p className="text-foreground/60 mb-4">The product you&apos;re looking for doesn&apos;t exist.</p>
                         <Button onClick={() => router.push('/products')}>
                             <ArrowLeft className="w-4 h-4 mr-2" />
                             Back to Products
@@ -156,7 +156,7 @@ const ProductDetailPage = () => {
 
 
                                 <div className="flex items-center gap-4">
-                                    <div className="text-3xl font-bold text-primary">
+                                    <div className="text-3xl font-bold text-primary-indigo">
                                         ${product.price}
                                     </div>
 
@@ -174,7 +174,7 @@ const ProductDetailPage = () => {
 
                             {/* Product Description */}
                             {product.description && (
-                                <p className="text-muted-foreground leading-relaxed">
+                                <p className="text-foreground/60 leading-relaxed">
                                     {product.description}
                                 </p>
                             )}
@@ -185,8 +185,8 @@ const ProductDetailPage = () => {
                                     <Button
                                         size="lg"
                                         className={`flex-1 font-medium rounded-lg transition-all duration-200 ${isInCart(product._id)
-                                            ? 'bg-green-600 hover:bg-green-700 text-white'
-                                            : 'bg-primary hover:bg-primary/90 text-primary-foreground'
+                                            ? 'bg-support-pastel hover:bg-support-pastel/90 text-background'
+                                            : 'bg-primary hover:bg-primary/90 text-background'
                                             }`}
                                         onClick={handleAddToCart}
                                         disabled={loading || (product.stock !== undefined && product.stock <= 0)}
@@ -199,7 +199,7 @@ const ProductDetailPage = () => {
                                         variant="outline"
                                         size="lg"
                                         className={`rounded-lg transition-all duration-200 ${isInWishlist(product._id)
-                                            ? 'border-red-500 text-red-600 hover:bg-red-50'
+                                            ? 'border-secondary-pop text-secondary-pop hover:bg-secondary-pop/5'
                                             : ''
                                             }`}
                                         onClick={handleAddToWishlist}

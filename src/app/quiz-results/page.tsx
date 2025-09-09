@@ -110,11 +110,11 @@ const QuizResults = () => {
       <Layout>
         <section className="section-padding min-h-[70vh] flex items-center">
           <div className="max-w-3xl mx-auto container-padding text-center">
-            <div className="w-16 h-16 bg-primary/10 rounded-2xl flex items-center justify-center mx-auto mb-6 animate-pulse">
-              <Sparkles className="w-8 h-8 text-primary" />
+            <div className="w-16 h-16 bg-primary-indigo/10 rounded-2xl flex items-center justify-center mx-auto mb-6 animate-pulse">
+              <Sparkles className="w-8 h-8 text-primary-indigo" />
             </div>
             <h1 className="text-2xl font-bold text-foreground mb-4">Crafting Your Personalized Path...</h1>
-            <p className="text-muted-foreground">Analyzing your responses and creating your unique wellness journey</p>
+            <p className="text-foreground/60">Analyzing your responses and creating your unique wellness journey</p>
           </div>
         </section>
       </Layout>
@@ -127,11 +127,11 @@ const QuizResults = () => {
         <section className="section-padding min-h-[70vh] flex items-center">
           <div className="max-w-3xl mx-auto container-padding text-center">
             <div className="w-16 h-16 bg-red-100 rounded-2xl flex items-center justify-center mx-auto mb-6">
-              <Shield className="w-8 h-8 text-red-600" />
+              <Shield className="w-8 h-8 text-secondary-pop" />
             </div>
             <h1 className="text-2xl font-bold text-foreground mb-4">No Results Found</h1>
-            <p className="text-muted-foreground mb-6">Please complete the quiz to get your personalized recommendations.</p>
-            <Button onClick={() => router.push('/quiz')} className="bg-primary hover:bg-primary/90">
+            <p className="text-foreground/60 mb-6">Please complete the quiz to get your personalized recommendations.</p>
+            <Button onClick={() => router.push('/quiz')} className="bg-primary-indigo hover:bg-primary-indigo/90">
               Take the Quiz
             </Button>
           </div>
@@ -142,17 +142,14 @@ const QuizResults = () => {
 
   return (
     <Layout>
-      <section className="section-padding min-h-screen">
+      <section className="py-10 min-h-screen">
         <div className="max-w-6xl mx-auto container-padding">
           {/* Header */}
           <div className="text-center mb-12 fade-in">
-            <div className="w-16 h-16 bg-primary/10 rounded-2xl flex items-center justify-center mx-auto mb-6">
-              <Sparkles className="w-8 h-8 text-primary" />
-            </div>
             <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-foreground mb-6">
               Your Personalized Wellness Path
             </h1>
-            <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+            <p className="text-lg text-foreground/60 max-w-2xl mx-auto">
               Based on your unique profile, we&apos;ve crafted the perfect healing journey for you
             </p>
           </div>
@@ -162,27 +159,27 @@ const QuizResults = () => {
             <Card className="modern-card">
               <CardHeader>
                 <CardTitle className="flex items-center gap-2">
-                  <Star className="w-5 h-5 text-yellow-500" />
+                  <Star className="w-5 h-5 text-support-pastel" />
                   Your Astrology Profile
                 </CardTitle>
               </CardHeader>
               <CardContent className="space-y-4">
                 <div className="flex justify-between">
-                  <span className="text-muted-foreground">Sun Sign:</span>
+                  <span className="text-foreground/60">Sun Sign:</span>
                   <Badge variant="secondary">{results.astrology?.sunSign}</Badge>
                 </div>
                 <div className="flex justify-between">
-                  <span className="text-muted-foreground">Moon Sign:</span>
+                  <span className="text-foreground/60">Moon Sign:</span>
                   <Badge variant="secondary">{results.astrology?.moonSign}</Badge>
                 </div>
                 <div className="flex justify-between">
-                  <span className="text-muted-foreground">Rising Sign:</span>
+                  <span className="text-foreground/60">Rising Sign:</span>
                   <Badge variant="secondary">{results.astrology?.risingSign}</Badge>
                 </div>
                                  {results.astrology?.sunSign !== "Unknown" && (
                    <div className="pt-3 border-t border-border/50">
                      <p className="text-sm font-medium text-foreground mb-2">Crystal Recommendation:</p>
-                     <p className="text-sm text-muted-foreground">{getCrystalRecommendation(results.astrology?.sunSign)}</p>
+                     <p className="text-sm text-foreground/60">{getCrystalRecommendation(results.astrology?.sunSign)}</p>
                    </div>
                  )}
                  {results.astrology?.calculationMethod && (
@@ -191,7 +188,7 @@ const QuizResults = () => {
                         {results.astrology?.calculationMethod === 'accurate' ? 'Accurate Calculation' : 'Simplified Calculation'}
                       </Badge>
                       {results.astrology?.calculationMethod === 'simplified' && (
-                      <p className="text-xs text-muted-foreground mt-1">
+                      <p className="text-xs text-foreground/60 mt-1">
                         Accurate calculation requires birth date, time, and location
                       </p>
                     )}
@@ -203,26 +200,26 @@ const QuizResults = () => {
             <Card className="modern-card">
               <CardHeader>
                 <CardTitle className="flex items-center gap-2">
-                  <Zap className="w-5 h-5 text-purple-500" />
+                  <Zap className="w-5 h-5 text-primary-lavender" />
                   Your Human Design
                 </CardTitle>
               </CardHeader>
               <CardContent className="space-y-4">
                 <div className="flex justify-between">
-                  <span className="text-muted-foreground">Energy Type:</span>
+                  <span className="text-foreground/60">Energy Type:</span>
                   <Badge variant="secondary">{results.humanDesign?.energyType}</Badge>
                 </div>
                 <div className="flex justify-between">
-                  <span className="text-muted-foreground">Strategy:</span>
+                  <span className="text-foreground/60">Strategy:</span>
                   <span className="text-sm">{results.humanDesign?.strategy}</span>
                 </div>
                 <div className="flex justify-between">
-                  <span className="text-muted-foreground">Authority:</span>
+                  <span className="text-foreground/60">Authority:</span>
                   <span className="text-sm">{results.humanDesign?.authority}</span>
                 </div>
                                   {results.humanDesign?.profile && (
                   <div className="flex justify-between">
-                    <span className="text-muted-foreground">Profile:</span>
+                    <span className="text-foreground/60">Profile:</span>
                     <Badge variant="outline">{results.humanDesign?.profile}</Badge>
                   </div>
                 )}
@@ -230,11 +227,11 @@ const QuizResults = () => {
                   <div className="pt-3 border-t border-border/50 space-y-3">
                     <div>
                       <p className="text-sm font-medium text-foreground mb-1">Your Strategy:</p>
-                                              <p className="text-sm text-muted-foreground">{getStrategyRecommendation(results.humanDesign?.energyType)}</p>
+                                              <p className="text-sm text-foreground/60">{getStrategyRecommendation(results.humanDesign?.energyType)}</p>
                     </div>
                     <div>
                       <p className="text-sm font-medium text-foreground mb-1">Key Insight:</p>
-                                              <p className="text-sm text-muted-foreground">{getHumanDesignInsights(results.humanDesign?.energyType)}</p>
+                                              <p className="text-sm text-foreground/60">{getHumanDesignInsights(results.humanDesign?.energyType)}</p>
                     </div>
                   </div>
                 )}
@@ -244,7 +241,7 @@ const QuizResults = () => {
                         {results.humanDesign?.calculationMethod === 'accurate' ? 'Accurate Calculation' : 'Simplified Calculation'}
                       </Badge>
                       {results.humanDesign?.calculationMethod === 'simplified' && (
-                      <p className="text-xs text-muted-foreground mt-1">
+                      <p className="text-xs text-foreground/60 mt-1">
                         Accurate calculation requires birth date, time, and location
                       </p>
                     )}
@@ -257,7 +254,7 @@ const QuizResults = () => {
           {/* Services Section */}
           <div className="mb-12">
             <h2 className="text-2xl font-bold text-foreground mb-6 flex items-center gap-2">
-              <Heart className="w-6 h-6 text-red-500" />
+              <Heart className="w-6 h-6 text-secondary-pop" />
               Recommended Services
             </h2>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -280,7 +277,7 @@ const QuizResults = () => {
           {results.products?.length > 0 && (
             <div className="mb-12">
               <h2 className="text-2xl font-bold text-foreground mb-6 flex items-center gap-2">
-                <ShoppingCart className="w-6 h-6 text-green-500" />
+                <ShoppingCart className="w-6 h-6 text-primary-indigo" />
                 Recommended Products
               </h2>
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -314,7 +311,7 @@ const QuizResults = () => {
                 </CardHeader>
                 <CardContent>
                   <p className="text-green-700 mb-4">{results.nonprofit?.message}</p>
-                  <Button className="bg-green-600 hover:bg-green-700 text-white">
+                  <Button className="bg-primary-indigo hover:bg-primary-indigo/90 text-background font-semibold rounded-xl">
                     Apply for Support
                     <ArrowRight className="w-4 h-4 ml-2" />
                   </Button>
@@ -326,7 +323,7 @@ const QuizResults = () => {
           {/* Podcast Section */}
           <div className="mb-12">
             <h2 className="text-2xl font-bold text-foreground mb-6 flex items-center gap-2">
-              <Headphones className="w-6 h-6 text-blue-500" />
+              <Headphones className="w-6 h-6 text-secondary-pop" />
               Listen & Learn
             </h2>
             {results.podcast && results.podcast.length > 0 ? (
@@ -335,10 +332,10 @@ const QuizResults = () => {
                   <Card key={podcast._id || index} className="modern-card">
                     <CardHeader>
                       <CardTitle>{podcast.title}</CardTitle>
-                      <p className="text-muted-foreground">{podcast.description}</p>
+                      <p className="text-foreground/60">{podcast.description}</p>
                     </CardHeader>
                     <CardContent>
-                      <Button className="bg-blue-600 hover:bg-blue-700 text-white" onClick={() => window.open(podcast.link, '_blank')}>
+                      <Button className="bg-secondary-pop hover:bg-secondary-pop/90 text-background font-semibold rounded-xl" onClick={() => window.open(podcast.link, '_blank')}>
                         Listen Now
                         <Headphones className="w-4 h-4 ml-2" />
                       </Button>
@@ -347,30 +344,28 @@ const QuizResults = () => {
                 ))}
               </div>
             ) : (
-              <p className="text-muted-foreground">No podcast recommendations available.</p>
+              <p className="text-foreground/60">No podcast recommendations available.</p>
             )}
           </div>
 
           {/* Action Buttons */}
-          <div className="text-center space-y-4">
+          <div className="text-center flex gap-4 justify-center">
             <Button 
               size="lg" 
-              className="bg-primary hover:bg-primary/90 text-primary-foreground font-semibold rounded-xl"
+              className="bg-primary-indigo hover:bg-primary-indigo/80 text-background font-semibold rounded-xl"
               onClick={() => router.push('/services')}
             >
               Explore All Services
               <ArrowRight className="w-5 h-5 ml-2" />
             </Button>
-            <div>
               <Button 
                 variant="outline" 
                 size="lg" 
-                className="rounded-xl"
+                className="rounded-xl bg-secondary-pop hover:bg-background hover:text-secondary-pop border border-secondary-pop text-background font-semibold"
                 onClick={() => router.push('/quiz')}
               >
                 Retake Quiz
               </Button>
-            </div>
           </div>
         </div>
       </section>

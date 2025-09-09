@@ -53,12 +53,12 @@ const About = () => {
   return (
     <Layout>
       {/* Hero Section */}
-      <section className="py-16 bg-gradient-to-br from-primary/10 via-primary-glow/5 to-transparent">
+      <section className="py-16 bg-gradient-to-br from-primary-indigo/10 via-primary-lavender/5 to-transparent">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <h1 className="text-4xl md:text-5xl font-bold text-foreground mb-6">
             Our Story
           </h1>
-          <p className="text-lg text-muted-foreground leading-relaxed">
+          <p className="text-lg text-foreground/70 leading-relaxed">
             MapMySoul Marketplace was born from a vision to democratize access to authentic spiritual healing. 
             We believe everyone deserves personalized guidance on their journey to wellness and self-discovery.
           </p>
@@ -73,12 +73,12 @@ const About = () => {
               <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-6">
                 Our Mission
               </h2>
-              <p className="text-lg text-muted-foreground mb-6 leading-relaxed">
+              <p className="text-lg text-foreground/70 mb-6 leading-relaxed">
                 MapMySoul Marketplace is dedicated to empowering wellness seekers by connecting them 
                 with trusted healers through a personalized, video-enabled platform that seamlessly 
                 blends holistic services, curated products, and impactful nonprofit initiatives.
               </p>
-              <p className="text-lg text-muted-foreground mb-8 leading-relaxed">
+              <p className="text-lg text-foreground/70 mb-8 leading-relaxed">
                 Our quiz-driven recommendations, Zoom-based sessions, wellness essentials, and curated 
                 workshops and retreats create a nurturing space for emotional, mental, and spiritual 
                 healing, guiding all users toward self-discovery and balance.
@@ -105,13 +105,13 @@ const About = () => {
       </section>
 
       {/* Values Section */}
-      <section className="py-16 bg-muted/30">
+      <section className="py-16 bg-foreground/5">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
             <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-6">
               Our Values
             </h2>
-            <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+            <p className="text-lg text-foreground/70 max-w-2xl mx-auto">
               These core principles guide everything we do at MapMySoul
             </p>
           </div>
@@ -120,11 +120,11 @@ const About = () => {
             {values.map((value, index) => (
               <Card key={index} className="mystical-card text-center">
                 <CardContent className="p-8">
-                  <value.icon className="w-12 h-12 text-primary mx-auto mb-4" />
+                  <value.icon className="w-12 h-12 text-primary-indigo mx-auto mb-4" />
                   <h3 className="text-lg font-semibold text-foreground mb-3">
                     {value.title}
                   </h3>
-                  <p className="text-muted-foreground text-sm">
+                  <p className="text-foreground/70 text-sm">
                     {value.description}
                   </p>
                 </CardContent>
@@ -141,7 +141,7 @@ const About = () => {
             <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-6">
               Meet Our Team
             </h2>
-            <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+            <p className="text-lg text-foreground/70 max-w-2xl mx-auto">
               Passionate individuals dedicated to bringing you authentic spiritual experiences
             </p>
           </div>
@@ -162,10 +162,10 @@ const About = () => {
                   <h3 className="text-xl font-bold text-foreground mb-2">
                     {member.name}
                   </h3>
-                  <p className="text-primary font-medium mb-3">
+                  <p className="text-primary-indigo font-medium mb-3">
                     {member.role}
                   </p>
-                  <p className="text-muted-foreground text-sm">
+                  <p className="text-foreground/70 text-sm">
                     {member.description}
                   </p>
                 </CardContent>
@@ -176,19 +176,19 @@ const About = () => {
       </section>
 
       {/* CTA Section */}
-      <section className="py-16 bg-gradient-to-r from-primary to-primary-glow">
+      <section className="py-16 bg-gradient-to-r from-primary-indigo to-primary-lavender">
         <div className="max-w-4xl mx-auto text-center px-4 sm:px-6 lg:px-8">
-          <h2 className="text-3xl md:text-4xl font-bold text-primary-foreground mb-6">
+          <h2 className="text-3xl md:text-4xl font-bold text-background mb-6">
             Ready to Start Your Healing Journey?
           </h2>
-          <p className="text-lg text-primary-foreground/90 mb-8">
+          <p className="text-lg text-background/90 mb-8">
             Join thousands who have found their path to wellness through our platform
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Button 
               size="lg" 
               variant="secondary"
-              className="bg-primary-foreground text-primary hover:bg-primary-foreground/90"
+              className="bg-background text-primary-indigo hover:bg-background/90"
             >
               <Sparkles className="w-5 h-5 mr-2" />
               Take the Quiz
@@ -196,6 +196,7 @@ const About = () => {
             <Button 
               size="lg" 
               variant="outline"
+              className="bg-background text-primary-indigo hover:bg-background/90 hover:text-primary-indigo"
             >
               Explore Services
             </Button>

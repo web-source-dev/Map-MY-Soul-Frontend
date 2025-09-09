@@ -9,7 +9,8 @@ import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { User, ArrowLeft, CheckCircle, ChevronLeft, ChevronRight, Video, Phone as PhoneIcon, MapPin } from "lucide-react";
+import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/dialog";
+import { User, ArrowLeft, ChevronLeft, ChevronRight, Video, Phone as PhoneIcon, MapPin, AlertCircle } from "lucide-react";
 import { useAuth } from "@/contexts/AuthContext";
 import { backendRequest } from "@/lib/api";
 import { showToast } from "@/lib/utils";
@@ -110,10 +111,10 @@ const CalendarComponent = ({ selectedDate, onDateSelect }: { selectedDate: strin
           className={`
             h-8 w-8 rounded-full text-sm font-medium transition-colors
             ${isSelected 
-              ? 'bg-primary text-primary-foreground hover:bg-primary/90' 
+              ? 'bg-primary-indigo text-background hover:bg-primary-indigo/90' 
               : isDisabled 
-                ? 'text-muted-foreground cursor-not-allowed' 
-                : 'hover:bg-muted cursor-pointer'
+                ? 'text-foreground/50 cursor-not-allowed' 
+                : 'hover:bg-foreground/5 cursor-pointer'
             }
           `}
         >
@@ -131,7 +132,7 @@ const CalendarComponent = ({ selectedDate, onDateSelect }: { selectedDate: strin
           <div className="grid grid-cols-7 gap-1 text-center">
             {/* Day headers */}
             {['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'].map(day => (
-              <div key={day} className="h-8 flex items-center justify-center text-xs font-medium text-muted-foreground">
+              <div key={day} className="h-8 flex items-center justify-center text-xs font-medium text-foreground/60">
                 {day}
               </div>
             ))}
@@ -156,7 +157,7 @@ const CalendarComponent = ({ selectedDate, onDateSelect }: { selectedDate: strin
           <ChevronLeft className="w-4 h-4" />
           Previous
         </Button>
-        <div className="text-sm text-muted-foreground">
+        <div className="text-sm text-foreground/60">
           {formatMonthYear(currentMonth)} - {formatMonthYear(nextMonth)}
         </div>
         <Button
@@ -189,9 +190,8 @@ const BookingPage = () => {
   const [loading, setLoading] = useState(true);
   const [submitting, setSubmitting] = useState(false);
   const [availableSlots, setAvailableSlots] = useState<string[]>([]);
-  const [selectedDate, setSelectedDate] = useState<string>("");
-  const [bookingSuccess, setBookingSuccess] = useState(false);
   const [showLoginPrompt, setShowLoginPrompt] = useState(false);
+  const [showPaymentPopup, setShowPaymentPopup] = useState(false);
 
   const [formData, setFormData] = useState<BookingForm>({
     bookingDate: "",
@@ -243,7 +243,6 @@ const BookingPage = () => {
   };
 
   const handleDateChange = (date: string) => {
-    setSelectedDate(date);
     setFormData(prev => ({ ...prev, bookingDate: date, bookingTime: "" }));
     if (date) {
       fetchAvailability(date);
@@ -284,8 +283,10 @@ const BookingPage = () => {
         })
       });
 
+      console.log(response);
+
       showToast.success('Booking created successfully!');
-      setBookingSuccess(true);
+      setShowPaymentPopup(true);
       
       setTimeout(() => {
         router.push('/');
@@ -304,6 +305,11 @@ const BookingPage = () => {
     }
   };
 
+  const handlePaymentPopupOk = () => {
+    router.push('/bookings');
+  };
+
+
   // Use available slots from backend instead of generating static slots
   const timeSlots = availableSlots;
 
@@ -312,8 +318,8 @@ const BookingPage = () => {
       <Layout>
         <div className="min-h-screen flex items-center justify-center">
           <div className="text-center">
-            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary mx-auto mb-4"></div>
-            <p className="text-muted-foreground">Loading service details...</p>
+            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary-indigo mx-auto mb-4"></div>
+            <p className="text-foreground/60">Loading service details...</p>
           </div>
         </div>
       </Layout>
@@ -326,26 +332,11 @@ const BookingPage = () => {
         <div className="min-h-screen flex items-center justify-center">
           <div className="text-center">
             <h2 className="text-2xl font-bold mb-4">Service Not Found</h2>
-            <p className="text-muted-foreground mb-4">The service you&apos;re looking for doesn&apos;t exist.</p>
+            <p className="text-foreground/60 mb-4">The service you&apos;re looking for doesn&apos;t exist.</p>
             <Button onClick={() => router.push('/services')}>
               <ArrowLeft className="w-4 h-4 mr-2" />
               Back to Services
             </Button>
-          </div>
-        </div>
-      </Layout>
-    );
-  }
-
-  if (bookingSuccess) {
-    return (
-      <Layout>
-        <div className="min-h-screen flex items-center justify-center">
-          <div className="text-center">
-            <CheckCircle className="w-16 h-16 text-green-500 mx-auto mb-4" />
-            <h2 className="text-2xl font-bold mb-4">Booking Successful!</h2>
-            <p className="text-muted-foreground mb-4">Your booking has been created successfully.</p>
-            <p className="text-sm text-muted-foreground">Redirecting to your bookings...</p>
           </div>
         </div>
       </Layout>
@@ -411,8 +402,8 @@ const BookingPage = () => {
                       </div>
                     ) : (
                       <div className="text-center py-8">
-                        <p className="text-muted-foreground mb-2">No available time slots for this date</p>
-                        <p className="text-sm text-muted-foreground">Please select another date or contact us for availability</p>
+                        <p className="text-foreground/60 mb-2">No available time slots for this date</p>
+                        <p className="text-sm text-foreground/60">Please select another date or contact us for availability</p>
                       </div>
                     )}
                   </div>
@@ -443,7 +434,7 @@ const BookingPage = () => {
                                 year: 'numeric'
                               })}
                               readOnly
-                              className="bg-muted"
+                              className="bg-foreground/5"
                             />
                           </div>
                           <div>
@@ -451,7 +442,7 @@ const BookingPage = () => {
                             <Input
                               value={formData.bookingTime}
                               readOnly
-                              className="bg-muted"
+                              className="bg-foreground/5"
                             />
                           </div>
                         </div>
@@ -459,12 +450,12 @@ const BookingPage = () => {
 
                       {/* Authentication Status */}
                       {!isAuthenticated ? (
-                        <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-4">
+                        <div className="bg-support-pastel/10 border border-support-pastel/30 rounded-lg p-4">
                           <div className="flex items-center gap-2 mb-2">
-                            <User className="w-4 h-4 text-yellow-600" />
-                            <span className="font-medium text-yellow-800">Login Required</span>
+                            <User className="w-4 h-4 text-support-pastel" />
+                            <span className="font-medium text-support-pastel">Login Required</span>
                           </div>
-                          <p className="text-sm text-yellow-700">
+                          <p className="text-sm text-support-pastel/80">
                             Please log in to book this service. Your information will be securely saved.
                           </p>
                           <Button
@@ -588,12 +579,12 @@ const BookingPage = () => {
                       {/* Submit Button */}
                       <Button 
                         type="submit" 
-                        className="w-full bg-primary hover:bg-primary/90 text-primary-foreground font-semibold py-3"
+                        className="w-full bg-primary-indigo hover:bg-primary-indigo/90 text-background font-semibold py-3"
                         disabled={submitting || !formData.bookingDate || !formData.bookingTime || !isAuthenticated}
                       >
                         {submitting ? (
                           <>
-                            <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white mr-2"></div>
+                            <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-background mr-2"></div>
                             Processing...
                           </>
                         ) : (
@@ -601,7 +592,7 @@ const BookingPage = () => {
                         )}
                       </Button>
 
-                      <p className="text-xs text-muted-foreground text-center">
+                      <p className="text-xs text-foreground/60 text-center">
                         Your payment won&apos;t be charged until the session is confirmed.
                       </p>
                     </form>
@@ -619,6 +610,29 @@ const BookingPage = () => {
         onClose={() => setShowLoginPrompt(false)} 
         action="booking"
       />
+
+      {/* Payment Not Supported Popup */}
+      <Dialog open={showPaymentPopup} onOpenChange={setShowPaymentPopup}>
+        <DialogContent className="sm:max-w-md">
+          <DialogHeader>
+            <DialogTitle className="flex items-center gap-2">
+              <AlertCircle className="w-5 h-5 text-support-pastel" />
+              Payment Not Available
+            </DialogTitle>
+            <DialogDescription className="text-center pt-2">
+              Our payment system is currently under development. Please contact us directly to complete your booking.
+            </DialogDescription>
+          </DialogHeader>
+          <div className="flex justify-center pt-4">
+            <Button 
+              onClick={handlePaymentPopupOk}
+              className="bg-primary-indigo hover:bg-primary-indigo/90 text-background px-8"
+            >
+              OK
+            </Button>
+          </div>
+        </DialogContent>
+      </Dialog>
     </Layout>
   );
 };

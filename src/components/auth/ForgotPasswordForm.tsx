@@ -38,7 +38,7 @@ export const ForgotPasswordForm: React.FC<ForgotPasswordFormProps> = ({ onSwitch
       <Card className="w-full max-w-md mx-auto">
         <CardHeader className="space-y-1">
           <CardTitle className="text-2xl font-bold text-center flex items-center justify-center gap-2">
-            <CheckCircle className="h-6 w-6 text-green-500" />
+            <CheckCircle className="h-6 w-6 text-support-pastel" />
             Email Sent Successfully
           </CardTitle>
           <CardDescription className="text-center">
@@ -46,9 +46,9 @@ export const ForgotPasswordForm: React.FC<ForgotPasswordFormProps> = ({ onSwitch
           </CardDescription>
         </CardHeader>
         <CardContent className="space-y-4">
-          <div className="p-4 bg-green-50 border border-green-200 rounded-md">
-            <p className="mb-2 text-green-800">We&apos;ve sent a password reset link to your email address.</p>
-            <p className="text-sm text-green-600">
+          <div className="p-4 bg-support-pastel/10 border border-support-pastel/30 rounded-md">
+            <p className="mb-2 text-support-pastel">We&apos;ve sent a password reset link to your email address.</p>
+            <p className="text-sm text-support-pastel/80">
               Click the link in the email to reset your password. The link will expire in 1 hour.
             </p>
           </div>
